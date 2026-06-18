@@ -95,8 +95,9 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
 .service-name{font-family:var(--font-display);font-size:1.35rem;font-weight:400;color:var(--text);line-height:1.2;margin-bottom:0.75rem;transition:color var(--transition);}
 .service-card:hover .service-name{color:var(--accent);}
 .service-desc{font-size:12px;color:var(--text-muted);line-height:1.6;font-weight:300;margin-bottom:1.5rem;}
-.service-more{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:0.5rem;background:none;border:none;cursor:pointer;padding:0;font-family:var(--font-body);opacity:0;transition:opacity var(--transition);}
-.service-card:hover .service-more{opacity:1;}
+.service-more{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:0.5rem;background:none;border:none;cursor:pointer;padding:0;font-family:var(--font-body);opacity:0;transition:opacity var(--transition);pointer-events:none;}
+@media(hover:hover){.service-card:hover .service-more{opacity:1;}}
+@media(hover:none),(max-width:900px){.service-more{opacity:1;pointer-events:auto;}}
 .service-more i{transition:transform var(--transition);}
 .service-more:hover i{transform:translateX(4px);}
 .service-process-link{display:inline-flex;align-items:center;gap:.4rem;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;margin-top:.5rem;transition:color var(--transition);}
@@ -466,14 +467,16 @@ function renderAllServices(){
   grid.innerHTML=servicesData.map((s,i)=>`<div class="service-card" onclick="openServiceModal(${i})">
     <div class="service-name">${s[currentLang].name}</div>
     <div class="service-desc">${s[currentLang].desc}</div>
-    <button class="service-more" tabindex="-1">
-      ${currentLang==='ru'?'Подробнее':currentLang==='en'?'Learn more':'了解更多'}
-      <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
-    </button>
-    <a href="process.html" class="service-process-link" onclick="event.stopPropagation()">
-      <i class="fa-regular fa-circle-question" style="font-size:10px;"></i>
-      ${i18n[currentLang].process_link}
-    </a>
+    <div style="display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;">
+      <button class="service-more" onclick="openServiceModal(${i});event.stopPropagation()">
+        ${currentLang==='ru'?'Подробнее':currentLang==='en'?'Learn more':'了解更多'}
+        <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
+      </button>
+      <a href="process.html" class="service-process-link" onclick="event.stopPropagation()">
+        <i class="fa-regular fa-circle-question" style="font-size:10px;"></i>
+        ${i18n[currentLang].process_link}
+      </a>
+    </div>
   </div>`).join('');
 }
 
