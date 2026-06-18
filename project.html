@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Проект — Наталья Пчелина</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<!-- Restore theme before paint to avoid flash -->
+<script>(function(){var t=localStorage.getItem('np-theme')||'dark';document.documentElement.dataset.theme=t;})()</script>
+<style>
+:root{
+  --accent:#C4A882;--accent-dim:rgba(196,168,130,0.15);--accent-hover:#D4B992;
+  --bg:#1A1410;--bg2:#221C17;--bg3:#2A231C;
+  --surface:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);--border-accent:rgba(196,168,130,0.3);
+  --text:#F0EAE0;--text-secondary:#A09080;--text-muted:#6B5E50;
+  --font-display:'Cormorant Garamond',serif;--font-body:'DM Sans',sans-serif;
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);--nav-h:52px;
+}
+[data-theme="light"]{
+  --bg:#F5F0E8;--bg2:#EDE7DC;--bg3:#E5DDD0;
+  --surface:rgba(0,0,0,0.03);--border:rgba(0,0,0,0.08);--border-accent:rgba(139,100,60,0.3);
+  --text:#1A1208;--text-secondary:#6B5030;--text-muted:#9E8060;
+  --accent:#8B643C;--accent-dim:rgba(139,100,60,0.1);--accent-hover:#7A5530;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* ─── NAVBAR (unified, same as all pages) ─────────── */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--nav-h);display:grid;grid-template-columns:auto 1fr auto;
+  align-items:center;padding:0 2.5rem;
+  backdrop-filter:blur(20px);
+  background:rgba(26,20,16,0.82);
+  border-bottom:1px solid var(--border);
+  transition:background var(--transition);
+}
+[data-theme="light"] .navbar{background:rgba(245,240,232,0.88);}
+.navbar-left{display:flex;gap:1.25rem;align-items:center;}
+.mobile-menu-btn{display:none;background:none;border:1px solid var(--border);color:var(--text-muted);width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;cursor:pointer;font-size:11px;flex-shrink:0;transition:color var(--transition),border-color var(--transition),background var(--transition);}
+.mobile-menu-btn:hover,.mobile-menu-btn.open{color:var(--accent);border-color:var(--border-accent);}
+.mobile-menu-btn.open{background:var(--accent-dim);}
+.navbar-langs{display:flex;gap:1.25rem;align-items:center;}
+.navbar-center-wrap{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.navbar-name{font-family:var(--font-display);font-size:1.15rem;font-weight:300;letter-spacing:-0.01em;color:var(--text-secondary);white-space:nowrap;max-width:0;overflow:hidden;opacity:0;padding-right:0;transition:max-width 0.55s cubic-bezier(0.4,0,0.2,1),opacity 0.45s,padding 0.55s;flex-shrink:0;}
+.navbar-name em{font-style:italic;color:var(--accent);}
+.navbar-name.visible{max-width:220px;opacity:1;padding-right:2.5rem;}
+.navbar-menu{display:flex;gap:2.5rem;align-items:center;}
+.navbar-icons{display:flex;gap:1.25rem;align-items:center;justify-content:flex-end;}
+.lang-btn{background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;padding:2px 0;border-bottom:1px solid transparent;transition:color var(--transition),border-color var(--transition);}
+.lang-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+.nav-link{font-family:var(--font-body);font-size:11px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-secondary);text-decoration:none;padding:2px 0;border-bottom:1px solid transparent;transition:color var(--transition),border-color var(--transition);}
+.nav-link:hover,.nav-link.active{color:var(--accent);border-bottom-color:var(--accent);}
+.icon-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px;transition:color var(--transition);}
+.icon-btn:hover{color:var(--accent);}
+@media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-langs{gap:0.75rem;}.navbar-icons{gap:0.75rem;}.navbar-name{max-width:unset!important;overflow:visible!important;padding-right:0!important;text-align:center;width:100%;}}
+
+/* ─── MOBILE DROPDOWN ────────────────────────────── */
+.mobile-nav-drop{position:fixed;top:var(--nav-h);left:0;z-index:99;display:flex;flex-direction:column;background:var(--bg2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;width:56px;border-radius:0 0 12px 0;}
+.mobile-nav-drop.open{max-height:360px;opacity:1;}
+.mobile-nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0.9rem 0;color:var(--text-muted);text-decoration:none;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-body);border-bottom:1px solid var(--border);transition:color var(--transition),background var(--transition);background:none;border-left:none;border-right:none;width:100%;cursor:pointer;}
+.mobile-nav-item:last-child{border-bottom:none;}
+.mobile-nav-item i{font-size:14px;}
+.mobile-nav-item:hover,.mobile-nav-item.active{color:var(--accent);background:var(--accent-dim);}
+
+/* ─── BREADCRUMB ─────────────────────────────────── */
+.breadcrumb{
+  padding-top:calc(var(--nav-h) + 1.5rem);
+  padding-left:2.5rem;padding-right:2.5rem;padding-bottom:0;
+  display:flex;align-items:center;gap:.75rem;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+}
+.breadcrumb a{color:var(--text-muted);text-decoration:none;transition:color var(--transition);}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:var(--text-muted);}
+.breadcrumb .current{color:var(--text-secondary);}
+@media(max-width:600px){.breadcrumb{padding-left:1.25rem;padding-right:1.25rem;}}
+
+/* ─── SIBLING NAV ────────────────────────────────── */
+.sibling-nav{padding:.75rem 2.5rem 0;display:flex;gap:1.5rem;}
+@media(max-width:600px){.sibling-nav{padding-left:1.25rem;padding-right:1.25rem;}}
+.sib-btn{background:none;border:none;cursor:pointer;font-family:var(--font-body);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);display:flex;align-items:center;gap:.5rem;transition:color var(--transition);padding:0;}
+.sib-btn:hover{color:var(--accent);}
+.sib-btn:disabled{opacity:.3;cursor:default;}
+
+/* ─── PROJECT LAYOUT ─────────────────────────────── */
+.project-layout{display:grid;grid-template-columns:1fr 260px;gap:4rem;padding:2.5rem 2.5rem 6rem;align-items:start;}
+@media(max-width:900px){.project-layout{grid-template-columns:1fr;gap:2.5rem;}.project-sidebar{order:-1;}}
+@media(max-width:600px){.project-layout{padding-left:1.25rem;padding-right:1.25rem;}}
+
+/* ─── MAIN CONTENT ───────────────────────────────── */
+.project-main{min-width:0;}
+.project-title{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,5rem);font-weight:300;line-height:1;letter-spacing:-.02em;color:var(--text);margin-bottom:.5rem;}
+.project-meta{display:flex;gap:2rem;margin-bottom:2.5rem;flex-wrap:wrap;}
+.meta-item span{display:block;}
+.meta-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);}
+.meta-value{font-size:13px;color:var(--text-secondary);font-weight:300;margin-top:.2rem;}
+
+/* ─── GALLERY ────────────────────────────────────── */
+.gallery-main{width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--bg3);position:relative;margin-bottom:1px;cursor:crosshair;}
+.gallery-main img{width:100%;height:100%;object-fit:cover;display:none;}
+.gallery-main img.active{display:block;}
+.gallery-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:5rem;font-weight:300;color:var(--border-accent);}
+.gallery-thumbs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;padding-bottom:2px;}
+.gallery-thumb{flex:0 0 64px;aspect-ratio:1/1;overflow:hidden;cursor:pointer;background:var(--bg3);opacity:.4;transition:opacity var(--transition);}
+.gallery-thumb:hover,.gallery-thumb.active{opacity:1;}
+.gallery-thumb img{width:100%;height:100%;object-fit:cover;}
+.gallery-counter{font-size:10px;letter-spacing:.1em;color:var(--text-muted);padding:.5rem 0;display:flex;align-items:center;gap:.5rem;}
+.gallery-dot{width:24px;height:1px;background:var(--border);cursor:pointer;transition:background var(--transition);}
+.gallery-dot.active{background:var(--accent);}
+
+/* ─── DESC ───────────────────────────────────────── */
+.project-desc{margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);}
+.project-desc p{font-size:14px;color:var(--text-secondary);font-weight:300;line-height:1.8;}
+.services-used{margin-top:1.5rem;}
+.services-used h4{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;}
+.services-pills{display:flex;flex-wrap:wrap;gap:.4rem;}
+.service-pill{font-size:11px;letter-spacing:.06em;color:var(--text-secondary);font-weight:300;border:1px solid var(--border);padding:.25rem .75rem;transition:border-color var(--transition),color var(--transition);}
+.service-pill:hover{border-color:var(--border-accent);color:var(--accent);}
+
+/* ─── SIDEBAR ────────────────────────────────────── */
+.project-sidebar{position:sticky;top:calc(var(--nav-h) + 1rem);}
+.sidebar-section{margin-bottom:2.5rem;}
+.sidebar-title{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
+.sidebar-title::before{content:'';display:block;width:16px;height:1px;background:var(--accent);}
+.sidebar-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.s-tag{font-size:10px;letter-spacing:.06em;color:var(--text-muted);cursor:pointer;padding:.2rem 0;transition:color var(--transition);}
+.s-tag::before{content:'#';}
+.s-tag.project-tag{color:var(--accent);font-weight:400;}
+.s-tag:hover{color:var(--text-secondary);}
+.related-card{display:block;text-decoration:none;padding:.75rem 0;border-bottom:1px solid var(--border);}
+.related-card:last-child{border-bottom:none;}
+.related-thumb{width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--bg3);margin-bottom:.5rem;}
+.related-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+.related-card:hover .related-thumb img{transform:scale(1.04);}
+.related-name{font-size:12px;color:var(--text-secondary);font-weight:300;transition:color var(--transition);}
+.related-card:hover .related-name{color:var(--accent);}
+
+/* ─── ORDER BUTTON ───────────────────────────────── */
+.order-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--font-body);font-size:10px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  background:var(--accent);color:var(--bg);
+  border:none;padding:.45rem 1rem;
+  cursor:pointer;text-decoration:none;white-space:nowrap;
+  transition:background var(--transition);
+}
+.order-btn:hover{background:var(--accent-hover);}
+
+/* Sidebar CTA block */
+.sidebar-order{
+  margin-top:2rem;padding:1.25rem;
+  background:var(--accent-dim);border:1px solid var(--border-accent);
+}
+.sidebar-order-hint{
+  font-size:11px;color:var(--text-muted);line-height:1.5;margin-bottom:.9rem;
+}
+.sidebar-order .order-btn{width:100%;justify-content:center;}
+
+/* ─── BACK FAB ───────────────────────────────────── */
+.back-fab{position:fixed;bottom:2rem;left:2.5rem;z-index:50;background:var(--bg2);border:1px solid var(--border);color:var(--text-muted);font-family:var(--font-body);font-size:10px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;padding:.6rem 1.1rem;display:flex;align-items:center;gap:.5rem;transition:color var(--transition),border-color var(--transition),background var(--transition);}
+.back-fab:hover{color:var(--accent);border-color:var(--border-accent);background:var(--bg3);}
+footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-name{font-family:var(--font-display);font-size:1rem;font-weight:300;letter-spacing:0.1em;color:var(--text-secondary);}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-link{color:var(--text-muted);font-size:13px;text-decoration:none;transition:color var(--transition);}
+.footer-link:hover{color:var(--accent);}
+.footer-copy{font-size:11px;color:var(--text-muted);letter-spacing:0.08em;}
+.footer-legal{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;}
+.footer-legal-link{color:var(--text-muted);font-size:11px;text-decoration:none;letter-spacing:.05em;transition:color var(--transition);}
+.footer-legal-link:hover{color:var(--accent);}
+.footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:.2rem;}
+@media(max-width:768px){footer{flex-direction:column;align-items:flex-start;}.footer-right{align-items:flex-start;}}
+
+
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border);}
+</style>
+</head>
+<body>
+
+<!-- MOBILE DROPDOWN -->
+<div class="mobile-nav-drop" id="mobile-nav-drop">
+  <a href="index.html"         class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-house"></i></a>
+  <a href="services.html"      class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-layer-group"></i></a>
+  <a href="portfolio.html"     class="mobile-nav-item active" onclick="closeMobileMenu()"><i class="fa-regular fa-images"></i></a>
+  <a href="index.html#skills"  class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-star"></i></a>
+  <a href="index.html#contact" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-envelope"></i></a>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-left">
+    <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">
+      <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
+    </button>
+    <div class="navbar-langs">
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    </div>
+  </div>
+  <div class="navbar-center-wrap">
+    <div class="navbar-name" id="navbar-name"></div>
+    <div class="navbar-menu">
+      <a href="index.html"          class="nav-link" data-i18n="nav_home">Главная</a>
+      <a href="services.html"       class="nav-link" data-i18n="nav_services">Услуги</a>
+      <a href="portfolio.html"      class="nav-link active" data-i18n="nav_portfolio">Портфолио</a>
+      <a href="index.html#skills"   class="nav-link" data-i18n="nav_skills">Навыки</a>
+      <a href="index.html#contact"  class="nav-link" data-i18n="nav_contact">Контакт</a>
+    </div>
+  </div>
+  <div class="navbar-icons">
+    <a href="price.html" class="order-btn" data-i18n="order_btn">
+      Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i>
+    </a>
+    <button class="icon-btn" onclick="downloadVCard()"><i class="fa-regular fa-address-card"></i></button>
+    <button class="icon-btn" onclick="goToPrice()"><i class="fa-regular fa-file-lines"></i></button>
+    <button class="icon-btn" onclick="downloadResume()"><i class="fa-regular fa-file-pdf"></i></button>
+    <a href="process.html" class="icon-btn" title="Как мы работаем"><i class="fa-regular fa-circle-question"></i></a>
+    <a href="privacy.html" class="icon-btn" title="Конфиденциальность"><i class="fa-solid fa-shield-halved"></i></a>
+    <button class="icon-btn" onclick="toggleTheme()">
+      <i class="fa-regular fa-sun" id="theme-icon"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- BREADCRUMB: Главная → Проекты → Название -->
+<div class="breadcrumb">
+  <a href="index.html" data-i18n="bc_home">Главная</a>
+  <span>—</span>
+  <a href="portfolio.html" data-i18n="bc_portfolio">Проекты</a>
+  <span>—</span>
+  <span class="current" id="bc-project">…</span>
+</div>
+
+<!-- SIBLING NAV -->
+<div class="sibling-nav">
+  <button class="sib-btn" id="prev-btn" onclick="goSibling(-1)">
+    <i class="fa-solid fa-arrow-left" style="font-size:10px;"></i>
+    <span data-i18n="prev_project">Предыдущий</span>
+  </button>
+  <button class="sib-btn" id="next-btn" onclick="goSibling(1)">
+    <span data-i18n="next_project">Следующий</span>
+    <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
+  </button>
+</div>
+
+<!-- PROJECT LAYOUT -->
+<div class="project-layout">
+  <!-- MAIN -->
+  <div class="project-main">
+    <h1 class="project-title" id="proj-title">…</h1>
+    <div class="project-meta">
+      <div class="meta-item">
+        <span class="meta-label" data-i18n="meta_year">Год</span>
+        <span class="meta-value" id="proj-year">—</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label" data-i18n="meta_client">Клиент</span>
+        <span class="meta-value" id="proj-client">—</span>
+      </div>
+    </div>
+    <div class="gallery">
+      <div class="gallery-main" id="gallery-main"></div>
+      <div class="gallery-thumbs" id="gallery-thumbs"></div>
+      <div class="gallery-counter" id="gallery-counter"></div>
+    </div>
+    <div class="project-desc">
+      <p id="proj-desc"></p>
+      <div class="services-used">
+        <h4 data-i18n="services_used">Услуги в проекте</h4>
+        <div class="services-pills" id="proj-services"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="project-sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title" data-i18n="sidebar_tags">Теги</div>
+      <div class="sidebar-tags" id="sidebar-tags"></div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title" data-i18n="sidebar_related">Похожие проекты</div>
+      <div id="related-list"></div>
+    </div>
+    <div class="sidebar-order">
+      <p class="sidebar-order-hint" data-i18n="order_hint">Понравился проект? Обсудим похожую задачу.</p>
+      <a href="price.html" class="order-btn" data-i18n="order_btn">
+        Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i>
+      </a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-legal">
+    <a href="privacy.html" class="footer-legal-link">Политика конфиденциальности</a>
+    <a href="process.html" class="footer-legal-link">Как мы работаем</a>
+  </div>
+  <div class="footer-links">
+    <a href="https://t.me/npchel" class="footer-link" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+    <a href="https://wa.me/79036040666" class="footer-link" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="https://www.behance.net/natalyapchelina" class="footer-link" target="_blank"><i class="fa-brands fa-behance"></i></a>
+    <a href="https://ru.pinterest.com/NPchelina" class="footer-link" target="_blank"><i class="fa-brands fa-pinterest"></i></a>
+    <a href="https://www.linkedin.com/in/npchelina" class="footer-link" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+    <a href="https://www.avito.ru/brands/9582581b86f01263db98c276fccb332b" class="footer-link" target="_blank"><i class="fa-solid fa-a"></i></a>
+  </div>
+  <div class="footer-right">
+    <span class="footer-name">Наталья Пчелина © 2025</span>
+    <span class="footer-copy">Все права защищены</span>
+  </div>
+</footer>
+
+<script src="projects.js"></script>
+<script>
+const i18n = {
+  ru:{nav_home:'Главная',nav_services:'Услуги',nav_portfolio:'Портфолио',nav_skills:'Навыки',nav_contact:'Контакт',bc_home:'Главная',bc_portfolio:'Проекты',prev_project:'Предыдущий',next_project:'Следующий',meta_year:'Год',meta_client:'Клиент',services_used:'Услуги в проекте',sidebar_tags:'Теги',sidebar_related:'Похожие',back:'Назад',not_found:'Проект не найден',nav_name:'Наталья <em>Пчелина</em>',order_btn:'Заказать проект',order_hint:'Понравился проект? Обсудим похожую задачу.'},
+  en:{nav_home:'Home',nav_services:'Services',nav_portfolio:'Portfolio',nav_skills:'Skills',nav_contact:'Contact',bc_home:'Home',bc_portfolio:'Projects',prev_project:'Previous',next_project:'Next',meta_year:'Year',meta_client:'Client',services_used:'Services in project',sidebar_tags:'Tags',sidebar_related:'Similar',back:'Back',not_found:'Project not found',nav_name:'Natalya <em>Pchelina</em>',order_btn:'Order a Project',order_hint:'Like this project? Let\'s discuss something similar.'},
+  zh:{nav_home:'首页',nav_services:'服务',nav_portfolio:'作品集',nav_skills:'技能',nav_contact:'联系',bc_home:'首页',bc_portfolio:'项目',prev_project:'上一个',next_project:'下一个',meta_year:'年份',meta_client:'客户',services_used:'项目服务',sidebar_tags:'标签',sidebar_related:'相似项目',back:'返回',not_found:'未找到项目',nav_name:'娜塔利亚 <em>普切利娜</em>',order_btn:'订购项目',order_hint:'喜欢这个项目？来讨论类似的任务。'},
+};
+let currentLang='ru';
+let currentProject=null;
+let currentIdx=0;
+let galleryIdx=0;
+
+// ─── LANG & THEME (with localStorage) ─────────────
+function setLang(lang){
+  currentLang=lang;
+  localStorage.setItem('np-lang',lang);
+  document.querySelectorAll('.lang-btn').forEach(b=>
+    b.classList.toggle('active',b.textContent.toLowerCase()===lang||(lang==='zh'&&b.textContent==='中文'))
+  );
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.dataset.i18n;
+    if(i18n[lang][k]) el.textContent=i18n[lang][k];
+  });
+  // navbar name
+  const nn=document.getElementById('navbar-name');
+  if(nn) nn.innerHTML=i18n[lang].nav_name;
+  if(currentProject) renderProject(currentProject);
+  const ft={ru:{privacy:'Политика конфиденциальности',process:'Как мы работаем'},en:{privacy:'Privacy Policy',process:'How We Work'},zh:{privacy:'隐私政策',process:'工作流程'}};
+  document.querySelectorAll('.footer-legal-link[href="privacy.html"]').forEach(function(el){el.textContent=(ft[lang]||ft.ru).privacy;});
+  document.querySelectorAll('.footer-legal-link[href="process.html"]').forEach(function(el){el.textContent=(ft[lang]||ft.ru).process;});
+}
+
+function toggleTheme(){
+  const html=document.documentElement;const isDark=html.dataset.theme==='dark';
+  const next=isDark?'light':'dark';
+  html.dataset.theme=next;
+  localStorage.setItem('np-theme',next);
+  document.getElementById('theme-icon').className=isDark?'fa-regular fa-moon':'fa-regular fa-sun';
+}
+function applyThemeIcon(){
+  const isDark=document.documentElement.dataset.theme==='dark';
+  const icon=document.getElementById('theme-icon');
+  if(icon) icon.className=isDark?'fa-regular fa-sun':'fa-regular fa-moon';
+}
+
+// ─── MOBILE MENU ──────────────────────────────────
+function toggleMobileMenu(){
+  const drop=document.getElementById('mobile-nav-drop');const btn=document.getElementById('mobile-menu-btn');const icon=document.getElementById('mobile-menu-icon');
+  const isOpen=drop.classList.toggle('open');btn.classList.toggle('open',isOpen);icon.className=isOpen?'fa-solid fa-xmark':'fa-solid fa-bars';
+}
+function closeMobileMenu(){document.getElementById('mobile-nav-drop').classList.remove('open');document.getElementById('mobile-menu-btn').classList.remove('open');document.getElementById('mobile-menu-icon').className='fa-solid fa-bars';}
+document.addEventListener('click',e=>{const drop=document.getElementById('mobile-nav-drop');const btn=document.getElementById('mobile-menu-btn');if(drop&&drop.classList.contains('open')&&!drop.contains(e.target)&&!btn.contains(e.target))closeMobileMenu();});
+
+// ─── SCROLL: name into navbar ──────────────────────
+window.addEventListener('scroll',()=>{
+  const navName=document.getElementById('navbar-name');
+  if(navName) navName.classList.toggle('visible',window.scrollY>80);
+});
+
+// ─── GALLERY ──────────────────────────────────────
+function renderGallery(project){
+  const main=document.getElementById('gallery-main');
+  const thumbs=document.getElementById('gallery-thumbs');
+  const counter=document.getElementById('gallery-counter');
+  if(!project.photos||!project.photos.length){
+    main.innerHTML=`<div class="gallery-placeholder">${project[currentLang]?.title?.charAt(0)||'N'}</div>`;
+    thumbs.innerHTML='';counter.innerHTML='';return;
+  }
+  galleryIdx=0;
+  main.innerHTML=project.photos.map((src,i)=>
+    `<img src="${src}" alt="${project[currentLang]?.title||''} ${i+1}" class="${i===0?'active':''}" loading="${i===0?'eager':'lazy'}">`
+  ).join('');
+  thumbs.innerHTML=project.photos.map((src,i)=>
+    `<div class="gallery-thumb ${i===0?'active':''}" onclick="setGalleryImg(${i})"><img src="${src}" alt="${i+1}" loading="lazy"></div>`
+  ).join('');
+  const n=project.photos.length;
+  if(n<=20){
+    counter.innerHTML=project.photos.map((_,i)=>
+      `<div class="gallery-dot ${i===0?'active':''}" onclick="setGalleryImg(${i})"></div>`
+    ).join('');
+  } else {
+    counter.innerHTML=`<span id="gallery-text-counter" style="font-size:10px;letter-spacing:.1em;color:var(--text-muted);">1 / ${n}</span>`;
+  }
+  document.onkeydown=e=>{
+    if(e.key==='ArrowRight') setGalleryImg(Math.min(galleryIdx+1,project.photos.length-1));
+    if(e.key==='ArrowLeft') setGalleryImg(Math.max(galleryIdx-1,0));
+  };
+}
+function setGalleryImg(idx){
+  galleryIdx=idx;
+  document.querySelectorAll('#gallery-main img').forEach((el,i)=>el.classList.toggle('active',i===idx));
+  document.querySelectorAll('.gallery-thumb').forEach((el,i)=>el.classList.toggle('active',i===idx));
+  const tc=document.getElementById('gallery-text-counter');
+  if(tc){const n=document.querySelectorAll('#gallery-main img').length;tc.textContent=`${idx+1} / ${n}`;}
+  document.querySelectorAll('.gallery-dot').forEach((el,i)=>el.classList.toggle('active',i===idx));
+}
+
+// ─── PROJECT RENDER ────────────────────────────────
+function renderProject(p){
+  const lang=currentLang;
+  const title=p[lang]?.title||p.ru.title;
+  document.title=`${title} — Наталья Пчелина`;
+  document.getElementById('bc-project').textContent=title;
+  document.getElementById('proj-title').textContent=title;
+  document.getElementById('proj-year').textContent=p.year||'—';
+  document.getElementById('proj-client').textContent=p.client||'—';
+  document.getElementById('proj-desc').textContent=p[lang]?.desc||p.ru?.desc||'';
+  const services=p[`services_${lang}`]||p.services_ru||[];
+  document.getElementById('proj-services').innerHTML=services.map(s=>`<span class="service-pill">${s}</span>`).join('');
+  // tags in sidebar
+  const allTags=getAllTagsForLang(lang);
+  const projTags=getTagsForLang(p,lang);
+  document.getElementById('sidebar-tags').innerHTML=allTags.map(t=>
+    `<span class="s-tag ${projTags.includes(t)?'project-tag':''}" onclick="filterByTag('${t}')">${t}</span>`
+  ).join(' ');
+  // related
+  const related=getSimilarProjects(p,3);
+  document.getElementById('related-list').innerHTML=related.map(r=>`
+    <a class="related-card" href="project.html?id=${r.id}&lang=${lang}">
+      <div class="related-thumb">${r.photos?.[0]?`<img src="${r.photos[0]}" alt="${r[lang]?.title||r.ru.title}" loading="lazy">`:''}
+      </div>
+      <div class="related-name">${r[lang]?.title||r.ru.title}</div>
+    </a>
+  `).join('');
+  renderGallery(p);
+}
+
+function getTagsForLang(p,lang){if(lang==='en'&&p.tags_en)return p.tags_en;if(lang==='zh'&&p.tags_zh)return p.tags_zh;return p.tags||[];}
+function getAllTagsForLang(lang){const set=new Set();PROJECTS.forEach(p=>getTagsForLang(p,lang).forEach(t=>set.add(t)));return[...set].sort();}
+function getSimilarProjects(p,n){
+  const lang=currentLang;
+  const tags=new Set(getTagsForLang(p,lang));
+  return PROJECTS
+    .filter(r=>r.id!==p.id)
+    .map(r=>({p:r,score:[...getTagsForLang(r,lang)].filter(t=>tags.has(t)).length}))
+    .filter(x=>x.score>0)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,n)
+    .map(x=>x.p);
+}
+
+function filterByTag(tag){
+  window.location.href=`portfolio.html?tag=${encodeURIComponent(tag)}&lang=${currentLang}`;
+}
+
+// ─── SIBLING NAV ──────────────────────────────────
+function goSibling(dir){
+  const newIdx=currentIdx+dir;
+  if(newIdx>=0&&newIdx<PROJECTS.length){
+    window.location.href=`project.html?id=${PROJECTS[newIdx].id}&lang=${currentLang}`;
+  }
+}
+function updateSiblingBtns(){
+  document.getElementById('prev-btn').disabled=currentIdx===0;
+  document.getElementById('next-btn').disabled=currentIdx===PROJECTS.length-1;
+}
+
+// ─── INIT ─────────────────────────────────────────
+function init(){
+  const params=new URLSearchParams(location.search);
+  const id=params.get('id');
+  // restore lang: URL param first, then localStorage
+  const urlLang=params.get('lang');
+  const lang=urlLang||localStorage.getItem('np-lang')||'ru';
+
+  applyThemeIcon();
+  setLang(lang);
+
+  if(!id){document.getElementById('proj-title').textContent=i18n[lang].not_found;return;}
+  currentProject=typeof getProjectById==='function'?getProjectById(id):PROJECTS.find(p=>p.id===id);
+  if(!currentProject){document.getElementById('proj-title').textContent=i18n[lang].not_found;return;}
+  currentIdx=PROJECTS.findIndex(p=>p.id===id);
+  updateSiblingBtns();
+  renderProject(currentProject);
+}
+
+function downloadVCard(){const lang=currentLang;const cfg={ru:{fn:'Наталья Пчелина',n:'Пчелина;Наталья;;;',title:'Дизайнер-конструктор'},en:{fn:'Natalya Pchelina',n:'Pchelina;Natalya;;;',title:'Fashion Designer & Pattern Maker'},zh:{fn:'娜塔利亚·普切利娜',n:'普切利娜;娜塔利亚;;;',title:'时装设计师 & 制版师'}};const c=cfg[lang];const vcard=['BEGIN:VCARD','VERSION:3.0',`FN:${c.fn}`,`N:${c.n}`,`TITLE:${c.title}`,'TEL;TYPE=CELL:+79036040666','EMAIL;TYPE=WORK:npchel93@gmail.com','URL:https://npchelina.ru','END:VCARD'].join('\n');const blob=new Blob([vcard],{type:'text/vcard'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='NPchelina.vcf';a.click();}
+function goToPrice(){window.location.href='price.html?lang='+currentLang;}
+function downloadResume(){window.open('resume-'+currentLang+'.pdf','_blank');}
+
+// wait for PROJECTS to load
+if(typeof PROJECTS!=='undefined') init();
+else window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

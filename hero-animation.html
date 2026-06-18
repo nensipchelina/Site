@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Animation — NPchelina preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;background:#1A1410;font-family:'DM Sans',sans-serif;overflow:hidden;}
+
+.hero{position:relative;width:100vw;height:100vh;overflow:hidden;}
+
+/* ─── Hero text ─── */
+#hero-text{
+  position:absolute;left:8%;top:50%;
+  transform:translateY(-50%);
+  z-index:10;pointer-events:none;
+}
+.htag{
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:#C4A882;margin-bottom:.9rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.htag::before{content:'';display:block;width:36px;height:1px;background:#C4A882;}
+.hname{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.5rem,7.5vw,8rem);
+  font-weight:300;line-height:.9;letter-spacing:-.02em;color:#F0EAE0;
+  margin-bottom:.8rem;
+}
+.hname em{font-style:italic;color:#C4A882;}
+.hsub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#A09080;font-weight:300;}
+
+/* ─── CTA Button ─── */
+#hero-btn{
+  position:absolute;left:8%;top:72%;
+  transform:translateY(-50%);
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;
+  background:#C4A882;color:#1A1410;
+  border:none;padding:.85rem 1.8rem;
+  cursor:pointer;text-decoration:none;z-index:10;
+}
+
+/* ─── SVG stage ─── */
+#anim-svg{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;
+}
+
+/* ─── Replay ─── */
+#replay-btn{
+  position:fixed;bottom:1.5rem;right:1.5rem;
+  background:rgba(196,168,130,.12);border:1px solid rgba(196,168,130,.25);
+  color:#C4A882;font-family:'DM Sans',sans-serif;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  padding:.55rem 1.1rem;cursor:pointer;z-index:200;
+  transition:background .3s;
+}
+#replay-btn:hover{background:rgba(196,168,130,.22);}
+#stage-label{
+  position:fixed;bottom:1.5rem;left:1.5rem;
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(196,168,130,.35);font-family:'DM Sans',sans-serif;
+  z-index:200;
+}
+</style>
+</head>
+<body>
+<div class="hero">
+
+  <div id="hero-text">
+    <div class="htag">Дизайнер-конструктор · 7 лет в индустрии</div>
+    <h1 class="hname">Наталья<br><em>Пчелина</em></h1>
+    <p class="hsub">Конструирование · 3D-примерка · AI-визуализация</p>
+  </div>
+
+  <a id="hero-btn" href="#">Заказать проект →</a>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <svg id="anim-svg" viewBox="0 0 1200 700"
+       preserveAspectRatio="xMidYMid slice"
+       xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .L  { fill:none; stroke:rgba(196,168,130,.45); stroke-width:1.2;
+            stroke-linecap:round; stroke-linejoin:round; }
+      .Ld { fill:none; stroke:rgba(196,168,130,.2);  stroke-width:.6;
+            stroke-linecap:round; stroke-linejoin:round; }
+      .Lx { fill:none; stroke:rgba(196,168,130,.18); stroke-width:.55;
+            stroke-dasharray:5 5; stroke-linecap:round; }
+      .TX { font-family:'DM Sans',sans-serif; font-size:9px;
+            fill:rgba(196,168,130,.5); letter-spacing:.1em; }
+      .TXs{ font-family:'DM Sans',sans-serif; font-size:7px;
+            fill:rgba(196,168,130,.32); letter-spacing:.07em; }
+      .arr{ fill:rgba(196,168,130,.4); }
+    </style>
+  </defs>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 1 — HOODIE FLAT SKETCH  (centered ~760, 340)        -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <g id="G-hoodie" opacity="0">
+
+    <!-- Grid (very dim) -->
+    <line class="Ld" style="stroke:rgba(196,168,130,.06)" x1="760" y1="20" x2="760" y2="650"/>
+    <line class="Ld" style="stroke:rgba(196,168,130,.06)" x1="440" y1="350" x2="1100" y2="350"/>
+    <line class="Ld" style="stroke:rgba(196,168,130,.05)" x1="440" y1="205" x2="1100" y2="205"/>
+    <line class="Ld" style="stroke:rgba(196,168,130,.05)" x1="440" y1="500" x2="1100" y2="500"/>
+
+    <!-- LEFT SLEEVE -->
+    <path class="L" id="hs-sl"
+      d="M 638,210 C 610,210 580,215 554,228 L 530,252
+         C 515,272 504,302 502,332 L 499,406
+         C 497,424 506,437 522,437 L 554,435
+         C 571,434 581,422 584,405 L 588,344
+         C 590,320 600,298 617,280 L 638,254"/>
+
+    <!-- RIGHT SLEEVE -->
+    <path class="L" id="hs-sr"
+      d="M 882,210 C 910,210 940,215 966,228 L 990,252
+         C 1005,272 1016,302 1018,332 L 1021,406
+         C 1023,424 1014,437 998,437 L 966,435
+         C 949,434 939,422 936,405 L 932,344
+         C 930,320 920,298 903,280 L 882,254"/>
+
+    <!-- BODY -->
+    <path class="L" id="hs-body"
+      d="M 638,254 L 620,278 L 606,320 L 600,372
+         L 598,446 L 598,516 C 598,533 610,543 628,547
+         L 760,551 L 892,547 C 910,543 922,533 922,516
+         L 922,446 L 920,372 L 914,320 L 900,278 L 882,254"/>
+
+    <!-- SHOULDER CONSTRUCTION -->
+    <line class="Ld" id="hs-sh" x1="638" y1="210" x2="882" y2="210"/>
+
+    <!-- HOOD -->
+    <path class="L" id="hs-hood"
+      d="M 695,210 C 681,195 668,174 663,148
+         C 656,116 660,83 676,57 C 693,29 722,12 752,10
+         C 782,8 812,26 828,54 C 845,82 848,116 840,148
+         C 836,174 822,195 808,210"/>
+
+    <!-- HOOD SEAM -->
+    <path class="Lx" id="hs-hseam" d="M 752,10 L 752,210"/>
+
+    <!-- NECKLINE -->
+    <path class="L" id="hs-neck"
+      d="M 695,210 C 710,200 734,196 760,196
+         C 786,196 810,200 825,210"/>
+
+    <!-- CF LINE -->
+    <line class="Lx" id="hs-cf" x1="760" y1="210" x2="760" y2="551"/>
+
+    <!-- KANGAROO POCKET -->
+    <path class="L" id="hs-pkt"
+      d="M 700,388 L 700,468 C 700,478 709,486 719,486
+         L 801,486 C 811,486 820,478 820,468 L 820,388
+         C 800,381 780,378 760,378 C 740,378 720,381 700,388 Z"/>
+
+    <!-- BOTTOM RIBBING -->
+    <line class="Ld" id="hs-r1" x1="604" y1="530" x2="916" y2="530"/>
+    <line class="Ld" id="hs-r2" x1="602" y1="540" x2="918" y2="540"/>
+
+    <!-- CUFFS L -->
+    <line class="Ld" id="hs-cl1" x1="497" y1="422" x2="585" y2="419"/>
+    <line class="Ld" id="hs-cl2" x1="496" y1="432" x2="584" y2="429"/>
+    <!-- CUFFS R -->
+    <line class="Ld" id="hs-cr1" x1="935" y1="419" x2="1023" y2="422"/>
+    <line class="Ld" id="hs-cr2" x1="936" y1="429" x2="1024" y2="432"/>
+
+    <!-- DRAWSTRINGS -->
+    <path class="Ld" id="hs-dsl"
+      d="M 738,196 C 733,220 728,256 724,298 L 720,355"/>
+    <path class="Ld" id="hs-dsr"
+      d="M 782,196 C 787,220 792,256 796,298 L 800,355"/>
+
+    <!-- DIMENSION ANNOTATIONS -->
+    <g id="hs-dims" opacity="0">
+      <line class="Ld" x1="598" y1="572" x2="922" y2="572"/>
+      <line class="Ld" x1="598" y1="566" x2="598" y2="578"/>
+      <line class="Ld" x1="922" y1="566" x2="922" y2="578"/>
+      <text class="TX" x="760" y="588" text-anchor="middle">← 108 СМ →</text>
+
+      <line class="Ld" x1="458" y1="210" x2="458" y2="551"/>
+      <line class="Ld" x1="452" y1="210" x2="464" y2="210"/>
+      <line class="Ld" x1="452" y1="551" x2="464" y2="551"/>
+      <text class="TX" x="440" y="386" text-anchor="middle"
+            transform="rotate(-90 440 386)">74 СМ</text>
+
+      <line class="Ld" x1="484" y1="244" x2="484" y2="440"/>
+      <line class="Ld" x1="478" y1="244" x2="490" y2="244"/>
+      <line class="Ld" x1="478" y1="440" x2="490" y2="440"/>
+      <text class="TX" x="468" y="348" text-anchor="middle"
+            transform="rotate(-90 468 348)">66 СМ</text>
+    </g>
+  </g>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 2 — PATTERN PIECES + FABRIC LAYOUT                  -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <g id="G-patterns" opacity="0">
+
+    <!-- Fabric width rulers -->
+    <g id="G-fabric">
+      <line class="L" x1="55" y1="38" x2="1145" y2="38"/>
+      <line class="Ld" x1="55" y1="26" x2="55" y2="650"/>
+      <line class="Ld" x1="1145" y1="26" x2="1145" y2="650"/>
+      <text class="TX" x="600" y="30" text-anchor="middle">← 150 СМ →</text>
+    </g>
+
+    <!-- PATTERN: FRONT BODY ─────────────────── -->
+    <g id="pat-front">
+      <path class="L"
+        d="M 110,80 L 238,80 L 254,118 L 260,174 L 260,368
+           C 260,381 252,390 238,390 L 110,390
+           C 96,390 88,381 88,368 L 88,174 L 95,118 Z"/>
+      <path class="Lx"
+        d="M 100,91 L 228,91 L 243,126 L 248,177 L 248,374
+           C 248,384 242,390 230,390 L 118,390
+           C 106,390 100,384 100,374 L 100,177 L 107,126 Z"/>
+      <line class="L" x1="174" y1="142" x2="174" y2="336"/>
+      <polygon class="arr" points="174,135 169,148 179,148"/>
+      <polygon class="arr" points="174,343 169,330 179,330"/>
+      <rect class="arr" x="86" y="228" width="10" height="4"/>
+      <rect class="arr" x="252" y="228" width="10" height="4"/>
+      <text class="TX" x="174" y="246" text-anchor="middle">ПЕР. ПОЛОЧКА</text>
+      <text class="TXs" x="174" y="260" text-anchor="middle">1 ДЕТ. × 1 ПАР</text>
+    </g>
+
+    <!-- PATTERN: BACK BODY ──────────────────── -->
+    <g id="pat-back">
+      <path class="L"
+        d="M 305,80 L 442,80 L 461,118 L 468,174 L 468,368
+           C 468,381 460,390 445,390 L 305,390
+           C 291,390 283,381 283,368 L 283,174 L 290,118 Z"/>
+      <path class="Lx"
+        d="M 295,91 L 432,91 L 450,126 L 456,177 L 456,374
+           C 456,384 450,390 438,390 L 312,390
+           C 300,390 295,384 295,374 L 295,177 L 302,126 Z"/>
+      <line class="L" x1="376" y1="142" x2="376" y2="336"/>
+      <polygon class="arr" points="376,135 371,148 381,148"/>
+      <polygon class="arr" points="376,343 371,330 381,330"/>
+      <rect class="arr" x="374" y="78" width="4" height="10"/>
+      <text class="TX" x="376" y="246" text-anchor="middle">ЗАД. ПОЛОЧКА</text>
+      <text class="TXs" x="376" y="260" text-anchor="middle">1 ДЕТ. × 1 ПАР</text>
+    </g>
+
+    <!-- PATTERN: SLEEVE ─────────────────────── -->
+    <g id="pat-sleeve">
+      <path class="L"
+        d="M 526,96 C 556,88 590,92 618,108 L 638,136 L 642,320
+           C 642,337 632,350 615,350 L 552,350
+           C 536,350 524,337 523,320 L 523,136 Z"/>
+      <path class="Lx"
+        d="M 530,108 C 556,101 586,104 611,119 L 628,144 L 630,317
+           C 630,330 623,339 610,340 L 557,340
+           C 545,340 535,330 535,317 L 535,144 Z"/>
+      <line class="L" x1="583" y1="155" x2="583" y2="322"/>
+      <polygon class="arr" points="583,148 578,161 588,161"/>
+      <polygon class="arr" points="583,329 578,316 588,316"/>
+      <rect class="arr" x="581" y="94" width="4" height="10"/>
+      <text class="TX" x="583" y="250" text-anchor="middle">РУКАВ</text>
+      <text class="TXs" x="583" y="264" text-anchor="middle">2 ДЕТ. × 2 ПАР</text>
+    </g>
+
+    <!-- PATTERN: HOOD L ─────────────────────── -->
+    <g id="pat-hoodl">
+      <path class="L"
+        d="M 682,96 C 698,64 722,44 750,38 L 774,38 L 774,208 L 682,208 Z"/>
+      <path class="Lx"
+        d="M 690,104 C 704,74 726,56 752,51 L 765,51 L 765,199 L 692,199 Z"/>
+      <line class="L" x1="728" y1="110" x2="728" y2="190"/>
+      <polygon class="arr" points="728,103 723,116 733,116"/>
+      <text class="TX" x="728" y="162" text-anchor="middle">КАП-Л</text>
+      <text class="TXs" x="728" y="174" text-anchor="middle">1 ДЕТ.</text>
+    </g>
+
+    <!-- PATTERN: HOOD R ─────────────────────── -->
+    <g id="pat-hoodr">
+      <path class="L"
+        d="M 822,96 C 806,64 782,44 754,38 L 730,38 L 730,208 L 822,208 Z"/>
+      <path class="Lx"
+        d="M 814,104 C 800,74 778,56 752,51 L 739,51 L 739,199 L 812,199 Z"/>
+      <line class="L" x1="776" y1="110" x2="776" y2="190"/>
+      <polygon class="arr" points="776,103 771,116 781,116"/>
+      <text class="TX" x="776" y="162" text-anchor="middle">КАП-П</text>
+      <text class="TXs" x="776" y="174" text-anchor="middle">1 ДЕТ.</text>
+    </g>
+
+    <!-- PATTERN: POCKET ─────────────────────── -->
+    <g id="pat-pkt">
+      <path class="L"
+        d="M 678,248 L 678,364 C 678,375 687,383 698,383
+           L 832,383 C 843,383 852,375 852,364 L 852,248
+           C 828,241 796,237 765,237 C 734,237 704,241 678,248 Z"/>
+      <path class="Lx"
+        d="M 688,258 L 688,360 C 688,368 694,374 702,374
+           L 828,374 C 836,374 842,368 842,360 L 842,258
+           C 820,252 793,248 765,248 C 737,248 710,252 688,258 Z"/>
+      <line class="L" x1="765" y1="266" x2="765" y2="356"/>
+      <polygon class="arr" points="765,259 760,272 770,272"/>
+      <text class="TX" x="765" y="326" text-anchor="middle">КАРМАН</text>
+      <text class="TXs" x="765" y="340" text-anchor="middle">1 ДЕТ.</text>
+    </g>
+
+    <!-- RIBBINGS ─────────────────────────────── -->
+    <g id="pat-rib">
+      <rect class="L" x="885" y="80" width="218" height="52" rx="2"/>
+      <rect class="Lx" x="895" y="90" width="198" height="32" rx="1"/>
+      <text class="TX" x="994" y="112" text-anchor="middle">МАНЖЕТЫ / ПОЯС × 3</text>
+
+      <rect class="L" x="885" y="148" width="218" height="52" rx="2"/>
+      <rect class="Lx" x="895" y="158" width="198" height="32" rx="1"/>
+      <text class="TX" x="994" y="180" text-anchor="middle">ОКАНТОВКА КАП × 1</text>
+    </g>
+
+  </g>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 3 — MANNEQUIN + HOODIE (centered at 600,345)        -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <g id="G-manne" opacity="0" transform="translate(600,345)">
+
+    <!-- Construction guides -->
+    <line class="Ld" style="stroke:rgba(196,168,130,.09)" x1="-220" y1="-215" x2="220" y2="-215"/>
+    <line class="Ld" style="stroke:rgba(196,168,130,.09)" x1="-220" y1="-140" x2="220" y2="-140"/>
+    <line class="Ld" style="stroke:rgba(196,168,130,.09)" x1="-220" y1="-55"  x2="220" y2="-55"/>
+    <line class="Ld" style="stroke:rgba(196,168,130,.09)" x1="-220" y1="35"   x2="220" y2="35"/>
+    <line class="Ld" style="stroke:rgba(196,168,130,.07)" x1="0" y1="-295" x2="0" y2="220"/>
+
+    <!-- Dress form body -->
+    <ellipse class="L" cx="0" cy="-253" rx="24" ry="30"/>
+    <line class="L" x1="-13" y1="-223" x2="-13" y2="-205"/>
+    <line class="L" x1="13" y1="-223" x2="13" y2="-205"/>
+    <path class="L" d="M -13,-205 Q 0,-198 13,-205"/>
+
+    <path class="L" id="m-torso"
+      d="M -13,-205 C -54,-201 -80,-178 -87,-148
+         C -94,-118 -87,-88 -80,-62 C -73,-38 -60,-20 -56,0
+         C -63,6 -76,20 -80,38 C -89,67 -82,100 -66,120
+         C -48,142 -24,152 0,152 C 24,152 48,142 66,120
+         C 82,100 89,67 80,38 C 76,20 63,6 56,0
+         C 60,-20 73,-38 80,-62 C 87,-88 94,-118 87,-148
+         C 80,-178 54,-201 13,-205 Z"/>
+
+    <!-- Hoodie on form — oversized so wider than torso -->
+    <!-- Sleeves -->
+    <path class="L" style="stroke:rgba(196,168,130,.7)"
+      d="M -87,-148 C -115,-144 -146,-128 -164,-102
+         L -182,-72 L -185,58 C -184,78 -171,90 -152,90
+         L -130,89 C -112,88 -101,75 -99,54 L -96,-36"/>
+    <path class="L" style="stroke:rgba(196,168,130,.7)"
+      d="M 87,-148 C 115,-144 146,-128 164,-102
+         L 182,-72 L 185,58 C 184,78 171,90 152,90
+         L 130,89 C 112,88 101,75 99,54 L 96,-36"/>
+
+    <!-- Hoodie body/hem -->
+    <path class="L" style="stroke:rgba(196,168,130,.7)"
+      d="M -96,-36 L -96,148 C -96,166 -82,178 -63,181
+         L 0,183 L 63,181 C 82,178 96,166 96,148 L 96,-36"/>
+
+    <!-- Hood -->
+    <path class="L" style="stroke:rgba(196,168,130,.7)"
+      d="M -56,-205 C -74,-218 -90,-244 -85,-272
+         C -80,-300 -56,-318 -18,-320 C 22,-322 58,-304 64,-276
+         C 70,-250 54,-224 38,-205"/>
+    <path class="Lx" style="stroke:rgba(196,168,130,.28)"
+      d="M -8,-320 L -8,-205"/>
+
+    <!-- Pocket -->
+    <path class="Ld" style="stroke:rgba(196,168,130,.45)"
+      d="M -48,14 L -48,100 C -48,108 -41,114 -33,114
+         L 33,114 C 41,114 48,108 48,100 L 48,14
+         C 26,8 -26,8 -48,14 Z"/>
+
+    <!-- Ribbing lines -->
+    <line class="Ld" style="stroke:rgba(196,168,130,.38)" x1="-96" y1="160" x2="96" y2="160"/>
+    <line class="Ld" style="stroke:rgba(196,168,130,.38)" x1="-96" y1="171" x2="96" y2="171"/>
+    <!-- Cuffs L -->
+    <line class="Ld" style="stroke:rgba(196,168,130,.38)" x1="-185" y1="72" x2="-99" y2="70"/>
+    <line class="Ld" style="stroke:rgba(196,168,130,.38)" x1="-185" y1="82" x2="-99" y2="80"/>
+    <!-- Cuffs R -->
+    <line class="Ld" style="stroke:rgba(196,168,130,.38)" x1="99" y1="70" x2="185" y2="72"/>
+    <line class="Ld" style="stroke:rgba(196,168,130,.38)" x1="99" y1="80" x2="185" y2="82"/>
+
+    <!-- Stand -->
+    <line class="L" x1="0" y1="152" x2="0" y2="212"/>
+    <ellipse class="L" cx="0" cy="212" rx="58" ry="14"/>
+  </g>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 4 — SPEC TABLE  (x 720-1140, y 130-540)            -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <g id="G-spec" opacity="0">
+    <rect class="L" x="718" y="128" width="400" height="400" rx="2"/>
+    <rect x="718" y="128" width="400" height="46"
+          fill="rgba(196,168,130,.07)" rx="2"/>
+    <text class="TX" x="918" y="155" text-anchor="middle"
+          style="font-size:10px;fill:rgba(196,168,130,.7);letter-spacing:.2em">ТАБЛИЦА РАЗМЕРОВ</text>
+    <text class="TXs" x="918" y="168" text-anchor="middle">ОВЕРСАЙЗ ХУДИ · УНИСЕКС</text>
+
+    <!-- Columns -->
+    <line class="Ld" x1="800" y1="174" x2="800" y2="528"/>
+    <line class="Ld" x1="900" y1="174" x2="900" y2="528"/>
+    <line class="Ld" x1="1000" y1="174" x2="1000" y2="528"/>
+
+    <!-- Header row -->
+    <line class="Ld" x1="718" y1="174" x2="1118" y2="174"/>
+    <text class="TX" x="759" y="190" text-anchor="middle">РАЗ</text>
+    <text class="TX" x="850" y="190" text-anchor="middle">Г.ОБХ</text>
+    <text class="TX" x="950" y="190" text-anchor="middle">ДЛИНА</text>
+    <text class="TX" x="1059" y="190" text-anchor="middle">РУКАВ</text>
+    <line class="Ld" x1="718" y1="200" x2="1118" y2="200"/>
+
+    <!-- Data rows -->
+    <text class="TX" x="759" y="218" text-anchor="middle">XS</text>
+    <text class="TX" x="850" y="218" text-anchor="middle">88</text>
+    <text class="TX" x="950" y="218" text-anchor="middle">68</text>
+    <text class="TX" x="1059" y="218" text-anchor="middle">62</text>
+    <line class="Ld" x1="718" y1="226" x2="1118" y2="226"/>
+
+    <text class="TX" x="759" y="244" text-anchor="middle">S</text>
+    <text class="TX" x="850" y="244" text-anchor="middle">92</text>
+    <text class="TX" x="950" y="244" text-anchor="middle">70</text>
+    <text class="TX" x="1059" y="244" text-anchor="middle">64</text>
+    <line class="Ld" x1="718" y1="252" x2="1118" y2="252"/>
+
+    <text class="TX" x="759" y="270" text-anchor="middle">M</text>
+    <text class="TX" x="850" y="270" text-anchor="middle">96</text>
+    <text class="TX" x="950" y="270" text-anchor="middle">72</text>
+    <text class="TX" x="1059" y="270" text-anchor="middle">66</text>
+    <line class="Ld" x1="718" y1="278" x2="1118" y2="278"/>
+
+    <text class="TX" x="759" y="296" text-anchor="middle">L</text>
+    <text class="TX" x="850" y="296" text-anchor="middle">100</text>
+    <text class="TX" x="950" y="296" text-anchor="middle">74</text>
+    <text class="TX" x="1059" y="296" text-anchor="middle">68</text>
+    <line class="Ld" x1="718" y1="304" x2="1118" y2="304"/>
+
+    <text class="TX" x="759" y="322" text-anchor="middle">XL</text>
+    <text class="TX" x="850" y="322" text-anchor="middle">104</text>
+    <text class="TX" x="950" y="322" text-anchor="middle">76</text>
+    <text class="TX" x="1059" y="322" text-anchor="middle">70</text>
+    <line class="Ld" x1="718" y1="330" x2="1118" y2="330"/>
+
+    <text class="TX" x="759" y="348" text-anchor="middle">2XL</text>
+    <text class="TX" x="850" y="348" text-anchor="middle">108</text>
+    <text class="TX" x="950" y="348" text-anchor="middle">78</text>
+    <text class="TX" x="1059" y="348" text-anchor="middle">72</text>
+    <line class="Ld" x1="718" y1="356" x2="1118" y2="356"/>
+
+    <text class="TX" x="759" y="374" text-anchor="middle">3XL</text>
+    <text class="TX" x="850" y="374" text-anchor="middle">112</text>
+    <text class="TX" x="950" y="374" text-anchor="middle">80</text>
+    <text class="TX" x="1059" y="374" text-anchor="middle">74</text>
+    <line class="Ld" x1="718" y1="382" x2="1118" y2="382"/>
+
+    <text class="TXs" x="738" y="418">ТИП: ФУТЕР 360 Г/М² · ОВЕРСАЙЗ</text>
+    <text class="TXs" x="738" y="434">СОСТАВ: ПЭ 80% + ХЛ 20%</text>
+    <text class="TXs" x="738" y="450">ДЕКОР: КАРМАН-КЕНГУРУ · ТЕСЬМА · ЛЮВЕРС</text>
+    <text class="TXs" x="738" y="498" style="fill:rgba(196,168,130,.18)">ТЕХ.ПАК № ___  /  ВЕРСИЯ 1.0  /  ___</text>
+  </g>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- STAGE 5 — FILE ICONS + ENVELOPE                           -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <g id="G-files" opacity="0">
+
+    <!-- PDF file -->
+    <g id="f-pdf" transform="translate(430,400)">
+      <path class="L" d="M 0,0 L 0,96 L 66,96 L 66,25 L 41,0 Z"/>
+      <path class="L" d="M 41,0 L 41,25 L 66,25"/>
+      <text class="TX" x="33" y="64"  text-anchor="middle"
+            style="fill:rgba(196,168,130,.7);font-size:11px">PDF</text>
+      <text class="TXs" x="33" y="80" text-anchor="middle">ЛЕКАЛА</text>
+    </g>
+
+    <!-- XLS file -->
+    <g id="f-xls" transform="translate(524,400)">
+      <path class="L" d="M 0,0 L 0,96 L 66,96 L 66,25 L 41,0 Z"/>
+      <path class="L" d="M 41,0 L 41,25 L 66,25"/>
+      <line class="Ld" x1="12" y1="52" x2="54" y2="52"/>
+      <line class="Ld" x1="12" y1="63" x2="54" y2="63"/>
+      <line class="Ld" x1="12" y1="74" x2="54" y2="74"/>
+      <line class="Ld" x1="33" y1="42" x2="33" y2="84"/>
+      <text class="TXs" x="33" y="92" text-anchor="middle">СПЕЦИФИКАЦИЯ</text>
+    </g>
+
+    <!-- Render/image file -->
+    <g id="f-img" transform="translate(618,400)">
+      <path class="L" d="M 0,0 L 0,96 L 66,96 L 66,25 L 41,0 Z"/>
+      <path class="L" d="M 41,0 L 41,25 L 66,25"/>
+      <path class="Ld" d="M 10,80 L 26,52 L 38,68 L 50,54 L 60,80 Z"/>
+      <text class="TXs" x="33" y="92" text-anchor="middle">РЕНДЕР</text>
+    </g>
+
+    <!-- Envelope -->
+    <g id="f-env" opacity="0" transform="translate(460,248)">
+      <rect class="L" x="0" y="0" width="180" height="120" rx="4"/>
+      <path class="L" d="M 0,0 L 90,78 L 180,0"/>
+      <path class="Ld" d="M 0,120 L 64,64 M 180,120 L 116,64"/>
+      <text class="TX" x="90" y="105" text-anchor="middle">npchel93@gmail.com</text>
+    </g>
+
+  </g>
+
+  </svg>
+  <!-- ══════════════════════════════════════════════════════════ -->
+
+</div><!-- .hero -->
+
+<button id="replay-btn">↺ Повтор анимации</button>
+<div id="stage-label">загрузка…</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+// ════════════════════════════════════════════════════════════════
+// REFS
+// ════════════════════════════════════════════════════════════════
+const heroText = document.getElementById('hero-text');
+const heroBtn  = document.getElementById('hero-btn');
+const lbl      = document.getElementById('stage-label');
+
+const G = {
+  hoodie:   document.getElementById('G-hoodie'),
+  dims:     document.getElementById('hs-dims'),
+  patterns: document.getElementById('G-patterns'),
+  manne:    document.getElementById('G-manne'),
+  spec:     document.getElementById('G-spec'),
+  files:    document.getElementById('G-files'),
+  env:      document.getElementById('f-env'),
+};
+
+// ════════════════════════════════════════════════════════════════
+// SETUP: stroke-dasharray for draw-on effect
+// ════════════════════════════════════════════════════════════════
+function initDash(group) {
+  group.querySelectorAll('.L, .Ld, .Lx').forEach(el => {
+    try {
+      const len = el.getTotalLength ? el.getTotalLength() : 400;
+      el.style.strokeDasharray = len;
+      el.style.strokeDashoffset = len;
+    } catch(e) {}
+  });
+}
+[G.hoodie, G.patterns, G.manne, G.spec].forEach(initDash);
+
+function resetDash(group) {
+  group.querySelectorAll('.L, .Ld, .Lx').forEach(el => {
+    try { el.style.strokeDashoffset = el.style.strokeDasharray; } catch(e) {}
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+// HARD RESET
+// ════════════════════════════════════════════════════════════════
+let tl = null;
+
+function hardReset() {
+  if (tl) { tl.kill(); tl = null; }
+  gsap.set(heroText, { x:0, y:0, scale:1, opacity:1 });
+  gsap.set(heroBtn,  { x:0, y:0 });
+  Object.values(G).forEach(el => el && gsap.set(el, { opacity:0 }));
+  gsap.set(G.manne, { x:0 });
+  gsap.set('#f-pdf,#f-xls,#f-img', { x:0, y:0, opacity:1 });
+  [G.hoodie, G.patterns, G.manne, G.spec].forEach(resetDash);
+  lbl.textContent = 'готово к запуску';
+}
+
+// ════════════════════════════════════════════════════════════════
+// ANIMATION
+// ════════════════════════════════════════════════════════════════
+function run() {
+  hardReset();
+
+  // We'll only set transformOrigin for mannequin rotation
+  gsap.set(G.manne, { transformOrigin: '600px 345px' });
+
+  tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
+
+  // ── Phase 0: pause before start ──────────────────────────────
+  tl.addLabel('go', 0.5);
+
+  // ── Phase 1: text shifts → button drops ──────────────────────
+  tl.add(() => lbl.textContent = '1 · компоновка', 'go')
+  .to(heroText, { x:'26vw', y:'-14vh', scale:.72, opacity:.52, duration:.9 }, 'go')
+  .to(heroBtn,  { x:'40vw', y:'22vh', duration:.9 }, 'go');
+
+  // ── Phase 2: hoodie draws ─────────────────────────────────────
+  tl.addLabel('h', '+=.25')
+  .add(() => lbl.textContent = '2 · технический эскиз', 'h')
+  .to(G.hoodie, { opacity:1, duration:.15 }, 'h')
+  .to(G.hoodie.querySelectorAll('.L'), {
+    strokeDashoffset:0, duration:.75, stagger:.18, ease:'power1.inOut'
+  }, 'h+=.1')
+  .to(G.hoodie.querySelectorAll('.Ld'), {
+    strokeDashoffset:0, duration:.5, stagger:.09, ease:'power1.inOut'
+  }, 'h+=.55')
+  .to(G.hoodie.querySelectorAll('.Lx'), {
+    strokeDashoffset:0, duration:.55, stagger:.1, ease:'power1.inOut'
+  }, 'h+=.9')
+  .to(G.dims, { opacity:1, duration:.6 }, 'h+=1.5');
+
+  // ── Phase 3: hoodie → pattern pieces ─────────────────────────
+  tl.addLabel('p', '+=.9')
+  .add(() => lbl.textContent = '3 · расстановка лекал', 'p')
+  .to(G.hoodie, { opacity:0, duration:.4, ease:'power2.in' }, 'p')
+  .to(G.patterns, { opacity:1, duration:.2 }, 'p+=.35')
+  .to(G.patterns.querySelectorAll('.L'), {
+    strokeDashoffset:0, duration:.65, stagger:.11, ease:'power1.inOut'
+  }, 'p+=.45')
+  .to(G.patterns.querySelectorAll('.Ld,.Lx'), {
+    strokeDashoffset:0, duration:.45, stagger:.06, ease:'none'
+  }, 'p+=.85');
+
+  // ── Phase 4: patterns → mannequin ────────────────────────────
+  tl.addLabel('m', '+=1.1')
+  .add(() => lbl.textContent = '4 · сборка изделия', 'm')
+  .to(G.patterns, { opacity:0, duration:.5, ease:'power2.in' }, 'm')
+  .to(G.manne,    { opacity:1, duration:.2 }, 'm+=.45')
+  .to(G.manne.querySelectorAll('.L'), {
+    strokeDashoffset:0, duration:.75, stagger:.1, ease:'power1.inOut'
+  }, 'm+=.55')
+  .to(G.manne.querySelectorAll('.Ld'), {
+    strokeDashoffset:0, duration:.5, stagger:.05, ease:'none'
+  }, 'm+=.8');
+
+  // ── Phase 5: mannequin rotates (back → front) ─────────────────
+  tl.addLabel('r', '+=.9')
+  .add(() => lbl.textContent = '5 · просмотр со спины', 'r')
+  .to(G.manne, { scaleX:.08, duration:.35, ease:'power2.in' }, 'r')
+  .to(G.manne, { scaleX:-1,  duration:.35, ease:'power2.out' }, 'r+=.35')
+  .to(G.manne, { scaleX:-1,  duration:.5 }, 'r+=.7')  // hold back
+  .to(G.manne, { scaleX:.08, duration:.35, ease:'power2.in' }, 'r+=1.2')
+  .to(G.manne, { scaleX:1,   duration:.35, ease:'power2.out' }, 'r+=1.55');
+
+  // ── Phase 6: mannequin left + spec table draws ────────────────
+  tl.addLabel('s', '+=.45')
+  .add(() => lbl.textContent = '6 · спецификация', 's')
+  .to(G.manne, { x:-215, duration:.65 }, 's')
+  .to(G.spec,  { opacity:1, duration:.2 }, 's+=.55')
+  .to(G.spec.querySelectorAll('.L'), {
+    strokeDashoffset:0, duration:.55, stagger:.04, ease:'power1.inOut'
+  }, 's+=.65')
+  .to(G.spec.querySelectorAll('.Ld'), {
+    strokeDashoffset:0, duration:.4, stagger:.02, ease:'none'
+  }, 's+=.9');
+
+  // ── Phase 7: files appear ─────────────────────────────────────
+  tl.addLabel('f', '+=1.0')
+  .add(() => lbl.textContent = '7 · формирование пакета', 'f')
+  .to([G.manne, G.spec], { opacity:0, duration:.5, ease:'power2.in' }, 'f')
+  .to(G.files, { opacity:1, duration:.25 }, 'f+=.45')
+  .to('#f-pdf', { y:-28, duration:.4, ease:'back.out(1.5)' }, 'f+=.55')
+  .to('#f-xls', { y:-28, duration:.4, ease:'back.out(1.5)' }, 'f+=.68')
+  .to('#f-img', { y:-28, duration:.4, ease:'back.out(1.5)' }, 'f+=.81');
+
+  // ── Phase 8: envelope forms, files fly in ────────────────────
+  tl.addLabel('e', '+=.9')
+  .add(() => lbl.textContent = '8 · отправка клиенту', 'e')
+  .to(G.env, { opacity:1, duration:.5 }, 'e')
+  .to(['#f-pdf','#f-xls','#f-img'], {
+    x:100, y:40, opacity:0, duration:.55, stagger:.1, ease:'power2.in'
+  }, 'e+=.5');
+
+  // ── Phase 9: all fades, text returns ─────────────────────────
+  tl.addLabel('back', '+=.8')
+  .add(() => lbl.textContent = '9 · сброс', 'back')
+  .to(G.files,   { opacity:0, duration:.45 }, 'back')
+  .to(heroText,  { x:0, y:0, scale:1, opacity:1, duration:.75, ease:'power2.out' }, 'back+=.3')
+  .to(heroBtn,   { x:0, y:0, duration:.75, ease:'power2.out' }, 'back+=.3')
+  .add(() => { lbl.textContent = '↺ нажмите «Повтор»'; tl = null; });
+}
+
+// ════════════════════════════════════════════════════════════════
+// SCROLL / TOUCH INTERRUPT
+// ════════════════════════════════════════════════════════════════
+function interrupt() {
+  if (!tl || !tl.isActive()) return;
+  tl.kill(); tl = null;
+  gsap.to(heroText, { x:0, y:0, scale:1, opacity:1, duration:.45, ease:'power2.out' });
+  gsap.to(heroBtn,  { x:0, y:0, duration:.45, ease:'power2.out' });
+  Object.values(G).forEach(el => el && gsap.to(el, { opacity:0, duration:.3 }));
+  lbl.textContent = '↺ нажмите «Повтор»';
+}
+
+window.addEventListener('wheel',      interrupt, { passive:true });
+window.addEventListener('touchstart', interrupt, { passive:true });
+
+// ════════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════════
+document.getElementById('replay-btn').addEventListener('click', run);
+
+window.addEventListener('load', () => {
+  hardReset();
+  setTimeout(run, 700);
+});
+</script>
+</body>
+</html>

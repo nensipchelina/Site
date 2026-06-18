@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Проекты — Наталья Пчелина</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script>(function(){var t=localStorage.getItem('np-theme')||'dark';document.documentElement.dataset.theme=t;})()</script>
+<style>
+:root {
+  --accent:#C4A882; --accent-dim:rgba(196,168,130,0.15); --accent-hover:#D4B992;
+  --bg:#1A1410; --bg2:#221C17; --bg3:#2A231C;
+  --surface:rgba(255,255,255,0.04); --border:rgba(255,255,255,0.08);
+  --border-accent:rgba(196,168,130,0.3);
+  --text:#F0EAE0; --text-secondary:#A09080; --text-muted:#6B5E50;
+  --font-display:'Cormorant Garamond',serif; --font-body:'DM Sans',sans-serif;
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+  --nav-h:52px;
+}
+[data-theme="light"]{
+  --bg:#F5F0E8;--bg2:#EDE7DC;--bg3:#E5DDD0;
+  --surface:rgba(0,0,0,0.03);--border:rgba(0,0,0,0.08);--border-accent:rgba(139,100,60,0.3);
+  --text:#1A1208;--text-secondary:#6B5030;--text-muted:#9E8060;
+  --accent:#8B643C;--accent-dim:rgba(139,100,60,0.1);--accent-hover:#7A5530;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* ─── SAME NAVBAR AS MAIN ────────────────────────── */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--nav-h);
+  display:grid; grid-template-columns:auto 1fr auto;
+  align-items:center; padding:0 2.5rem;
+  backdrop-filter:blur(20px);
+  background:rgba(26,20,16,0.82);
+  border-bottom:1px solid var(--border);
+  transition:background var(--transition);
+}
+[data-theme="light"] .navbar{background:rgba(245,240,232,0.88);}
+
+.navbar-left{display:flex;gap:1.25rem;align-items:center;}
+.mobile-menu-btn{
+  display:none;background:none;border:1px solid var(--border);
+  color:var(--text-muted);width:30px;height:30px;border-radius:50%;
+  align-items:center;justify-content:center;cursor:pointer;
+  font-size:11px;flex-shrink:0;
+  transition:color var(--transition),border-color var(--transition),background var(--transition);
+}
+.mobile-menu-btn:hover,.mobile-menu-btn.open{color:var(--accent);border-color:var(--border-accent);}
+.mobile-menu-btn.open{background:var(--accent-dim);}
+.navbar-langs{display:flex;gap:1.25rem;align-items:center;}
+
+.navbar-center-wrap{display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.navbar-name{
+  font-family:var(--font-display);font-size:1.15rem;font-weight:300;
+  letter-spacing:-0.01em;color:var(--text-secondary);
+  white-space:nowrap;max-width:0;overflow:hidden;opacity:0;padding-right:0;
+  transition:max-width 0.55s cubic-bezier(0.4,0,0.2,1),opacity 0.45s,padding 0.55s;flex-shrink:0;
+}
+.navbar-name em{font-style:italic;color:var(--accent);}
+.navbar-name.visible{max-width:220px;opacity:1;padding-right:2.5rem;}
+.navbar-menu{display:flex;gap:2.5rem;align-items:center;}
+
+.navbar-icons{display:flex;gap:1.25rem;align-items:center;justify-content:flex-end;}
+
+.lang-btn{background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;padding:2px 0;border-bottom:1px solid transparent;transition:color var(--transition),border-color var(--transition);}
+.lang-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+.nav-link{font-family:var(--font-body);font-size:11px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-secondary);text-decoration:none;padding:2px 0;border-bottom:1px solid transparent;transition:color var(--transition),border-color var(--transition);}
+.nav-link:hover,.nav-link.active{color:var(--accent);border-bottom-color:var(--accent);}
+.icon-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px;transition:color var(--transition);}
+.icon-btn:hover{color:var(--accent);}
+
+/* Mobile overrides */
+@media(max-width:900px){
+  .navbar{padding:0 1rem;}
+  .navbar-menu{display:none;}
+  .mobile-menu-btn{display:flex;}
+  .navbar-langs{gap:0.75rem;}
+  .navbar-icons{gap:0.75rem;}
+  .navbar-name{max-width:unset!important;overflow:visible!important;padding-right:0!important;text-align:center;width:100%;}
+}
+
+/* ─── MOBILE DROPDOWN ────────────────────────────── */
+.mobile-nav-drop{
+  position:fixed;top:var(--nav-h);left:0;z-index:99;
+  display:flex;flex-direction:column;background:var(--bg2);
+  border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+  overflow:hidden;max-height:0;opacity:0;
+  transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;
+  width:56px;border-radius:0 0 12px 0;
+}
+.mobile-nav-drop.open{max-height:360px;opacity:1;}
+.mobile-nav-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:0.9rem 0;color:var(--text-muted);text-decoration:none;
+  font-size:9px;letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-body);
+  border-bottom:1px solid var(--border);
+  transition:color var(--transition),background var(--transition);
+  background:none;border-left:none;border-right:none;width:100%;cursor:pointer;
+}
+.mobile-nav-item:last-child{border-bottom:none;}
+.mobile-nav-item i{font-size:14px;}
+.mobile-nav-item:hover,.mobile-nav-item.active{color:var(--accent);background:var(--accent-dim);}
+
+/* ─── PORTFOLIO HERO ─────────────────────────────── */
+/* This section shows name prominently before scroll */
+.portfolio-hero{
+  padding-top:calc(var(--nav-h) + 3rem);
+  padding-bottom:2.5rem;
+  position:relative;
+  overflow:hidden;
+}
+.portfolio-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(196,168,130,0.04) 0%,transparent 70%);
+}
+.portfolio-hero .container{position:relative;}
+
+.portfolio-hero-label{
+  font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:1rem;margin-bottom:0.8rem;
+}
+.portfolio-hero-label::before{content:'';display:block;width:32px;height:1px;background:var(--accent);}
+
+.portfolio-hero-name{
+  font-family:var(--font-display);
+  font-size:clamp(3rem,7vw,6rem);
+  font-weight:300;line-height:0.9;letter-spacing:-0.02em;
+  color:var(--text);margin-bottom:1rem;
+}
+.portfolio-hero-name em{font-style:italic;color:var(--accent);}
+
+.portfolio-hero-sub{
+  font-size:12px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--text-secondary);font-weight:300;margin-bottom:1.5rem;
+}
+
+/* Order project CTA — standalone, separate from navbar */
+.portfolio-cta{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--bg);text-decoration:none;
+  background:var(--accent);padding:0.8rem 1.75rem;
+  border:none;transition:background var(--transition);margin-top:2rem;
+}
+.portfolio-cta:hover{background:var(--accent-hover);}
+.portfolio-cta i{font-size:9px;}
+
+/* ─── CONTENT AREA ───────────────────────────────── */
+.container{max-width:1200px;margin:0 auto;padding:0 2.5rem;}
+@media(max-width:768px){.container{padding:0 1.25rem;}}
+
+.content-area{padding:0 2.5rem 6rem;max-width:1200px;margin:0 auto;}
+@media(max-width:768px){.content-area{padding:0 1.25rem 4rem;}}
+
+/* ─── TAGS ROW (horizontal, centered, same width as grid) ─── */
+.tags-row{
+  display:flex;flex-wrap:wrap;gap:0.4rem;
+  margin-bottom:2rem;align-items:center;
+  padding-bottom:1.25rem;
+  border-bottom:1px solid var(--border);
+}
+.tag-filter{
+  background:none;border:1px solid var(--border);cursor:pointer;
+  font-family:var(--font-body);font-size:11px;font-weight:300;
+  letter-spacing:0.06em;color:var(--text-muted);
+  padding:0.3rem 0.75rem;
+  transition:color var(--transition),border-color var(--transition),background var(--transition);
+}
+.tag-filter::before{content:'#';color:var(--text-muted);transition:color var(--transition);}
+.tag-filter:hover{color:var(--text-secondary);border-color:var(--border);}
+.tag-filter.active{color:var(--accent);border-color:var(--border-accent);background:var(--accent-dim);}
+.tag-filter.active::before{color:var(--accent);}
+
+.tags-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1rem;
+}
+.tags-label{
+  font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:0.5rem;
+}
+.tags-label::before{content:'';display:block;width:16px;height:1px;background:var(--accent);}
+.tags-clear{
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);
+  background:none;border:none;cursor:pointer;font-family:var(--font-body);
+  transition:color var(--transition);display:none;
+}
+.tags-clear:hover{color:var(--accent);}
+.tags-clear.visible{display:block;}
+
+/* ─── PROJECTS GRID ──────────────────────────────── */
+.projects-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:2px;align-content:start;
+}
+.project-card{background:var(--bg);cursor:pointer;transition:background var(--transition);text-decoration:none;display:block;overflow:hidden;}
+.project-card:hover{background:var(--bg2);}
+.card-title{font-family:var(--font-display);font-size:1rem;font-weight:400;color:var(--text);padding:1rem 1rem 0.5rem;line-height:1.2;transition:color var(--transition);height:3.9rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.project-card:hover .card-title{color:var(--accent);}
+.card-img-wrap{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--bg3);}
+.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.15s;}
+.card-img.active{opacity:1;}
+.card-img-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg3);}
+.card-img-placeholder span{font-family:var(--font-display);font-size:3rem;font-weight:300;color:var(--border-accent);letter-spacing:0.05em;}
+.card-progress{height:2px;background:var(--border);position:relative;}
+.card-progress-fill{position:absolute;top:0;left:0;height:100%;background:var(--accent);transition:width 0.1s;}
+.card-tags{padding:0.6rem 1rem 1rem;display:flex;flex-wrap:wrap;gap:0.3rem;}
+.card-tag{font-size:10px;letter-spacing:0.06em;color:var(--text-muted);font-weight:300;}
+.card-tag::before{content:'#';}
+.card-tag.highlight{color:var(--accent);}
+.no-projects{grid-column:1/-1;padding:4rem 2rem;text-align:center;color:var(--text-muted);font-size:13px;}
+
+/* ─── MOBILE ─────────────────────────────────────── */
+@media(max-width:600px){
+  .portfolio-hero-name{font-size:clamp(2.5rem,12vw,4rem);}
+  .projects-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:400px){.projects-grid{grid-template-columns:1fr;}}
+@media(max-width:900px){
+  .portfolio-hero{padding-top:calc(var(--nav-h) + 2rem);}
+}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);}
+
+.navbar-order-btn{opacity:0;pointer-events:none;transform:translateY(-4px);transition:opacity 0.35s,transform 0.35s,background var(--transition);display:inline-flex;align-items:center;gap:.5rem;font-family:var(--font-body);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;background:var(--accent);color:var(--bg);border:none;padding:.45rem 1rem;cursor:pointer;text-decoration:none;white-space:nowrap;flex-shrink:0;margin-right:0.75rem;}
+.navbar-order-btn.visible{opacity:1;pointer-events:all;transform:translateY(0);}
+.navbar-order-btn:hover{background:var(--accent-hover);}
+@media(max-width:600px){.navbar-order-btn{display:none;}}
+
+.back-fab{position:fixed;bottom:2rem;left:2.5rem;z-index:50;background:var(--bg2);border:1px solid var(--border);color:var(--text-muted);font-family:var(--font-body);font-size:10px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;padding:.6rem 1.1rem;display:flex;align-items:center;gap:.5rem;transition:color var(--transition),border-color var(--transition),background var(--transition);}
+.back-fab:hover{color:var(--accent);border-color:var(--border-accent);background:var(--bg3);}
+.breadcrumb{display:flex;align-items:center;gap:.75rem;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.75rem;}
+.breadcrumb a{color:var(--text-muted);text-decoration:none;transition:color var(--transition);}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:var(--text-muted);}
+.breadcrumb .current{color:var(--text-secondary);}
+footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-name{font-family:var(--font-display);font-size:1rem;font-weight:300;letter-spacing:0.1em;color:var(--text-secondary);}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-link{color:var(--text-muted);font-size:13px;text-decoration:none;transition:color var(--transition);}
+.footer-link:hover{color:var(--accent);}
+.footer-copy{font-size:11px;color:var(--text-muted);letter-spacing:0.08em;}
+.footer-legal{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;}
+.footer-legal-link{color:var(--text-muted);font-size:11px;text-decoration:none;letter-spacing:.05em;transition:color var(--transition);}
+.footer-legal-link:hover{color:var(--accent);}
+.footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:.2rem;}
+@media(max-width:768px){footer{flex-direction:column;align-items:flex-start;}.footer-right{align-items:flex-start;}}
+
+</style>
+</head>
+<body>
+
+<!-- MOBILE DROPDOWN -->
+<div class="mobile-nav-drop" id="mobile-nav-drop">
+  <a href="index.html"          class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-house"></i></a>
+  <a href="services.html"       class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-layer-group"></i></a>
+  <a href="portfolio.html"      class="mobile-nav-item active" onclick="closeMobileMenu()"><i class="fa-regular fa-images"></i></a>
+  <a href="index.html#skills"   class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-star"></i></a>
+  <a href="index.html#contact"  class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-envelope"></i></a>
+</div>
+
+<!-- NAVBAR (same structure as index.html) -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-left">
+    <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">
+      <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
+    </button>
+    <div class="navbar-langs">
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    </div>
+  </div>
+  <div class="navbar-center-wrap">
+    <div class="navbar-name" id="navbar-name"></div>
+    <div class="navbar-menu">
+      <a href="index.html"         class="nav-link" data-i18n="nav_home">Главная</a>
+      <a href="services.html"      class="nav-link" data-i18n="nav_services">Услуги</a>
+      <a href="portfolio.html"     class="nav-link active" data-i18n="nav_portfolio">Портфолио</a>
+      <a href="index.html#skills"  class="nav-link" data-i18n="nav_skills">Навыки</a>
+      <a href="index.html#contact" class="nav-link" data-i18n="nav_contact">Контакт</a>
+    </div>
+  </div>
+  <div class="navbar-icons">
+    <a href="price.html" class="navbar-order-btn" id="navbar-order-btn">Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i></a>
+    <button class="icon-btn" onclick="downloadVCard()"><i class="fa-regular fa-address-card"></i></button>
+    <button class="icon-btn" onclick="window.location.href='price.html?lang='+currentLang"><i class="fa-regular fa-file-lines"></i></button>
+    <button class="icon-btn" onclick="downloadResume()"><i class="fa-regular fa-file-pdf"></i></button>
+        <a href="process.html" class="icon-btn" title="Как мы работаем"><i class="fa-regular fa-circle-question"></i></a>
+    <a href="privacy.html" class="icon-btn" title="Конфиденциальность"><i class="fa-solid fa-shield-halved"></i></a>
+    <button class="icon-btn" onclick="toggleTheme()"><i class="fa-regular fa-sun" id="theme-icon"></i></button>
+  </div>
+</nav>
+
+<!-- PORTFOLIO HERO: visible on load, name flies into navbar on scroll -->
+<div class="portfolio-hero" id="portfolio-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html" data-i18n="bc_home">Главная</a>
+      <span>—</span>
+      <span class="current" data-i18n="bc_current">Портфолио</span>
+    </div>
+    <h1 class="portfolio-hero-name" id="portfolio-hero-name">Наталья<br><em>Пчелина</em></h1>
+    <p class="portfolio-hero-sub" id="count-label"></p>
+    <p id="portfolio-disclaimer" style="font-size:11px;color:var(--text-muted);font-weight:300;margin-bottom:1.5rem;max-width:520px;line-height:1.6;letter-spacing:0.02em;"></p>
+    <!-- Order project CTA — standalone -->
+    <a href="price.html" class="portfolio-cta" id="portfolio-cta-btn">
+      <i class="fa-regular fa-pen-to-square"></i>
+      <span data-i18n="order_project">Заказать проект</span>
+    </a>
+  </div>
+</div>
+
+<!-- CONTENT: tags + grid (same container width) -->
+<div class="content-area">
+  <!-- Tags row -->
+  <div class="tags-header">
+    <div class="tags-label" data-i18n="filter_label">Фильтр</div>
+    <button class="tags-clear" id="tags-clear" onclick="clearTags()" data-i18n="tags_clear">× Сбросить</button>
+  </div>
+  <div class="tags-row" id="tags-list"></div>
+
+  <!-- Projects grid -->
+  <div class="projects-grid" id="projects-grid"></div>
+</div>
+
+<footer>
+  <div class="footer-legal">
+    <a href="privacy.html" class="footer-legal-link">Политика конфиденциальности</a>
+    <a href="process.html" class="footer-legal-link">Как мы работаем</a>
+  </div>
+  <div class="footer-links">
+    <a href="https://t.me/npchel" class="footer-link" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+    <a href="https://wa.me/79036040666" class="footer-link" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="https://www.behance.net/natalyapchelina" class="footer-link" target="_blank"><i class="fa-brands fa-behance"></i></a>
+    <a href="https://ru.pinterest.com/NPchelina" class="footer-link" target="_blank"><i class="fa-brands fa-pinterest"></i></a>
+    <a href="https://www.linkedin.com/in/npchelina" class="footer-link" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+    <a href="https://www.avito.ru/brands/9582581b86f01263db98c276fccb332b" class="footer-link" target="_blank"><i class="fa-solid fa-a"></i></a>
+  </div>
+  <div class="footer-right">
+    <span class="footer-name">Наталья Пчелина © 2025</span>
+    <span class="footer-copy">Все права защищены</span>
+  </div>
+</footer>
+
+<script src="projects.js"></script>
+<script>
+const i18n={
+  ru:{bc_home:'Главная',bc_current:'Портфолио',nav_home:'Главная',nav_services:'Услуги',nav_portfolio:'Портфолио',nav_skills:'Навыки',nav_contact:'Контакт',hero_label:'Портфолио',order_project:'Заказать проект',filter_label:'Фильтр',tags_clear:'× Сбросить',no_projects:'Проектов с такими фильтрами нет',count:n=>`${n} проект${n===1?'':n<5?'а':'ов'}`,nav_name:'Наталья <em>Пчелина</em>',hero_name:'Наталья<br><em>Пчелина</em>',disclaimer:'В портфолио представлены только проекты, по которым проводилась съёмка и получено разрешение на публикацию.'},
+  en:{bc_home:'Home',bc_current:'Portfolio',nav_home:'Home',nav_services:'Services',nav_portfolio:'Portfolio',nav_skills:'Skills',nav_contact:'Contact',hero_label:'Portfolio',order_project:'Start a project',filter_label:'Filter',tags_clear:'× Clear',no_projects:'No projects with these filters',count:n=>`${n} project${n===1?'':'s'}`,nav_name:'Natalya <em>Pchelina</em>',hero_name:'Natalya<br><em>Pchelina</em>',disclaimer:'Only projects with a photoshoot and publication permission are shown. Full list available on request.'},
+  zh:{bc_home:'首页',bc_current:'作品集',nav_home:'首页',nav_services:'服务',nav_portfolio:'作品集',nav_skills:'技能',nav_contact:'联系',hero_label:'作品集',order_project:'开始项目',filter_label:'筛选',tags_clear:'× 清除',no_projects:'没有符合条件的项目',count:n=>`${n} 个项目`,nav_name:'娜塔利亚 <em>普切利娜</em>',hero_name:'娜塔利亚<br><em>普切利娜</em>',disclaimer:'作品集中仅展示已拍摄照片且获得发布许可的项目。'},
+};
+let currentLang='ru';
+let activeTags=new Set();
+
+function setLang(lang){
+  currentLang=lang;
+  localStorage.setItem('np-lang',lang);
+  document.querySelectorAll('.lang-btn').forEach(b=>{b.classList.toggle('active',b.textContent.toLowerCase()===lang||(lang==='zh'&&b.textContent==='中文'));});
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(i18n[lang][k]&&typeof i18n[lang][k]==='string')el.textContent=i18n[lang][k];});
+  // Update hero name
+  const hn=document.getElementById('portfolio-hero-name');
+  if(hn) hn.innerHTML=i18n[lang].hero_name;
+  // Update navbar name
+  const nn=document.getElementById('navbar-name');
+  if(nn) nn.innerHTML=i18n[lang].nav_name;
+  // Update CTA link
+  const cta=document.getElementById('portfolio-cta-btn');
+  if(cta) cta.href='price.html?lang='+lang;
+  // Disclaimer
+  const disc=document.getElementById('portfolio-disclaimer');
+  if(disc) disc.textContent=i18n[lang].disclaimer;
+  renderTags();
+  renderGrid();
+  const ft={ru:{privacy:'Политика конфиденциальности',process:'Как мы работаем'},en:{privacy:'Privacy Policy',process:'How We Work'},zh:{privacy:'隐私政策',process:'工作流程'}};
+  document.querySelectorAll('.footer-legal-link[href="privacy.html"]').forEach(function(el){el.textContent=(ft[lang]||ft.ru).privacy;});
+  document.querySelectorAll('.footer-legal-link[href="process.html"]').forEach(function(el){el.textContent=(ft[lang]||ft.ru).process;});
+}
+
+// Tags helpers
+function getAllTagsForLang(lang){const set=new Set();PROJECTS.forEach(p=>getTagsForLang(p,lang).forEach(t=>set.add(t)));return[...set].sort();}
+function getTagsForLang(p,lang){if(lang==='en'&&p.tags_en)return p.tags_en;if(lang==='zh'&&p.tags_zh)return p.tags_zh;return p.tags||[];}
+
+function renderTags(){
+  const allTags=getAllTagsForLang(currentLang);
+  document.getElementById('tags-list').innerHTML=allTags.map(tag=>`<button class="tag-filter ${activeTags.has(tag)?'active':''}" onclick="toggleTag('${tag}')">${tag}</button>`).join('');
+}
+function toggleTag(tag){
+  if(activeTags.has(tag))activeTags.delete(tag);else activeTags.add(tag);
+  document.getElementById('tags-clear').classList.toggle('visible',activeTags.size>0);
+  renderTags();renderGrid();
+}
+function clearTags(){
+  activeTags.clear();
+  document.getElementById('tags-clear').classList.remove('visible');
+  renderTags();renderGrid();
+}
+
+function renderGrid(){
+  const grid=document.getElementById('projects-grid');
+  const lang=currentLang;
+  let filtered=PROJECTS;
+  if(activeTags.size>0) filtered=PROJECTS.filter(p=>{const ptags=getTagsForLang(p,lang);return[...activeTags].every(t=>ptags.includes(t));});
+  const cl=document.getElementById('count-label');
+  if(cl) cl.textContent=i18n[lang].count(filtered.length);
+  if(filtered.length===0){grid.innerHTML=`<div class="no-projects">${i18n[lang].no_projects}</div>`;return;}
+  grid.innerHTML=filtered.map(p=>buildCard(p,lang)).join('');
+  grid.querySelectorAll('.project-card').forEach(card=>{
+    const imgs=card.querySelectorAll('.card-img');
+    const fill=card.querySelector('.card-progress-fill');
+    const imgWrap=card.querySelector('.card-img-wrap');
+    if(!imgs.length) return;
+    let ci=0;
+    function showImg(idx){imgs.forEach((img,i)=>img.classList.toggle('active',i===idx));if(fill)fill.style.width=`${((idx+1)/imgs.length)*100}%`;}
+    showImg(0);
+    imgWrap.addEventListener('mousemove',e=>{const rect=imgWrap.getBoundingClientRect();const x=e.clientX-rect.left;const idx=Math.max(0,Math.min(imgs.length-1,Math.floor(x/rect.width*imgs.length)));if(idx!==ci){ci=idx;showImg(ci);}});
+    imgWrap.addEventListener('mouseleave',()=>showImg(0));
+    imgWrap.addEventListener('touchmove',e=>{e.preventDefault();const rect=imgWrap.getBoundingClientRect();const x=e.touches[0].clientX-rect.left;const idx=Math.max(0,Math.min(imgs.length-1,Math.floor(x/rect.width*imgs.length)));if(idx!==ci){ci=idx;showImg(ci);}},{passive:false});
+  });
+}
+
+function buildCard(p,lang){
+  const title=p[lang]?.title||p.ru.title;
+  const tags=getTagsForLang(p,lang);
+  const imgs=p.photos.map((src,i)=>`<img class="card-img${i===0?' active':''}" src="${src}" alt="${title} ${i+1}" loading="lazy">`).join('');
+  const tagHtml=tags.slice(0,4).map(t=>`<span class="card-tag ${activeTags.has(t)?'highlight':''}">${t}</span>`).join('');
+  return `<a class="project-card" href="project.html?id=${p.id}" data-id="${p.id}">
+    <div class="card-title">${title}</div>
+    <div class="card-img-wrap">${imgs||`<div class="card-img-placeholder"><span>${title.charAt(0)}</span></div>`}</div>
+    <div class="card-progress"><div class="card-progress-fill" style="width:${p.photos.length>0?Math.round(100/p.photos.length):100}%"></div></div>
+    <div class="card-tags">${tagHtml}</div>
+  </a>`;
+}
+
+function downloadResume(){window.open('resume-'+currentLang+'.pdf','_blank');}
+
+// ─── THEME ─────────────────────────────────────────
+function toggleTheme(){
+  const html=document.documentElement;const isDark=html.dataset.theme==='dark';
+  const next=isDark?'light':'dark';html.dataset.theme=next;
+  localStorage.setItem('np-theme',next);
+  document.getElementById('theme-icon').className=isDark?'fa-regular fa-moon':'fa-regular fa-sun';
+}
+function applyThemeIcon(){const isDark=document.documentElement.dataset.theme==='dark';const icon=document.getElementById('theme-icon');if(icon)icon.className=isDark?'fa-regular fa-sun':'fa-regular fa-moon';}
+
+// ─── MOBILE MENU ───────────────────────────────────
+function toggleMobileMenu(){
+  const drop=document.getElementById('mobile-nav-drop');const btn=document.getElementById('mobile-menu-btn');const icon=document.getElementById('mobile-menu-icon');
+  const isOpen=drop.classList.toggle('open');btn.classList.toggle('open',isOpen);icon.className=isOpen?'fa-solid fa-xmark':'fa-solid fa-bars';
+}
+function closeMobileMenu(){document.getElementById('mobile-nav-drop').classList.remove('open');document.getElementById('mobile-menu-btn').classList.remove('open');document.getElementById('mobile-menu-icon').className='fa-solid fa-bars';}
+document.addEventListener('click',e=>{const drop=document.getElementById('mobile-nav-drop');const btn=document.getElementById('mobile-menu-btn');if(drop&&drop.classList.contains('open')&&!drop.contains(e.target)&&!btn.contains(e.target))closeMobileMenu();});
+
+// ─── VCARD ─────────────────────────────────────────
+function downloadVCard(){
+  const lang=currentLang;const cfg={ru:{fn:'Наталья Пчелина',n:'Пчелина;Наталья;;;',title:'Дизайнер-конструктор'},en:{fn:'Natalya Pchelina',n:'Pchelina;Natalya;;;',title:'Fashion Designer & Pattern Maker'},zh:{fn:'娜塔利亚·普切利娜',n:'普切利娜;娜塔利亚;;;',title:'时装设计师 & 制版师'}};
+  const c=cfg[lang];
+  const vcard=['BEGIN:VCARD','VERSION:3.0',`FN:${c.fn}`,`N:${c.n}`,`TITLE:${c.title}`,'TEL;TYPE=CELL:+79036040666','EMAIL;TYPE=WORK:npchel93@gmail.com','URL:https://npchelina.ru','X-SOCIALPROFILE;TYPE=telegram:https://t.me/npchel','END:VCARD'].join('\n');
+  const blob=new Blob([vcard],{type:'text/vcard'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='NPchelina.vcf';a.click();
+}
+
+// ─── SCROLL: name into navbar ──────────────────────
+window.addEventListener('scroll',()=>{
+  const heroNameEl=document.getElementById('portfolio-hero-name');
+  const navName=document.getElementById('navbar-name');
+  if(heroNameEl&&navName){
+    const rect=heroNameEl.getBoundingClientRect();
+    navName.classList.toggle('visible',rect.bottom<70);
+  }
+  const heroBtn=document.getElementById('portfolio-cta-btn');const navBtn=document.getElementById('navbar-order-btn');if(heroBtn&&navBtn){navBtn.classList.toggle('visible',heroBtn.getBoundingClientRect().bottom<0);}
+});
+
+// ─── URL PARAMS ────────────────────────────────────
+function initFromURL(){
+  const params=new URLSearchParams(location.search);
+  const tag=params.get('tag');
+  if(tag){activeTags.add(tag);document.getElementById('tags-clear').classList.add('visible');}
+}
+
+// ─── INIT ──────────────────────────────────────────
+const savedLang=localStorage.getItem('np-lang')||'ru';
+applyThemeIcon();
+initFromURL();
+setLang(savedLang);
+</script>
+</body>
+</html>

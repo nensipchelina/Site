@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Наталья Пчелина — Дизайнер-конструктор</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script>(function(){var t=localStorage.getItem('np-theme')||'dark';document.documentElement.dataset.theme=t;})()</script>
+<style>
+:root {
+  --accent: #C4A882;
+  --accent-dim: rgba(196,168,130,0.15);
+  --accent-hover: #D4B992;
+  --bg: #1A1410; --bg2: #221C17; --bg3: #2A231C;
+  --surface: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08);
+  --border-accent: rgba(196,168,130,0.3);
+  --text: #F0EAE0;
+  --text-secondary: #A09080;
+  --text-muted: #6B5E50;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+  --nav-h: 52px;
+}
+[data-theme="light"] {
+  --bg:#F5F0E8; --bg2:#EDE7DC; --bg3:#E5DDD0;
+  --surface:rgba(0,0,0,0.03); --border:rgba(0,0,0,0.08);
+  --border-accent:rgba(139,100,60,0.3);
+  --text:#1A1208; --text-secondary:#6B5030; --text-muted:#9E8060;
+  --accent:#8B643C; --accent-dim:rgba(139,100,60,0.1); --accent-hover:#7A5530;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;transition:background var(--transition),color var(--transition);overflow-x:hidden;}
+
+/* ─── NAVBAR ─────────────────────────────────────── */
+.navbar {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  height:var(--nav-h);
+  display:grid;
+  grid-template-columns: auto 1fr auto; /* left | center | icons */
+  align-items:center;
+  padding:0 2.5rem;
+  transition:backdrop-filter 0.4s, background 0.4s;
+}
+.navbar.scrolled {
+  backdrop-filter:blur(20px);
+  background:rgba(26,20,16,0.82);
+  border-bottom:1px solid var(--border);
+}
+[data-theme="light"] .navbar.scrolled{background:rgba(245,240,232,0.88);}
+
+/* Left: hamburger + langs */
+.navbar-left{display:flex;gap:1.25rem;align-items:center;}
+.mobile-menu-btn{
+  display:none; background:none; border:1px solid var(--border);
+  color:var(--text-muted); width:30px; height:30px; border-radius:50%;
+  align-items:center; justify-content:center; cursor:pointer;
+  font-size:11px; flex-shrink:0;
+  transition:color var(--transition),border-color var(--transition),background var(--transition);
+}
+.mobile-menu-btn:hover,.mobile-menu-btn.open{color:var(--accent);border-color:var(--border-accent);}
+.mobile-menu-btn.open{background:var(--accent-dim);}
+.navbar-langs{display:flex;gap:1.25rem;align-items:center;}
+
+/* Center: name (slides in) + menu */
+.navbar-center-wrap{
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.navbar-name{
+  font-family:var(--font-display); font-size:1.15rem; font-weight:300;
+  letter-spacing:-0.01em; color:var(--text-secondary);
+  white-space:nowrap;
+  max-width:0; overflow:hidden; opacity:0;
+  padding-right:0;
+  transition:max-width 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.45s, padding 0.55s;
+  flex-shrink:0;
+}
+.navbar-name em{font-style:italic;color:var(--accent);}
+.navbar-name.visible{
+  max-width:220px; opacity:1;
+  padding-right:2.5rem;
+  border-right:1px solid var(--border);
+  margin-right:2.5rem; /* space before menu */
+  /* border-right handled via padding trick below */
+}
+/* Separator between name and menu */
+.navbar-name-sep{
+  display:none; width:1px; height:16px; background:var(--border);
+  margin:0 2.5rem; flex-shrink:0; opacity:0;
+  transition:opacity 0.4s;
+}
+.navbar-name-sep.visible{display:block;opacity:1;}
+
+.navbar-menu{display:flex;gap:2.5rem;align-items:center;}
+
+/* Right: icons */
+.navbar-icons{display:flex;gap:1.25rem;align-items:center;justify-content:flex-end;}
+
+/* shared button styles */
+.lang-btn{
+  background:none;border:none; font-family:var(--font-body);font-size:10px;font-weight:400;
+  letter-spacing:0.14em;text-transform:uppercase; color:var(--text-muted);cursor:pointer;
+  padding:2px 0; border-bottom:1px solid transparent;
+  transition:color var(--transition),border-color var(--transition);
+}
+.lang-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+.lang-btn:hover{color:var(--text-secondary);}
+
+.nav-link{
+  font-family:var(--font-body);font-size:11px;font-weight:400;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text-secondary);text-decoration:none;
+  padding:2px 0;border-bottom:1px solid transparent;
+  transition:color var(--transition),border-color var(--transition);
+}
+.nav-link:hover,.nav-link.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+.icon-btn{
+  background:none;border:none;cursor:pointer;color:var(--text-muted);
+  font-size:13px;padding:4px;transition:color var(--transition);position:relative;
+}
+.icon-btn:hover{color:var(--accent);}
+.icon-btn .tooltip{
+  position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);
+  background:var(--bg3);color:var(--text-secondary);font-size:10px;
+  letter-spacing:0.08em;white-space:nowrap;padding:3px 8px;
+  border:1px solid var(--border);opacity:0;pointer-events:none;transition:opacity 0.2s;
+}
+.icon-btn:hover .tooltip{opacity:1;}
+
+/* ─── MOBILE DROPDOWN ────────────────────────────── */
+.mobile-nav-drop{
+  position:fixed;top:var(--nav-h);left:0;z-index:99;
+  display:flex;flex-direction:column;background:var(--bg2);
+  border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+  overflow:hidden;max-height:0;opacity:0;
+  transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;
+  width:56px;border-radius:0 0 12px 0;
+}
+.mobile-nav-drop.open{max-height:360px;opacity:1;}
+.mobile-nav-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:0.9rem 0;color:var(--text-muted);text-decoration:none;
+  font-size:9px;letter-spacing:0.1em;text-transform:uppercase;
+  font-family:var(--font-body);border-bottom:1px solid var(--border);
+  transition:color var(--transition),background var(--transition);
+  cursor:pointer;background:none;border-left:none;border-right:none;width:100%;
+}
+.mobile-nav-item:last-child{border-bottom:none;}
+.mobile-nav-item i{font-size:14px;}
+.mobile-nav-item:hover,.mobile-nav-item.active{color:var(--accent);background:var(--accent-dim);}
+
+/* ─── MOBILE OVERRIDES ───────────────────────────── */
+@media(max-width:900px){
+  .navbar{padding:0 1rem;}
+  .navbar-menu{display:none;}
+  .mobile-menu-btn{display:flex;}
+  .navbar-langs{gap:0.75rem;}
+  .navbar-icons{gap:0.75rem;}
+  .icon-btn .tooltip{display:none;}
+  /* On mobile, name goes full width in center col, shown by opacity only */
+  .navbar-name{
+    max-width:unset !important; overflow:visible !important;
+    padding-right:0 !important; margin-right:0 !important;
+    border-right:none !important; text-align:center;
+    width:100%;
+  }
+  .navbar-name-sep{display:none !important;}
+}
+@media(max-width:500px){
+  .navbar-icons .icon-btn:nth-child(3){display:none;}
+}
+
+/* ─── CONTENT ────────────────────────────────────── */
+.container{max-width:1200px;margin:0 auto;padding:0 2.5rem;}
+@media(max-width:768px){.container{padding:0 1.25rem;}}
+
+/* ─── HERO ───────────────────────────────────────── */
+.hero{
+  min-height:100vh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:calc(var(--nav-h) + 2rem) 0 4rem;
+  position:relative; overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 75% 40%,rgba(196,168,130,0.06) 0%,transparent 70%),
+             radial-gradient(ellipse 40% 60% at 20% 70%,rgba(196,168,130,0.04) 0%,transparent 60%);
+}
+.hero-content{position:relative;max-width:900px;z-index:1;}
+
+/* ─── MANNEQUIN ─────────────────────────────────── */
+.hero-mannequin{
+  position:absolute;
+  left:44%;
+  top:50%;
+  transform:translateY(-45%);
+  height:min(85vh,660px);
+  width:auto;
+  color:var(--accent);
+  opacity:0.13;
+  pointer-events:none;
+  z-index:0;
+  overflow:visible;
+}
+[data-theme="light"] .hero-mannequin{opacity:0.1;}
+@media(max-width:900px){.hero-mannequin{left:36%;opacity:0.09;height:min(70vh,520px);}}
+@media(max-width:600px){.hero-mannequin{display:none;}}
+.hero-tag{
+  font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);
+  margin-bottom:0.8rem;display:flex;align-items:center;gap:1rem;
+}
+.hero-tag::before{content:'';display:block;width:40px;height:1px;background:var(--accent);}
+.hero-name{
+  font-family:var(--font-display);font-size:clamp(4rem,9vw,9rem);
+  font-weight:300;line-height:0.9;letter-spacing:-0.02em;color:var(--text);
+  margin-bottom:0.75rem;
+}
+.hero-name em{font-style:italic;color:var(--accent);}
+.hero-sub{font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);font-weight:300;}
+@media(max-width:768px){
+  .hero{padding:calc(var(--nav-h) + 1.5rem) 0 3rem;}
+  .hero-name{font-size:clamp(3rem,14vw,5rem);}
+}
+
+/* ─── SECTION BASE ───────────────────────────────── */
+section{padding:7rem 0;position:relative;}
+@media(max-width:768px){section{padding:5rem 0;}}
+
+.section-label{
+  font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);
+  margin-bottom:3rem;display:flex;align-items:center;gap:1rem;
+}
+.section-label::before{content:'';display:block;width:24px;height:1px;background:var(--accent);}
+
+/* ─── SERVICES PREVIEW (4 cards in grid) ─────────── */
+#services{background:var(--bg);}
+.services-grid-4{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+}
+@media(max-width:900px){.services-grid-4{grid-template-columns:1fr 1fr;}}
+@media(max-width:500px){.services-grid-4{grid-template-columns:1fr;}}
+
+.service-card{
+  background:var(--bg);padding:2rem 1.75rem;position:relative;
+  cursor:pointer;overflow:hidden;transition:background var(--transition);
+}
+.service-card::before{
+  content:'';position:absolute;bottom:0;left:0;width:0;height:1px;
+  background:var(--accent);transition:width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.service-card:hover{background:var(--bg2);}
+.service-card:hover::before{width:100%;}
+.service-num{font-family:var(--font-display);font-size:11px;color:var(--text-muted);letter-spacing:0.1em;margin-bottom:1.25rem;}
+.service-name{
+  font-family:var(--font-display);font-size:1.35rem;font-weight:400;color:var(--text);
+  line-height:1.2;margin-bottom:0.75rem;transition:color var(--transition);
+}
+.service-card:hover .service-name{color:var(--accent);}
+.service-desc{font-size:12px;color:var(--text-muted);line-height:1.6;font-weight:300;margin-bottom:1.5rem;}
+.service-more{
+  font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:0.5rem;background:none;border:none;
+  cursor:pointer;padding:0;font-family:var(--font-body);opacity:0;transition:opacity var(--transition);
+}
+.service-card:hover .service-more{opacity:1;}
+.service-more i{transition:transform var(--transition);}
+.service-more:hover i{transform:translateX(4px);}
+
+/* All services link */
+.all-services-link{
+  display:inline-flex;align-items:center;gap:.75rem;margin-top:2rem;
+  font-family:var(--font-body);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--accent);text-decoration:none;
+  border-bottom:1px solid var(--border-accent);padding-bottom:.25rem;
+  transition:color var(--transition),border-color var(--transition);
+}
+.all-services-link:hover{color:var(--accent-hover);border-bottom-color:var(--accent);}
+
+/* ─── SERVICE MODAL ──────────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(10,7,4,0.85);z-index:200;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 0.4s;backdrop-filter:blur(4px);
+}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-panel{
+  background:var(--bg2);border:1px solid var(--border);
+  width:min(560px,95vw);max-height:82vh;overflow-y:auto;padding:4rem 3rem 3rem;
+  transform:translateY(16px);transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);position:relative;
+}
+.modal-overlay.open .modal-panel{transform:translateY(0);}
+.modal-num{display:none;}
+.example-btn{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-body);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--border-accent);padding-bottom:2px;transition:color var(--transition),border-color var(--transition);}
+.example-btn i{font-size:14px;}
+.modal-close{
+  position:absolute;top:1.5rem;right:1.5rem;background:none;
+  border:1px solid var(--border);color:var(--text-muted);cursor:pointer;
+  font-size:14px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+  transition:color var(--transition),border-color var(--transition);
+}
+.modal-close:hover{color:var(--accent);border-color:var(--border-accent);}
+.modal-num{font-family:var(--font-display);font-size:11px;color:var(--accent);letter-spacing:0.15em;margin-bottom:0.75rem;}
+.modal-title{font-family:var(--font-display);font-size:2.5rem;font-weight:300;line-height:1.1;margin-bottom:2rem;color:var(--text);}
+.modal-section{margin-bottom:2rem;}
+.modal-section h4{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;}
+.modal-section p,.modal-section li{font-size:13px;color:var(--text-secondary);line-height:1.7;font-weight:300;}
+.modal-section ul{list-style:none;padding:0;}
+.modal-section li{padding:0.4rem 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:0.75rem;}
+.modal-section li::before{content:'—';color:var(--accent);flex-shrink:0;font-size:11px;margin-top:2px;}
+.modal-benefit{background:var(--accent-dim);border:1px solid var(--border-accent);padding:1rem 1.25rem;margin-top:1.5rem;}
+.modal-benefit p{font-size:12px;color:var(--accent) !important;line-height:1.6;}
+.modal-cta{margin-top:2.5rem;display:flex;gap:1rem;}
+.btn-primary{
+  font-family:var(--font-body);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  background:var(--accent);color:var(--bg);border:none;padding:0.75rem 1.5rem;
+  cursor:pointer;transition:background var(--transition);font-weight:500;
+}
+.btn-primary:hover{background:var(--accent-hover);}
+.btn-ghost{
+  font-family:var(--font-body);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  background:none;color:var(--text-secondary);border:1px solid var(--border);
+  padding:0.75rem 1.5rem;cursor:pointer;transition:color var(--transition),border-color var(--transition);font-weight:400;
+  text-decoration:none;display:inline-flex;align-items:center;
+}
+.btn-ghost:hover{color:var(--text);border-color:var(--text-secondary);}
+
+/* ─── SKILLS ─────────────────────────────────────── */
+#skills{background:var(--bg2);}
+.skills-split{display:grid;grid-template-columns:1fr 1fr;gap:5rem;}
+@media(max-width:768px){.skills-split{grid-template-columns:1fr;gap:3rem;}}
+.skills-col h3{font-family:var(--font-display);font-size:1.5rem;font-weight:300;margin-bottom:2rem;color:var(--text);}
+.skill-item{border-bottom:1px solid var(--border);padding:0.6rem 0;display:flex;justify-content:space-between;align-items:center;}
+.skill-name{font-size:13px;color:var(--text-secondary);font-weight:300;}
+.skill-tag{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);padding:2px 8px;border:1px solid var(--border-accent);}
+.exp-block{border-left:1px solid var(--border-accent);padding:0 0 2rem 1.5rem;margin-bottom:1.5rem;position:relative;}
+.exp-block::before{content:'';position:absolute;top:0;left:-4px;width:7px;height:7px;border-radius:50%;background:var(--accent);}
+.exp-year{font-size:10px;letter-spacing:0.15em;color:var(--accent);text-transform:uppercase;margin-bottom:0.4rem;}
+.exp-title{font-family:var(--font-display);font-size:1.1rem;font-weight:400;color:var(--text);margin-bottom:0.3rem;}
+.exp-desc{font-size:12px;color:var(--text-muted);font-weight:300;line-height:1.5;}
+
+/* ─── BRANDS TICKER ──────────────────────────────── */
+.brands-section{
+  padding:3rem 0;background:var(--bg);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;
+}
+.brands-track{display:flex;gap:4rem;animation:ticker 20s linear infinite;width:max-content;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.brand-logo{opacity:0.25;font-family:var(--font-display);font-size:1rem;font-weight:300;letter-spacing:0.15em;text-transform:uppercase;color:var(--text);white-space:nowrap;transition:opacity var(--transition);filter:grayscale(1);}
+.brand-logo img{height:28px;width:auto;object-fit:contain;filter:grayscale(1) brightness(2);opacity:0.3;transition:opacity var(--transition);}
+[data-theme="light"] .brand-logo img{filter:grayscale(1) brightness(0);opacity:0.25;}
+.brands-track:hover{animation-play-state:paused;}
+.brand-logo:hover img,.brand-logo:hover{opacity:0.7;}
+
+/* ─── ORDER BUTTON (hero → navbar) ──────────────── */
+.hero-order-btn {
+  display:inline-flex; align-items:center; gap:0.6rem;
+  margin-top:2rem;
+  font-family:var(--font-body); font-size:11px; font-weight:500;
+  letter-spacing:0.14em; text-transform:uppercase;
+  background:var(--accent); color:var(--bg);
+  border:none; padding:0.8rem 1.75rem;
+  cursor:pointer; text-decoration:none;
+  transition:background var(--transition), opacity var(--transition), transform var(--transition);
+}
+.hero-order-btn:hover { background:var(--accent-hover); }
+
+/* Navbar order button — hidden until hero btn scrolls away */
+.navbar-order-btn {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  font-family:var(--font-body); font-size:10px; font-weight:500;
+  letter-spacing:0.12em; text-transform:uppercase;
+  background:var(--accent); color:var(--bg);
+  border:none; padding:0.45rem 1rem;
+  cursor:pointer; text-decoration:none;
+  white-space:nowrap; flex-shrink:0;
+  opacity:0; pointer-events:none;
+  transform:translateY(-4px);
+  transition:opacity 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1), background var(--transition);
+  margin-right:0.75rem;
+}
+.navbar-order-btn.visible { opacity:1; pointer-events:all; transform:translateY(0); }
+.navbar-order-btn:hover { background:var(--accent-hover); }
+@media(max-width:600px) { .navbar-order-btn { display:none; } }
+
+/* ─── CONTACT ORDER CTA (above form) ────────────── */
+.contact-order-block {
+  margin-bottom:1.5rem;
+  padding:1.25rem 1.5rem;
+  background:var(--accent-dim);
+  border:1px solid var(--border-accent);
+  display:flex; flex-direction:column; gap:0.75rem;
+}
+.contact-order-block-title {
+  font-size:10px; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--accent); font-weight:400;
+}
+.contact-order-link {
+  display:inline-flex; align-items:center; gap:0.6rem;
+  font-family:var(--font-body); font-size:11px; font-weight:500;
+  letter-spacing:0.12em; text-transform:uppercase;
+  background:var(--accent); color:var(--bg);
+  border:none; padding:0.75rem 1.5rem;
+  cursor:pointer; text-decoration:none; align-self:flex-start;
+  transition:background var(--transition);
+}
+.contact-order-link:hover { background:var(--accent-hover); }
+.contact-form-purpose {
+  font-size:11px; color:var(--text-muted); letter-spacing:0.04em;
+  line-height:1.5; margin-bottom:1.25rem;
+  padding-bottom:1.25rem; border-bottom:1px solid var(--border);
+}
+
+/* ─── CONTACT ────────────────────────────────────── */
+#contact{background:var(--bg2);scroll-margin-top:var(--nav-h);}
+@media(max-width:768px){#contact .container>div{grid-template-columns:1fr !important;}}
+.contact-left h2{font-family:var(--font-display);font-size:clamp(2rem,5vw,4rem);font-weight:300;line-height:1;color:var(--text);margin-bottom:1.5rem;}
+.social-links{display:flex;flex-direction:column;gap:0.5rem;margin-top:2rem;}
+.social-link{display:flex;align-items:center;gap:1rem;text-decoration:none;color:var(--text-muted);font-size:12px;letter-spacing:0.08em;padding:0.5rem 0;border-bottom:1px solid transparent;transition:color var(--transition),border-color var(--transition);}
+.social-link:hover{color:var(--accent);border-bottom-color:var(--border-accent);}
+.social-link i{width:16px;text-align:center;font-size:13px;}
+.contact-form{display:flex;flex-direction:column;gap:1rem;}
+.form-group{position:relative;}
+.form-input{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:13px;font-weight:300;padding:0.85rem 1rem;outline:none;transition:border-color var(--transition);appearance:none;border-radius:0;}
+.form-input::placeholder{color:var(--text-muted);}
+.form-input:focus{border-color:var(--accent);}
+textarea.form-input{min-height:120px;resize:vertical;}
+.form-submit{width:100%;padding:0.9rem;background:var(--accent);color:var(--bg);border:none;font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:background var(--transition);}
+.form-submit:hover{background:var(--accent-hover);}
+.form-note{font-size:10px;color:var(--text-muted);text-align:center;letter-spacing:0.05em;}
+
+/* ─── FOOTER ─────────────────────────────────────── */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-name{font-family:var(--font-display);font-size:1rem;font-weight:300;letter-spacing:0.1em;color:var(--text-secondary);}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-link{color:var(--text-muted);font-size:13px;text-decoration:none;transition:color var(--transition);}
+.footer-link:hover{color:var(--accent);}
+.footer-copy{font-size:11px;color:var(--text-muted);letter-spacing:0.08em;}
+.footer-legal{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;}
+.footer-legal-link{color:var(--text-muted);font-size:11px;text-decoration:none;letter-spacing:.05em;transition:color var(--transition);}
+.footer-legal-link:hover{color:var(--accent);}
+.footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:.2rem;}
+@media(max-width:768px){footer{flex-direction:column;align-items:flex-start;}.footer-right{align-items:flex-start;}}
+
+
+/* ─── CONTACT POPUP ──────────────────────────────── */
+.contact-popup-overlay{position:fixed;inset:0;background:rgba(10,7,4,0.85);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(4px);}
+.contact-popup-overlay.open{opacity:1;pointer-events:all;}
+.contact-popup{background:var(--bg2);border:1px solid var(--border);padding:2.5rem;width:min(480px,92vw);transform:translateY(20px);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);position:relative;}
+.contact-popup-overlay.open .contact-popup{transform:translateY(0);}
+.success-popup{text-align:center;display:none;}
+.success-popup.show{display:block;}
+.success-icon{width:48px;height:48px;border:1px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;color:var(--accent);font-size:18px;}
+
+/* ─── SCROLLBAR ──────────────────────────────────── */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);}
+::-webkit-scrollbar-thumb:hover{background:var(--text-muted);}
+
+/* ─── PORTFOLIO PREVIEW ──────────────────────────── */
+#portfolio{background:var(--bg2);}
+
+/* ─── FADE IN ────────────────────────────────────── */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+
+/* ─── PROJECT CARDS (preview on home) ────────────── */
+/* ─── PREVIEW CARDS (главная) ─────────────────────── */
+.project-card{background:var(--bg2);cursor:pointer;transition:background var(--transition);text-decoration:none;display:block;overflow:hidden;}
+.project-card:hover{background:var(--bg3);}
+.card-title{font-family:var(--font-display);font-size:1rem;font-weight:400;color:var(--text);padding:1rem 1rem 0.5rem;line-height:1.2;transition:color var(--transition);height:3.9rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.project-card:hover .card-title{color:var(--accent);}
+.card-img-wrap{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--bg3);}
+.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.15s;}
+.card-img.active{opacity:1;}
+.card-img-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg3);}
+.card-img-placeholder span{font-family:var(--font-display);font-size:3rem;font-weight:300;color:var(--border-accent);}
+.card-progress{height:2px;background:var(--border);position:relative;}
+.card-progress-fill{position:absolute;top:0;left:0;height:100%;background:var(--accent);transition:width 0.1s;}
+.card-tags-row{padding:0.6rem 1rem 1rem;display:flex;flex-wrap:wrap;gap:0.3rem;}
+.card-tag-item{font-size:10px;letter-spacing:0.06em;color:var(--text-muted);font-weight:300;}
+.card-tag-item::before{content:'#';}
+</style>
+</head>
+<body>
+
+<<<<<<< Updated upstream
+<!-- ===== HEADER ===== -->
+<header id="header">
+  <div class="header-wrap">
+
+    <!-- Языки слева -->
+    <div class="language-switch">
+      <span class="lang-text active" data-lang="ru">Ru</span>
+      <span class="separator">/</span>
+      <span class="lang-text" data-lang="en">En</span>
+    </div>
+
+    <!-- Бургер (появляется только на телефоне) -->
+    <button id="burger" class="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="navbar">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- Меню справа -->
+    <nav id="navbar" class="nav">
+      <ul class="menu-list">
+        <li class="menu-item"><a href="#about" data-ru="Обо мне" data-en="About">Обо мне</a></li>
+        <li class="menu-item"><a href="#portfolio" data-ru="Портфолио" data-en="Portfolio">Портфолио</a></li>
+        <li class="menu-item"><a href="#services" data-ru="Услуги" data-en="Services">Услуги</a></li>
+        <li class="menu-item"><a href="#contact" data-ru="Контакты" data-en="Contact">Контакты</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero" aria-label="Hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1 data-ru="Привет, я - Наталья Пчелина" data-en="Hello I'm Natalya Pchelina">Наталья Пчелина</h1>
+      <p class="subtitle"
+         data-ru="Дизайнер-конструктор лекал, AI, 3D"
+         data-en="Pattern Constructor, AI & 3D Designer">
+         Дизайнер-конструктор лекал, AI, 3D
+      </p>
+=======
+<!-- MOBILE DROPDOWN -->
+<div class="mobile-nav-drop" id="mobile-nav-drop">
+  <a href="#hero"          class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-house"></i></a>
+  <a href="services.html"  class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-layer-group"></i></a>
+  <a href="portfolio.html" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-images"></i></a>
+  <a href="#skills"        class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-star"></i></a>
+  <a href="#contact"       class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-envelope"></i></a>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <!-- Left: hamburger (mobile) + langs -->
+  <div class="navbar-left">
+    <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">
+      <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
+    </button>
+    <div class="navbar-langs">
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    </div>
+  </div>
+
+  <!-- Center: name slides in + menu -->
+  <div class="navbar-center-wrap">
+    <div class="navbar-name" id="navbar-name"></div>
+    <div class="navbar-menu">
+      <a href="#hero"          class="nav-link active" data-i18n="nav_home">Главная</a>
+      <a href="services.html"  class="nav-link" data-i18n="nav_services">Услуги</a>
+      <a href="portfolio.html" class="nav-link" data-i18n="nav_portfolio">Портфолио</a>
+      <a href="#skills"        class="nav-link" data-i18n="nav_skills">Навыки</a>
+      <a href="#contact"       class="nav-link" data-i18n="nav_contact">Контакт</a>
+    </div>
+  </div>
+
+  <!-- Right: order CTA (slides in when hero btn scrolls away) + icons -->
+  <div class="navbar-icons">
+    <a href="price.html" class="navbar-order-btn" id="navbar-order-btn" data-i18n="order_btn">
+      Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i>
+    </a>
+    <button class="icon-btn" onclick="downloadVCard()">
+      <i class="fa-regular fa-address-card"></i>
+      <span class="tooltip" data-i18n="tooltip_vcard">Сохранить контакт</span>
+    </button>
+    <button class="icon-btn" onclick="goToPrice()">
+      <i class="fa-regular fa-file-lines"></i>
+      <span class="tooltip" data-i18n="tooltip_price">Прайс-лист</span>
+    </button>
+    <button class="icon-btn" onclick="downloadCV()">
+      <i class="fa-regular fa-file-pdf"></i>
+      <span class="tooltip" data-i18n="tooltip_cv">Резюме PDF</span>
+    </button>
+    <a href="process.html" class="icon-btn">
+      <i class="fa-regular fa-circle-question"></i>
+      <span class="tooltip" data-i18n="tooltip_process">Как мы работаем</span>
+    </a>
+    <a href="privacy.html" class="icon-btn">
+      <i class="fa-solid fa-shield-halved"></i>
+      <span class="tooltip" data-i18n="tooltip_privacy">Конфиденциальность</span>
+    </a>
+    <button class="icon-btn" onclick="toggleTheme()">
+      <i class="fa-regular fa-sun" id="theme-icon"></i>
+      <span class="tooltip" data-i18n="tooltip_theme">Тема</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+>>>>>>> Stashed changes
+
+  <!-- Mannequin silhouette — peeks from behind name on the right -->
+  <svg class="hero-mannequin" viewBox="0 0 220 580" xmlns="http://www.w3.org/2000/svg"
+       fill="none" stroke="currentColor" aria-hidden="true">
+    <!-- Head -->
+    <ellipse cx="110" cy="42" rx="24" ry="30" stroke-width="0.8"/>
+    <!-- Neck -->
+    <path d="M98 70 L98 86 M122 70 L122 86" stroke-width="0.8"/>
+    <path d="M98 86 Q110 94 122 86" stroke-width="0.8"/>
+    <!-- Body outline (smooth bezier torso) -->
+    <path stroke-width="0.9" d="
+      M 98 86
+      C 82 87  52 100  36 126
+      C 20 152  24 176  26 198
+      C 28 220  36 240  42 260
+      C 48 280  42 296  34 314
+      C 26 332  26 350  38 366
+      C 50 382  78 390  110 390
+      C 142 390  170 382  182 366
+      C 194 350  194 332  186 314
+      C 178 296  172 280  178 260
+      C 184 240  192 220  194 198
+      C 196 176  200 152  184 126
+      C 168 100  138 87  122 86 Z"/>
+    <!-- Construction guide lines -->
+    <line x1="20" y1="130" x2="200" y2="130" stroke-width="0.55" stroke-dasharray="4,8" opacity="0.5"/>
+    <line x1="20" y1="200" x2="200" y2="200" stroke-width="0.55" stroke-dasharray="4,8" opacity="0.5"/>
+    <line x1="32" y1="264" x2="188" y2="264" stroke-width="0.55" stroke-dasharray="4,8" opacity="0.5"/>
+    <line x1="24" y1="322" x2="196" y2="322" stroke-width="0.55" stroke-dasharray="4,8" opacity="0.5"/>
+    <!-- Centre vertical (very subtle) -->
+    <line x1="110" y1="12" x2="110" y2="390" stroke-width="0.45" stroke-dasharray="2,10" opacity="0.22"/>
+    <!-- Stand pole -->
+    <line x1="110" y1="390" x2="110" y2="520" stroke-width="0.8"/>
+    <!-- Base -->
+    <ellipse cx="110" cy="520" rx="54" ry="13" stroke-width="0.8"/>
+  </svg>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag" data-i18n="hero_tag">Дизайнер-конструктор · 7 лет в индустрии</div>
+      <h1 class="hero-name" id="hero-name">Наталья<br><em>Пчелина</em></h1>
+      <p class="hero-sub" data-i18n="hero_sub">Конструирование · 3D-примерка · AI-визуализация · Техдокументация</p>
+      <a href="price.html" class="hero-order-btn" id="hero-order-btn" data-i18n="order_btn">
+        Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-label fade-in" data-i18n="services_label">Услуги</div>
+    <p style="font-family:var(--font-display);font-size:clamp(1.8rem,4vw,3rem);font-weight:300;color:var(--text);letter-spacing:-0.01em;margin-bottom:2rem;line-height:1.1;" class="fade-in" data-i18n="services_popular">Популярные услуги</p>
+    <div class="services-grid-4" id="services-preview"></div>
+    <div style="text-align:center;">
+      <a href="services.html" class="all-services-link" data-i18n="services_all">
+        Смотреть все услуги <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO PREVIEW -->
+<section id="portfolio" style="padding-bottom:4rem;">
+  <div class="container">
+    <div class="section-label fade-in" data-i18n="portfolio_label">Проекты</div>
+    <div id="portfolio-preview" style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:2rem;"></div>
+    <div style="text-align:center;">
+      <a href="portfolio.html" style="display:inline-flex;align-items:center;gap:.75rem;font-family:var(--font-body);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--border-accent);padding-bottom:.25rem;transition:color var(--transition),border-color var(--transition);" data-i18n="portfolio_all">
+        Смотреть все проекты <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label fade-in" data-i18n="skills_label">Навыки и опыт</div>
+    <div class="skills-split">
+      <div class="skills-col fade-in">
+        <h3 data-i18n="skills_hard">Компетенции</h3>
+        <div id="skills-list"></div>
+      </div>
+      <div class="skills-col fade-in" style="transition-delay:0.15s">
+        <h3 data-i18n="skills_exp">Опыт</h3>
+        <div id="exp-list"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS TICKER -->
+<div class="brands-section">
+  <div class="brands-track" id="brands-track"></div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" style="padding:7rem 0;">
+  <div class="container">
+    <!-- Label sits above the grid so both columns start at the same baseline -->
+    <div class="section-label fade-in" data-i18n="contact_label" style="margin-bottom:2.5rem;">Контакт</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
+      <div class="contact-left fade-in">
+        <h2 data-i18n="contact_heading">Давайте работать<br>вместе</h2>
+        <div class="social-links">
+          <a href="https://t.me/npchel" class="social-link" target="_blank"><i class="fa-brands fa-telegram"></i><span>Telegram</span></a>
+          <a href="https://wa.me/79036040666" class="social-link" target="_blank"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
+          <a href="https://www.behance.net/natalyapchelina" class="social-link" target="_blank"><i class="fa-brands fa-behance"></i><span>Behance</span></a>
+          <a href="https://ru.pinterest.com/NPchelina" class="social-link" target="_blank"><i class="fa-brands fa-pinterest"></i><span>Pinterest</span></a>
+          <a href="https://www.linkedin.com/in/npchelina" class="social-link" target="_blank"><i class="fa-brands fa-linkedin"></i><span>LinkedIn</span></a>
+          <a href="mailto:npchel93@gmail.com" class="social-link"><i class="fa-regular fa-envelope"></i><span>npchel93@gmail.com</span></a>
+        </div>
+      </div>
+      <div class="fade-in" style="transition-delay:0.1s;">
+        <!-- Order project CTA -->
+        <div class="contact-order-block">
+          <div class="contact-order-block-title" data-i18n="contact_order_label">Хотите начать проект?</div>
+          <a href="price.html" class="contact-order-link" data-i18n="order_btn">
+            Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i>
+          </a>
+        </div>
+        <p class="contact-form-purpose" data-i18n="contact_form_purpose">Форма ниже — для быстрых вопросов и отзывов. Для оформления заказа используйте кнопку выше: там можно подробно описать задачу и прикрепить файлы.</p>
+        <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="form-group"><input class="form-input" type="text" name="name" placeholder="" required data-i18n-placeholder="form_name"></div>
+          <div class="form-group"><input class="form-input" type="text" name="phone" placeholder="" required data-i18n-placeholder="form_phone"></div>
+          <div class="form-group"><input class="form-input" type="email" name="email" placeholder="" data-i18n-placeholder="form_email"></div>
+          <div class="form-group"><textarea class="form-input" name="message" placeholder="" data-i18n-placeholder="form_message"></textarea></div>
+          <button type="submit" class="form-submit" data-i18n="form_submit">Отправить</button>
+          <p class="form-note" data-i18n="form_note">Нажимая «Отправить», вы соглашаетесь с обработкой данных</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-legal">
+    <a href="privacy.html" class="footer-legal-link" data-i18n="footer_privacy">Политика конфиденциальности</a>
+    <a href="process.html" class="footer-legal-link" data-i18n="footer_process">Как мы работаем</a>
+  </div>
+  <div class="footer-links">
+    <a href="https://t.me/npchel" class="footer-link" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+    <a href="https://wa.me/79036040666" class="footer-link" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="https://www.behance.net/natalyapchelina" class="footer-link" target="_blank"><i class="fa-brands fa-behance"></i></a>
+    <a href="https://ru.pinterest.com/NPchelina" class="footer-link" target="_blank"><i class="fa-brands fa-pinterest"></i></a>
+    <a href="https://www.linkedin.com/in/npchelina" class="footer-link" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+    <a href="https://www.avito.ru/brands/9582581b86f01263db98c276fccb332b" class="footer-link" target="_blank"><i class="fa-solid fa-a"></i></a>
+  </div>
+  <div class="footer-right">
+    <span class="footer-name">Наталья Пчелина © 2025</span>
+    <span class="footer-copy">Все права защищены</span>
+  </div>
+</footer>
+
+<!-- SERVICE MODAL -->
+<div class="modal-overlay" id="service-modal" onclick="closeModal(event)">
+  <div class="modal-panel">
+    <button class="modal-close" onclick="closeServiceModal()"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-num" id="modal-num"></div>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <div class="modal-section"><h4 data-i18n="modal_what">Что включает</h4><ul id="modal-includes"></ul></div>
+    <div class="modal-section"><h4 data-i18n="modal_for">Для кого</h4><p id="modal-for"></p></div>
+    <div class="modal-benefit"><p id="modal-benefit"></p></div>
+    <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <a class="example-btn" id="example-file-btn" href="#" target="_blank"><i class="fa-regular fa-file-pdf"></i> <span data-i18n="modal_example">Посмотреть пример работы</span></a>
+    </div>
+    <div class="modal-cta">
+      <button class="btn-primary" onclick="goToPrice()" data-i18n="modal_cta">Запросить стоимость</button>
+      <button class="btn-ghost" onclick="closeServiceModal()" data-i18n="modal_back">← Назад</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT POPUP -->
+<div class="contact-popup-overlay" id="contact-popup" onclick="closeContactPopup(event)">
+  <div class="contact-popup">
+    <button class="modal-close" onclick="closeContactPopup()" style="position:absolute;top:1rem;right:1rem;"><i class="fa-solid fa-xmark"></i></button>
+    <div id="popup-form-wrap">
+      <div class="modal-num" data-i18n="popup_tag">Обратная связь</div>
+      <h3 style="font-family:var(--font-display);font-size:1.8rem;font-weight:300;margin-bottom:1.5rem;" data-i18n="popup_heading">Задайте вопрос</h3>
+      <form class="contact-form" id="popup-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <input class="form-input" type="text" name="name" placeholder="" required data-i18n-placeholder="form_name">
+        <input class="form-input" type="text" name="phone" placeholder="" required data-i18n-placeholder="form_phone">
+        <textarea class="form-input" name="message" placeholder="" style="min-height:80px;" data-i18n-placeholder="form_message"></textarea>
+        <button type="submit" class="form-submit" data-i18n="form_submit">Отправить</button>
+      </form>
+    </div>
+    <div class="success-popup" id="popup-success">
+      <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+      <h3 style="font-family:var(--font-display);font-size:1.5rem;font-weight:300;margin-bottom:0.5rem;" data-i18n="success_title">Отправлено!</h3>
+      <p style="color:var(--text-muted);font-size:13px;margin-bottom:1.5rem;" data-i18n="success_msg">Я отвечу вам в ближайшее время</p>
+      <button class="btn-ghost" onclick="closeContactPopup()" data-i18n="success_back">Вернуться на сайт</button>
+    </div>
+  </div>
+</div>
+
+<script src="projects.js"></script>
+<script>
+// ─── i18n ──────────────────────────────────────────
+const i18n = {
+  ru:{
+    nav_home:'Главная',nav_services:'Услуги',nav_portfolio:'Портфолио',nav_skills:'Навыки',nav_contact:'Контакт',
+    hero_tag:'Дизайнер-конструктор · 7 лет в индустрии',
+    hero_sub:'Конструирование · 3D-примерка · AI-визуализация · Техдокументация',
+    services_label:'Услуги',services_popular:'Популярные услуги',services_all:'Смотреть все услуги',
+    portfolio_label:'Проекты',portfolio_all:'Смотреть все проекты',
+    skills_label:'Навыки и опыт',skills_hard:'Компетенции',skills_exp:'Опыт',
+    contact_label:'Контакт',contact_heading:'Давайте работать\nвместе',
+    contact_order_label:'Хотите начать проект?',
+    contact_form_purpose:'Форма ниже — для быстрых вопросов и отзывов. Для оформления заказа используйте кнопку выше: там можно подробно описать задачу и прикрепить файлы.',
+    order_btn:'Заказать проект',
+    form_name:'Имя *',form_phone:'Телефон *',form_email:'E-mail',form_message:'Ваш вопрос или отзыв',
+    form_submit:'Отправить',form_note:'Нажимая «Отправить», вы соглашаетесь с обработкой данных',
+    modal_what:'Что включает',modal_for:'Для кого',modal_cta:'Запросить стоимость',modal_back:'← Назад',modal_example:'Посмотреть пример работы',
+    popup_tag:'Обратная связь',popup_heading:'Задайте вопрос',
+    success_title:'Отправлено!',success_msg:'Я отвечу вам в ближайшее время',success_back:'Вернуться на сайт',
+    tooltip_vcard:'Сохранить контакт',tooltip_price:'Прайс-лист',tooltip_cv:'Резюме PDF',tooltip_process:'Как мы работаем',tooltip_privacy:'Конфиденциальность',tooltip_theme:'Тема',
+    footer_privacy:'Политика конфиденциальности',footer_process:'Как мы работаем',
+    footer_copy:'Все права защищены',
+    nav_name:'Наталья <em>Пчелина</em>',
+  },
+  en:{
+    nav_home:'Home',nav_services:'Services',nav_portfolio:'Portfolio',nav_skills:'Skills',nav_contact:'Contact',
+    hero_tag:'Fashion Designer & Pattern Maker · 7 years in industry',
+    hero_sub:'Pattern Making · 3D Fitting · AI Visualisation · Technical Documentation',
+    services_label:'Services',services_popular:'Popular services',services_all:'View all services',
+    portfolio_label:'Projects',portfolio_all:'View all projects',
+    skills_label:'Skills & Experience',skills_hard:'Competencies',skills_exp:'Experience',
+    contact_label:'Contact',contact_heading:'Let\'s work together',
+    contact_order_label:'Ready to start a project?',
+    contact_form_purpose:'This form is for quick questions and feedback only. To place an order, use the button above — you can describe your task in detail and attach files.',
+    order_btn:'Order a Project',
+    form_name:'Name *',form_phone:'Phone *',form_email:'E-mail',form_message:'Your question or feedback',
+    form_submit:'Send',form_note:'By clicking Send you agree to data processing',
+    modal_what:'What\'s included',modal_for:'Who it\'s for',modal_cta:'Request a quote',modal_back:'← Back',modal_example:'View work example',
+    popup_tag:'Get in touch',popup_heading:'Ask a question',
+    success_title:'Sent!',success_msg:'I\'ll reply as soon as possible',success_back:'Back to site',
+    tooltip_vcard:'Save contact',tooltip_price:'Price list',tooltip_cv:'Resume PDF',tooltip_process:'How We Work',tooltip_privacy:'Privacy Policy',tooltip_theme:'Theme',
+    footer_privacy:'Privacy Policy',footer_process:'How We Work',
+    footer_copy:'All rights reserved',
+    nav_name:'Natalya <em>Pchelina</em>',
+  },
+  zh:{
+    nav_home:'首页',nav_services:'服务',nav_portfolio:'作品集',nav_skills:'技能',nav_contact:'联系',
+    hero_tag:'时装设计师 & 制版师 · 7年行业经验',
+    hero_sub:'制版 · 3D试衣 · AI视觉化 · 技术文件',
+    services_label:'服务',services_popular:'热门服务',services_all:'查看所有服务',
+    portfolio_label:'项目',portfolio_all:'查看所有项目',
+    skills_label:'技能与经验',skills_hard:'专业能力',skills_exp:'工作经验',
+    contact_label:'联系',contact_heading:'携手合作',
+    contact_order_label:'想开始项目？',
+    contact_form_purpose:'下方表单仅用于快速提问和反馈。如需下单，请使用上方按钮——可详细描述任务并附上文件。',
+    order_btn:'订购项目',
+    form_name:'姓名 *',form_phone:'电话 *',form_email:'邮箱',form_message:'您的问题或评价',
+    form_submit:'发送',form_note:'点击发送即表示您同意数据处理',
+    modal_what:'服务内容',modal_for:'适合人群',modal_cta:'询价',modal_back:'← 返回',modal_example:'查看工作示例',
+    popup_tag:'联系我',popup_heading:'提问',
+    success_title:'已发送！',success_msg:'我会尽快回复您',success_back:'返回网站',
+    tooltip_vcard:'保存联系人',tooltip_price:'价格表',tooltip_cv:'简历PDF',tooltip_process:'工作流程',tooltip_privacy:'隐私政策',tooltip_theme:'主题',
+    footer_privacy:'隐私政策',footer_process:'工作流程',
+    footer_copy:'版权所有',
+    nav_name:'娜塔利亚 <em>普切利娜</em>',
+  }
+};
+let currentLang='ru';
+
+function setLang(lang){
+  currentLang=lang;
+  localStorage.setItem('np-lang',lang);
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent.toLowerCase()===lang||(lang==='zh'&&b.textContent==='中文'));
+  });
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.dataset.i18n;
+    if(i18n[lang][k]&&typeof i18n[lang][k]==='string'){
+      // render \n as <br> for headings; plain text otherwise
+      if(i18n[lang][k].includes('\n'))
+        el.innerHTML=i18n[lang][k].replace(/\n/g,'<br>');
+      else
+        el.textContent=i18n[lang][k];
+    }
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const k=el.dataset.i18nPlaceholder;
+    if(i18n[lang][k]) el.placeholder=i18n[lang][k];
+  });
+  const heroName=document.getElementById('hero-name');
+  if(heroName&&heroNames[lang]) heroName.innerHTML=heroNames[lang];
+  // update navbar name text
+  const nn=document.getElementById('navbar-name');
+  if(nn) nn.innerHTML=i18n[lang].nav_name;
+  renderServicesPreview();
+  renderSkills();
+}
+
+// ─── SERVICES DATA ─────────────────────────────────
+const servicesData=[
+  {ru:{name:'Дизайн изделия',desc:'Концепция и дизайн одежды с нуля'},en:{name:'Design Development',desc:'Concept and garment design from scratch'},zh:{name:'设计开发',desc:'从零开始的概念和服装设计'},includes_ru:['Концептуальный эскиз и мудборд','Проработка конструктивных линий','Цветовые и материальные решения','Подготовка к тех паку'],includes_en:['Concept sketch and moodboard','Structural line development','Colour and material solutions','Tech pack preparation'],includes_zh:['概念草图和情绪板','结构线开发','颜色和材料解决方案','技术包准备'],for_ru:'Бренды и дизайнеры, которым нужен специалист на этапе разработки продукта.',for_en:'Brands and designers needing a specialist at the product development stage.',for_zh:'需要在产品开发阶段寻求专家的品牌和设计师。',benefit_ru:'💡 Экономия: не нужен штатный дизайнер — получаете экспертизу под конкретный проект.',benefit_en:'💡 Saving: no in-house designer needed — expert input for each specific project.',benefit_zh:'💡 节省：无需内部设计师——为每个具体项目提供专家意见。'},
+  {ru:{name:'Технический эскиз',desc:'Плоский рисунок для производства'},en:{name:'Technical Sketch',desc:'Flat drawing for production'},zh:{name:'技术草图',desc:'用于生产的平面图'},includes_ru:['Плоский рисунок лицо и спинка','Детализация швов и фурнитуры','Узлы и конструктивные детали','Форматы AI / PDF'],includes_en:['Front and back flat drawing','Seam and hardware detail','Construction nodes and details','AI / PDF formats'],includes_zh:['正面和背面平面图','缝线和五金细节','结构节点和细节','AI / PDF格式'],for_ru:'Производства, фабрики, бренды при подаче задания на пошив.',for_en:'Manufacturers, factories, and brands briefing a cut-and-sew production run.',for_zh:'为剪裁生产提供简报的制造商、工厂和品牌。',benefit_ru:'💡 Чёткий тех эскиз сокращает количество правок на производстве до минимума.',benefit_en:'💡 A clear tech sketch cuts production revisions to a minimum.',benefit_zh:'💡 清晰的技术草图将生产修改次数降至最低。'},
+  {ru:{name:'Технический дизайн',desc:'Полная техническая документация изделия'},en:{name:'Technical Design',desc:'Full garment technical documentation'},zh:{name:'技术设计',desc:'完整的服装技术文件'},includes_ru:['Тех эскиз + описание','Таблица размеров и допусков','Спецификация материалов','Комментарии по качеству'],includes_en:['Tech sketch + description','Size and tolerance table','Material specification','Quality comments'],includes_zh:['技术草图+描述','尺寸和公差表','材料规格','质量说明'],for_ru:'Бренды, выводящие продукт на фабрику или маркетплейс.',for_en:'Brands taking a product to a factory or marketplace.',for_zh:'将产品带到工厂或市场的品牌。',benefit_ru:'💡 Снижает риск брака и переделок — всё прописано до начала производства.',benefit_en:'💡 Reduces defect and rework risk — everything specified before production begins.',benefit_zh:'💡 减少缺陷和返工风险——在生产开始前一切都已明确。'},
+  {ru:{name:'Лекала',desc:'Конструирование по методикам Олдрич, Мюллер, ЕМКО'},en:{name:'Pattern Making',desc:'Pattern construction: Aldrich, Müller, EMKO methods'},zh:{name:'纸样制作',desc:'纸样构造：Aldrich、Müller、EMKO方法'},includes_ru:['Базовая конструкция по меркам','Модельная конструкция','Раскладка и градация','Цифровые + бумажные форматы'],includes_en:['Base pattern to measurements','Model pattern','Layout and grading','Digital + paper formats'],includes_zh:['按测量数据的基础纸样','模型纸样','排版和档差','数字+纸质格式'],for_ru:'Инд пошив, малые серии, производства любого масштаба.',for_en:'Bespoke, small runs, and large-scale production.',for_zh:'定制、小批量和大规模生产。',benefit_ru:'💡 Точные лекала = меньше ткани на отходы и меньше образцов до финального изделия.',benefit_en:'💡 Accurate patterns = less fabric waste and fewer samples before the final piece.',benefit_zh:'💡 精确的纸样=更少的面料浪费，更少的样品。'},
+  {ru:{name:'Тех пак',desc:'Пакет документов для запуска производства'},en:{name:'Tech Pack',desc:'Document package for production launch'},zh:{name:'技术包',desc:'生产启动文件包'},includes_ru:['Тех эскиз + описание конструкции','Таблица замеров','BOM (ведомость материалов)','Комментарии по посадке и отделке'],includes_en:['Tech sketch + construction notes','Measurement table','BOM (bill of materials)','Fit and finish comments'],includes_zh:['技术草图+构造说明','测量表','BOM（物料清单）','合身和整理说明'],for_ru:'Бренды, работающие с фабриками, в том числе зарубежными.',for_en:'Brands working with factories, including overseas.',for_zh:'与工厂（包括海外工厂）合作的品牌。',benefit_ru:'💡 Полный тех пак — главный инструмент коммуникации с любой фабрикой мира.',benefit_en:'💡 A complete tech pack is the key communication tool with any factory worldwide.',benefit_zh:'💡 完整的技术包是与全球任何工厂沟通的关键工具。'},
+  {ru:{name:'3D-примерка',desc:'Виртуальная примерка в Clo3D / Browzwear'},en:{name:'3D Fitting',desc:'Virtual fitting in Clo3D / Browzwear'},zh:{name:'3D试衣',desc:'Clo3D / Browzwear虚拟试衣'},includes_ru:['Сборка изделия в 3D','Примерка на типовую или кастомную фигуру','Анализ посадки и натяжений','Рендер для презентации'],includes_en:['3D garment assembly','Fitting on standard or custom avatar','Fit and stress analysis','Presentation render'],includes_zh:['3D服装组装','在标准或定制模型上试衣','合身度和张力分析','展示渲染'],for_ru:'Бренды, которые хотят видеть результат до пошива образца.',for_en:'Brands wanting to see the result before sewing a sample.',for_zh:'希望在缝制样品前看到结果的品牌。',benefit_ru:'💡 Экономия до 70% стоимости образцов — правки делаются в 3D, а не на ткани.',benefit_en:'💡 Save up to 70% on sample costs — revisions happen in 3D, not on fabric.',benefit_zh:'💡 节省高达70%的样品成本——修改在3D中完成，而不是在面料上。'},
+  {ru:{name:'3D + видео',desc:'Анимированная примерка для презентаций'},en:{name:'3D + Video',desc:'Animated fitting for presentations'},zh:{name:'3D + 视频',desc:'用于演示的动画试衣'},includes_ru:['Всё что в 3D-примерке','Анимация движения / подиум','Видеорендер для lookbook или инвестора','Форматы MP4 / GIF'],includes_en:['Everything in 3D Fitting','Motion / runway animation','Video render for lookbook or investor deck','MP4 / GIF formats'],includes_zh:['3D试衣的所有内容','动作/T台动画','用于lookbook或投资者的视频渲染','MP4 / GIF格式'],for_ru:'Стартапы, привлекающие инвестиции, бренды для презентаций и лукбуков.',for_en:'Start-ups raising investment, brands for presentations and lookbooks.',for_zh:'寻求投资的初创公司、品牌演示和lookbook。',benefit_ru:'💡 Показываете коллекцию без фотосессии — быстро, дёшево, красиво.',benefit_en:'💡 Showcase a collection without a photoshoot — fast, affordable, beautiful.',benefit_zh:'💡 无需拍摄即可展示系列——快速、经济、美观。'},
+  {ru:{name:'AI-фотосессия',desc:'Реалистичные изображения изделий с помощью ИИ'},en:{name:'AI Photo Shoot',desc:'Realistic garment imagery with AI'},zh:{name:'AI摄影',desc:'用AI生成逼真的服装图像'},includes_ru:['Генерация образов на модели или без','Разные локации и концепции','Ретушь и финальная обработка','Готово к публикации'],includes_en:['Image generation on model or standalone','Various locations and concepts','Retouch and final processing','Ready to publish'],includes_zh:['有模特或无模特的图像生成','各种地点和概念','修图和最终处理','可直接发布'],for_ru:'Бренды на маркетплейсах, соцсети, лендинги без бюджета на фотографа.',for_en:'Marketplace brands, social media, landing pages — no photographer budget needed.',for_zh:'市场品牌、社交媒体、落地页——无需摄影师预算。',benefit_ru:'💡 В 5–10 раз дешевле обычной студийной фотосессии.',benefit_en:'💡 5–10× cheaper than a standard studio photoshoot.',benefit_zh:'💡 比标准影棚拍摄便宜5-10倍。'},
+  {ru:{name:'Подбор материалов',desc:'Поиск и анализ тканей, фурнитуры, поставщиков'},en:{name:'Material Sourcing',desc:'Fabric, hardware, and supplier research & analysis'},zh:{name:'材料采购',desc:'面料、五金和供应商研究与分析'},includes_ru:['Подбор ткани под задачу и бюджет','Сравнение поставщиков РФ и зарубежных','Рекомендации по качеству и уходу','Образцы и контакты'],includes_en:['Fabric selection for brief and budget','Supplier comparison: Russia and overseas','Quality and care recommendations','Samples and contacts'],includes_zh:['根据需求和预算选择面料','供应商比较：俄罗斯和海外','质量和护理建议','样品和联系方式'],for_ru:'Бренды без своего закупщика или технолога.',for_en:'Brands without their own buyer or technologist.',for_zh:'没有自己的采购员或技术专家的品牌。',benefit_ru:'💡 Не нужен штатный закупщик — снижение затрат на команду.',benefit_en:'💡 No dedicated buyer needed — reduced team cost.',benefit_zh:'💡 不需要专职采购员——降低团队成本。'},
+  {ru:{name:'Ведение проекта',desc:'Полное сопровождение от идеи до производства'},en:{name:'Project Management',desc:'Full support from concept to production'},zh:{name:'项目管理',desc:'从概念到生产的全程支持'},includes_ru:['Координация всех этапов разработки','Коммуникация с производством','Контроль сроков и качества','Отчётность и документация'],includes_en:['Coordination of all development stages','Production communication','Timeline and quality control','Reporting and documentation'],includes_zh:['协调所有开发阶段','生产沟通','时间和质量控制','报告和文档'],for_ru:'Малые и средние бренды без выделенной команды разработки.',for_en:'Small and medium brands without a dedicated development team.',for_zh:'没有专门开发团队的中小品牌。',benefit_ru:'💡 Один специалист закрывает задачи нескольких сотрудников — экономия бюджета и времени.',benefit_en:'💡 One specialist covers the role of several employees — saving budget and time.',benefit_zh:'💡 一位专家承担多名员工的工作——节省预算和时间。'},
+];
+
+// Top 4 preview: тех пак (4), лекала (3), AI фото (7), ведение (9)
+const TOP_INDICES=[4,3,7,9];
+
+function renderServicesPreview(){
+  const grid=document.getElementById('services-preview');
+  if(!grid) return;
+  grid.innerHTML=TOP_INDICES.map(i=>{
+    const s=servicesData[i];
+    return `<div class="service-card" onclick="openServiceModal(${i})">
+      <div class="service-name">${s[currentLang].name}</div>
+      <div class="service-desc">${s[currentLang].desc}</div>
+      <button class="service-more" tabindex="-1">
+        ${currentLang==='ru'?'Подробнее':currentLang==='en'?'Learn more':'了解更多'}
+        <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
+      </button>
+    </div>`;
+  }).join('');
+}
+
+const serviceExamples=['examples/design.pdf','examples/tech-sketch.pdf','examples/tech-design.pdf','examples/pattern.pdf','examples/tech-pack.pdf','examples/3d-fitting.pdf','examples/3d-video.pdf','examples/ai-photo.pdf','examples/material-sourcing.pdf','examples/project-management.pdf'];
+
+function openServiceModal(i){
+  const s=servicesData[i]; const lang=currentLang;
+  document.getElementById('modal-num').textContent=`0${i+1}`;
+  document.getElementById('modal-title').textContent=s[lang].name;
+  document.getElementById('modal-includes').innerHTML=s[`includes_${lang}`].map(item=>`<li>${item}</li>`).join('');
+  document.getElementById('modal-for').textContent=s[`for_${lang}`];
+  document.getElementById('modal-benefit').textContent=s[`benefit_${lang}`];
+  document.getElementById('service-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+  const exBtn=document.getElementById('example-file-btn');
+  if(exBtn) exBtn.href=serviceExamples[i];
+}
+function closeServiceModal(){document.getElementById('service-modal').classList.remove('open');document.body.style.overflow='';}
+function closeModal(e){if(e.target===document.getElementById('service-modal'))closeServiceModal();}
+
+// ─── SKILLS DATA ───────────────────────────────────
+const skillsData={
+  skills_ru:[{name:'Конструирование (Олдрич, Мюллер, ЕМКО)',tag:'Эксперт'},{name:'Моделирование и градация',tag:'Эксперт'},{name:'Clo3D / Browzwear',tag:'Эксперт'},{name:'Adobe Illustrator / Photoshop',tag:'Эксперт'},{name:'Gerber / Lectra',tag:'Продвинутый'},{name:'AI-инструменты (Midjourney, Runway)',tag:'Продвинутый'},{name:'Технический дизайн и тех пак',tag:'Эксперт'},{name:'Bitrix24',tag:'Базовый'}],
+  skills_en:[{name:'Pattern Making (Aldrich, Müller, EMKO)',tag:'Expert'},{name:'Modelling & Grading',tag:'Expert'},{name:'Clo3D / Browzwear',tag:'Expert'},{name:'Adobe Illustrator / Photoshop',tag:'Expert'},{name:'Gerber / Lectra',tag:'Advanced'},{name:'AI Tools (Midjourney, Runway)',tag:'Advanced'},{name:'Technical Design & Tech Pack',tag:'Expert'},{name:'Bitrix24',tag:'Basic'}],
+  skills_zh:[{name:'制版（Aldrich、Müller、EMKO）',tag:'专家'},{name:'建模与档差',tag:'专家'},{name:'Clo3D / Browzwear',tag:'专家'},{name:'Adobe Illustrator / Photoshop',tag:'专家'},{name:'Gerber / Lectra',tag:'高级'},{name:'AI工具（Midjourney、Runway）',tag:'高级'},{name:'技术设计与技术包',tag:'专家'},{name:'Bitrix24',tag:'基础'}],
+  exp_ru:[{year:'7 лет',title:'Конструирование & Моделирование',desc:'Ручное и цифровое конструирование. Работа с разными типовыми фигурами, инд пошив.'},{year:'Опыт',title:'Международные & российские бренды',desc:'Локальные бренды, маркетплейсы, фабрики РФ и зарубежные.'},{year:'Проекты',title:'Полное ведение проектов',desc:'От идеи до производства — самостоятельно и в команде.'}],
+  exp_en:[{year:'7 years',title:'Pattern Making & Modelling',desc:'Manual and digital pattern construction. Various body types, bespoke sewing.'},{year:'Experience',title:'International & Russian Brands',desc:'Local brands, marketplaces, Russian and overseas factories.'},{year:'Projects',title:'Full Project Management',desc:'From concept to production — independently and in team.'}],
+  exp_zh:[{year:'7年',title:'制版与建模',desc:'手工和数字制版。各种体型，定制缝纫。'},{year:'经验',title:'国际及俄罗斯品牌',desc:'本地品牌、市场、俄罗斯和海外工厂。'},{year:'项目',title:'完整项目管理',desc:'从概念到生产——独立或团队合作。'}],
+};
+function renderSkills(){
+  const lang=currentLang;
+  document.getElementById('skills-list').innerHTML=skillsData[`skills_${lang}`].map(s=>`<div class="skill-item"><span class="skill-name">${s.name}</span><span class="skill-tag">${s.tag}</span></div>`).join('');
+  document.getElementById('exp-list').innerHTML=skillsData[`exp_${lang}`].map(e=>`<div class="exp-block"><div class="exp-year">${e.year}</div><div class="exp-title">${e.title}</div><div class="exp-desc">${e.desc}</div></div>`).join('');
+}
+
+// ─── BRANDS ────────────────────────────────────────
+const brands=[{name:'Vincult',img:'https://npchelina.ru/brands/vinkult_h70.png'},{name:'Franky',img:'https://npchelina.ru/brands/franky_h70.png'},{name:'Vertango',img:'https://npchelina.ru/brands/logo_vertango_white_h70.png'},{name:'Pachkoriya',img:'https://npchelina.ru/brands/logo_pachkoriya_white_padded.png'},{name:'Дом музыки',img:'https://npchelina.ru/brands/logo_dommuzyki_white_h70.png'},{name:'KraftiShop',img:'https://npchelina.ru/brands/kraftishop_transparent_white.png'},{name:'Edinovlastie',img:'https://npchelina.ru/brands/edinovlastie_white_final.png'}];
+function renderBrands(){
+  const track=document.getElementById('brands-track');
+  const doubled=[...brands,...brands];
+  track.innerHTML=doubled.map(b=>`<div class="brand-logo"><img src="${b.img}" alt="${b.name}" title="${b.name}"></div>`).join('');
+}
+
+// ─── THEME ─────────────────────────────────────────
+function toggleTheme(){
+  const html=document.documentElement; const isDark=html.dataset.theme==='dark';
+  const next=isDark?'light':'dark'; html.dataset.theme=next;
+  localStorage.setItem('np-theme',next);
+  document.getElementById('theme-icon').className=isDark?'fa-regular fa-moon':'fa-regular fa-sun';
+}
+function applyThemeIcon(){
+  const isDark=document.documentElement.dataset.theme==='dark';
+  const icon=document.getElementById('theme-icon');
+  if(icon) icon.className=isDark?'fa-regular fa-sun':'fa-regular fa-moon';
+}
+
+// ─── SCROLL ────────────────────────────────────────
+const heroNames={ru:'Наталья<br><em>Пчелина</em>',en:'Natalya<br><em>Pchelina</em>',zh:'娜塔利亚<br><em>普切利娜</em>'};
+
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('navbar');
+  if(nav) nav.classList.toggle('scrolled',window.scrollY>40);
+
+  // Name in navbar
+  const heroNameEl=document.getElementById('hero-name');
+  const navName=document.getElementById('navbar-name');
+  if(heroNameEl&&navName){
+    const rect=heroNameEl.getBoundingClientRect();
+    const show=rect.bottom<70;
+    navName.classList.toggle('visible',show);
+  }
+
+  // Order button: fly into navbar when hero btn scrolls away
+  const heroBtn=document.getElementById('hero-order-btn');
+  const navBtn=document.getElementById('navbar-order-btn');
+  if(heroBtn&&navBtn){
+    const heroBtnRect=heroBtn.getBoundingClientRect();
+    navBtn.classList.toggle('visible', heroBtnRect.bottom < 0);
+  }
+
+  // Active nav link
+  const sections=['hero','services','portfolio','skills','contact'];
+  let current='hero';
+  sections.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-120)current=id;});
+  document.querySelectorAll('.nav-link').forEach(l=>{const href=l.getAttribute('href');l.classList.toggle('active',href==='#'+current||href==='index.html#'+current);});
+  document.querySelectorAll('.mobile-nav-item').forEach(l=>{const href=l.getAttribute('href');l.classList.toggle('active',href==='#'+current);});
+});
+
+// ─── MOBILE MENU ───────────────────────────────────
+function toggleMobileMenu(){
+  const drop=document.getElementById('mobile-nav-drop');
+  const btn=document.getElementById('mobile-menu-btn');
+  const icon=document.getElementById('mobile-menu-icon');
+  const isOpen=drop.classList.toggle('open');
+  btn.classList.toggle('open',isOpen);
+  icon.className=isOpen?'fa-solid fa-xmark':'fa-solid fa-bars';
+}
+function closeMobileMenu(){
+  document.getElementById('mobile-nav-drop').classList.remove('open');
+  document.getElementById('mobile-menu-btn').classList.remove('open');
+  document.getElementById('mobile-menu-icon').className='fa-solid fa-bars';
+}
+document.addEventListener('click',e=>{
+  const drop=document.getElementById('mobile-nav-drop');
+  const btn=document.getElementById('mobile-menu-btn');
+  if(drop&&drop.classList.contains('open')&&!drop.contains(e.target)&&!btn.contains(e.target))closeMobileMenu();
+});
+
+// ─── CONTACT / POPUPS ──────────────────────────────
+function openContactPopup(){
+  closeServiceModal();
+  setTimeout(()=>{document.getElementById('contact-popup').classList.add('open');document.body.style.overflow='hidden';},200);
+}
+function closeContactPopup(e){
+  if(!e||e.target===document.getElementById('contact-popup')){
+    document.getElementById('contact-popup').classList.remove('open');document.body.style.overflow='';
+  }
+}
+document.getElementById('popup-form').addEventListener('submit',async e=>{
+  e.preventDefault();const form=e.target;
+  try{const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+  if(res.ok){document.getElementById('popup-form-wrap').style.display='none';document.getElementById('popup-success').classList.add('show');}}catch{}
+});
+
+<<<<<<< Updated upstream
+function openByIndex(i){
+    if (!images.length) collectImages();
+    index = (i + images.length) % images.length;
+    lbImg.src = images[index];
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('no-scroll');
+  }
+  function close(){
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('no-scroll');
+  }
+  function prev(){
+    openByIndex(index - 1);
+  }
+  function next(){
+    openByIndex(index + 1);
+  }
+  
+  // Делегируем клик по картинке в гриде
+  if (grid) {
+    grid.addEventListener('click', (e) => {
+      const img = e.target.closest('img');
+      if (!img) return;
+=======
+// ─── VCARD / DOWNLOADS ─────────────────────────────
+function downloadVCard(){
+  const lang=currentLang;
+  const cfg={ru:{fn:'Наталья Пчелина',n:'Пчелина;Наталья;;;',title:'Дизайнер-конструктор'},en:{fn:'Natalya Pchelina',n:'Pchelina;Natalya;;;',title:'Fashion Designer & Pattern Maker'},zh:{fn:'娜塔利亚·普切利娜',n:'普切利娜;娜塔利亚;;;',title:'时装设计师 & 制版师'}};
+  const c=cfg[lang];
+  const vcard=['BEGIN:VCARD','VERSION:3.0',`FN:${c.fn}`,`N:${c.n}`,`TITLE:${c.title}`,'ORG:NP Pchelina Design','TEL;TYPE=CELL:+79036040666','EMAIL;TYPE=WORK:npchel93@gmail.com','URL:https://npchelina.ru','X-SOCIALPROFILE;TYPE=telegram:https://t.me/npchel','NOTE:Telegram: @npchel | npchelina.ru','END:VCARD'].join('\n');
+  const blob=new Blob([vcard],{type:'text/vcard'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='NPchelina.vcf';a.click();
+}
+function goToPrice(){window.location.href='price.html?lang='+currentLang;}
+function downloadCV(){
+  window.open('resume-'+currentLang+'.pdf','_blank');
+}
+
+// ─── PORTFOLIO PREVIEW ─────────────────────────────
+function getTagsForLang(p,lang){
+  if(lang==='en'&&p.tags_en)return p.tags_en;
+  if(lang==='zh'&&p.tags_zh)return p.tags_zh;
+  return p.tags||[];
+}
+>>>>>>> Stashed changes
+
+function renderPortfolioPreview(){
+  if(typeof PROJECTS==='undefined') return;
+  const preview=document.getElementById('portfolio-preview');if(!preview) return;
+  const lang=currentLang;const items=PROJECTS.slice(0,4);
+
+  preview.innerHTML=items.map(p=>{
+    const title=p[lang]?.title||p.ru.title;
+    const tags=getTagsForLang(p,lang);
+    const imgs=p.photos.map((src,i)=>
+      `<img class="card-img${i===0?' active':''}" src="${src}" alt="${title} ${i+1}" loading="${i===0?'eager':'lazy'}">`
+    ).join('');
+    const tagHtml=tags.slice(0,3).map(t=>`<span class="card-tag-item">${t}</span>`).join('');
+    return `<a class="project-card" href="project.html?id=${p.id}">
+      <div class="card-title">${title}</div>
+      <div class="card-img-wrap">
+        ${imgs||`<div class="card-img-placeholder"><span>${title.charAt(0)}</span></div>`}
+      </div>
+      <div class="card-progress">
+        <div class="card-progress-fill" style="width:${p.photos.length>0?Math.round(100/p.photos.length):100}%"></div>
+      </div>
+      <div class="card-tags-row">${tagHtml}</div>
+    </a>`;
+  }).join('');
+
+  // hover scrub on each card (same as portfolio.html)
+  preview.querySelectorAll('.project-card').forEach(card=>{
+    const imgs=card.querySelectorAll('.card-img');
+    const fill=card.querySelector('.card-progress-fill');
+    const wrap=card.querySelector('.card-img-wrap');
+    if(!imgs.length) return;
+    let ci=0;
+    function show(idx){imgs.forEach((img,i)=>img.classList.toggle('active',i===idx));if(fill)fill.style.width=`${((idx+1)/imgs.length)*100}%`;}
+    show(0);
+    wrap.addEventListener('mousemove',e=>{
+      const rect=wrap.getBoundingClientRect();
+      const idx=Math.max(0,Math.min(imgs.length-1,Math.floor((e.clientX-rect.left)/rect.width*imgs.length)));
+      if(idx!==ci){ci=idx;show(ci);}
+    });
+    wrap.addEventListener('mouseleave',()=>show(0));
+    wrap.addEventListener('touchmove',e=>{
+      e.preventDefault();
+      const rect=wrap.getBoundingClientRect();
+      const idx=Math.max(0,Math.min(imgs.length-1,Math.floor((e.touches[0].clientX-rect.left)/rect.width*imgs.length)));
+      if(idx!==ci){ci=idx;show(ci);}
+    },{passive:false});
+  });
+}
+
+// ─── CONTACT SCROLL FIX ────────────────────────────
+// Scroll so the section label ("Контакт") is right below navbar, not section top with 7rem padding
+function scrollToContact(behavior){
+  const section=document.getElementById('contact');
+  if(!section)return;
+  const navH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'))||52;
+  const label=section.querySelector('.section-label')||section;
+  const top=label.getBoundingClientRect().top+window.scrollY-navH-4;
+  window.scrollTo({top,behavior:behavior||'smooth'});
+}
+document.querySelectorAll('a[href="#contact"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    history.pushState(null,'','#contact');
+    scrollToContact('smooth');
+  });
+});
+if(location.hash==='#contact'){
+  window.addEventListener('load',function(){scrollToContact('instant');});
+}
+
+// ─── FADE IN ───────────────────────────────────────
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.12});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+// ─── INIT ──────────────────────────────────────────
+const savedLang=localStorage.getItem('np-lang')||'ru';
+applyThemeIcon();
+renderBrands();
+setLang(savedLang);
+setTimeout(()=>{renderPortfolioPreview();},0);
+</script>
+<script>
+  (function(){
+    const burger = document.getElementById('burger');
+    const nav = document.getElementById('navbar');
+    if(!burger || !nav) return;
+
+    burger.addEventListener('click', () => {
+      const open = burger.classList.toggle('is-open');
+      nav.classList.toggle('is-open', open);
+      document.body.classList.toggle('menu-open', open);
+      burger.setAttribute('aria-expanded', open);
+    });
+
+    /* клик по ссылке — закрыть; клик по фону оверлея — тоже закрыть */
+    nav.addEventListener('click', e=>{
+      const linkClicked = !!e.target.closest('a');
+      const clickedBackdrop = e.target === nav;
+      if (linkClicked || clickedBackdrop){
+        burger.classList.remove('is-open');
+        nav.classList.remove('is-open');
+        document.body.classList.remove('menu-open');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
