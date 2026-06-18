@@ -142,29 +142,60 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
   border-right:1px solid var(--border);border-bottom:1px solid var(--border);
   overflow:hidden;max-height:0;opacity:0;
   transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;
-  width:56px;border-radius:0 0 12px 0;
+  width:160px;border-radius:0 0 12px 0;
 }
-.mobile-nav-drop.open{max-height:360px;opacity:1;}
+.mobile-nav-drop.open{max-height:700px;opacity:1;}
 .mobile-nav-item{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:3px;padding:0.9rem 0;color:var(--text-muted);text-decoration:none;
-  font-size:9px;letter-spacing:0.1em;text-transform:uppercase;
+  display:flex;flex-direction:row;align-items:center;justify-content:flex-start;
+  gap:10px;padding:0.75rem 1rem;color:var(--text-muted);text-decoration:none;
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
   font-family:var(--font-body);border-bottom:1px solid var(--border);
   transition:color var(--transition),background var(--transition);
   cursor:pointer;background:none;border-left:none;border-right:none;width:100%;
+  text-align:left;
 }
 .mobile-nav-item:last-child{border-bottom:none;}
-.mobile-nav-item i{font-size:14px;}
+.mobile-nav-item i{font-size:14px;flex-shrink:0;width:16px;text-align:center;}
 .mobile-nav-item:hover,.mobile-nav-item.active{color:var(--accent);background:var(--accent-dim);}
+.mobile-nav-divider{height:1px;background:var(--border-accent);margin:0;opacity:0.4;}
+
+/* ─── LANG DROPDOWN ──────────────────────────────── */
+.lang-drop{position:relative;}
+.lang-drop-trigger{
+  background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;
+  letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);cursor:pointer;
+  padding:2px 0;border-bottom:1px solid var(--accent);
+  transition:color var(--transition);
+}
+.lang-drop-menu{
+  position:absolute;top:calc(100% + 8px);left:0;z-index:200;
+  display:flex;flex-direction:column;gap:0;
+  background:var(--bg2);border:1px solid var(--border);
+  overflow:hidden;max-height:0;opacity:0;
+  transition:max-height 0.25s ease,opacity 0.2s;
+  min-width:52px;
+}
+.lang-drop.open .lang-drop-menu{max-height:120px;opacity:1;}
+.lang-drop-opt{
+  background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;
+  letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;
+  padding:6px 12px;text-align:left;
+  transition:color var(--transition),background var(--transition);
+  border-bottom:1px solid var(--border);
+}
+.lang-drop-opt:last-child{border-bottom:none;}
+.lang-drop-opt:hover{color:var(--accent);background:var(--accent-dim);}
 
 /* ─── MOBILE OVERRIDES ───────────────────────────── */
 @media(max-width:900px){
   .navbar{padding:0 1rem;}
   .navbar-menu{display:none;}
   .mobile-menu-btn{display:flex;}
-  .navbar-langs{gap:0.75rem;}
   .navbar-icons{gap:0.75rem;}
   .icon-btn .tooltip{display:none;}
+  /* Hide all icon buttons except theme + process on mobile */
+  .navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}
+  .navbar-order-btn{display:none !important;}
   /* On mobile, name goes full width in center col, shown by opacity only */
   .navbar-name{
     max-width:unset !important; overflow:visible !important;
@@ -173,9 +204,6 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     width:100%;
   }
   .navbar-name-sep{display:none !important;}
-}
-@media(max-width:500px){
-  .navbar-icons .icon-btn:nth-child(3){display:none;}
 }
 
 /* ─── CONTENT ────────────────────────────────────── */
@@ -226,7 +254,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 .hero-name em{font-style:italic;color:var(--accent);}
 .hero-sub{font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);font-weight:300;}
 @media(max-width:768px){
-  .hero{padding:calc(var(--nav-h) + 1.5rem) 0 3rem;}
+  .hero{padding:calc(var(--nav-h) + 0.75rem) 0 3rem;}
   .hero-name{font-size:clamp(3rem,14vw,5rem);}
 }
 
@@ -250,6 +278,11 @@ section{padding:7rem 0;position:relative;}
 }
 @media(max-width:900px){.services-grid-4{grid-template-columns:1fr 1fr;}}
 @media(max-width:500px){.services-grid-4{grid-template-columns:1fr;}}
+@media(max-width:768px){
+  .service-card{padding:1.25rem 1.25rem;}
+  .service-num{margin-bottom:0.75rem;}
+  .service-desc{margin-bottom:1rem;}
+}
 
 .service-card{
   background:var(--bg);padding:2rem 1.75rem;position:relative;
@@ -470,6 +503,12 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
 
 /* ─── PORTFOLIO PREVIEW ──────────────────────────── */
 #portfolio{background:var(--bg2);}
+#portfolio-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:2rem;}
+@media(max-width:900px){#portfolio-preview{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:500px){
+  #portfolio-preview{grid-template-columns:1fr;}
+  .card-title{height:auto;-webkit-line-clamp:1;line-clamp:1;}
+}
 
 /* ─── FADE IN ────────────────────────────────────── */
 .fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
@@ -497,11 +536,17 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
 
 <!-- MOBILE DROPDOWN -->
 <div class="mobile-nav-drop" id="mobile-nav-drop">
-  <a href="#hero"          class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-house"></i></a>
-  <a href="services.html"  class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-layer-group"></i></a>
-  <a href="portfolio.html" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-images"></i></a>
-  <a href="#skills"        class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-star"></i></a>
-  <a href="#contact"       class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-envelope"></i></a>
+  <a href="#hero"          class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-solid fa-house"></i><span data-i18n="nav_home">Главная</span></a>
+  <a href="services.html"  class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-solid fa-layer-group"></i><span data-i18n="nav_services">Услуги</span></a>
+  <a href="portfolio.html" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-images"></i><span data-i18n="nav_portfolio">Портфолио</span></a>
+  <a href="#skills"        class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-star"></i><span data-i18n="nav_skills">Навыки</span></a>
+  <a href="#contact"       class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-envelope"></i><span data-i18n="nav_contact">Контакт</span></a>
+  <div class="mobile-nav-divider"></div>
+  <button class="mobile-nav-item" onclick="downloadVCard();closeMobileMenu()"><i class="fa-regular fa-address-card"></i><span data-i18n="tooltip_vcard">Сохранить контакт</span></button>
+  <button class="mobile-nav-item" onclick="goToPrice();closeMobileMenu()"><i class="fa-regular fa-file-lines"></i><span data-i18n="tooltip_price">Прайс-лист</span></button>
+  <button class="mobile-nav-item" onclick="downloadCV();closeMobileMenu()"><i class="fa-regular fa-file-pdf"></i><span data-i18n="tooltip_cv">Резюме PDF</span></button>
+  <a href="process.html"   class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-circle-question"></i><span data-i18n="tooltip_process">Как мы работаем</span></a>
+  <a href="privacy.html"   class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-solid fa-shield-halved"></i><span data-i18n="tooltip_privacy">Конфиденциальность</span></a>
 </div>
 
 <!-- NAVBAR -->
@@ -511,10 +556,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">
       <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
     </button>
-    <div class="navbar-langs">
-      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    <div class="lang-drop" id="lang-drop">
+      <button class="lang-drop-trigger" id="lang-drop-trigger" onclick="toggleLangDrop(event)">RU</button>
+      <div class="lang-drop-menu" id="lang-drop-menu"></div>
     </div>
   </div>
 
@@ -547,7 +591,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
       <i class="fa-regular fa-file-pdf"></i>
       <span class="tooltip" data-i18n="tooltip_cv">Резюме PDF</span>
     </button>
-    <a href="process.html" class="icon-btn">
+    <a href="process.html" class="icon-btn process-btn">
       <i class="fa-regular fa-circle-question"></i>
       <span class="tooltip" data-i18n="tooltip_process">Как мы работаем</span>
     </a>
@@ -555,7 +599,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
       <i class="fa-solid fa-shield-halved"></i>
       <span class="tooltip" data-i18n="tooltip_privacy">Конфиденциальность</span>
     </a>
-    <button class="icon-btn" onclick="toggleTheme()">
+    <button class="icon-btn theme-btn" onclick="toggleTheme()">
       <i class="fa-regular fa-sun" id="theme-icon"></i>
       <span class="tooltip" data-i18n="tooltip_theme">Тема</span>
     </button>
@@ -632,7 +676,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
 <section id="portfolio" style="padding-bottom:4rem;">
   <div class="container">
     <div class="section-label fade-in" data-i18n="portfolio_label">Проекты</div>
-    <div id="portfolio-preview" style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:2rem;"></div>
+    <div id="portfolio-preview"></div>
     <div style="text-align:center;">
       <a href="portfolio.html" style="display:inline-flex;align-items:center;gap:.75rem;font-family:var(--font-body);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--border-accent);padding-bottom:.25rem;transition:color var(--transition),border-color var(--transition);" data-i18n="portfolio_all">
         Смотреть все проекты <i class="fa-solid fa-arrow-right" style="font-size:10px;"></i>
@@ -834,12 +878,34 @@ const i18n = {
 };
 let currentLang='ru';
 
+const LANGS=[{code:'ru',label:'RU'},{code:'en',label:'EN'},{code:'zh',label:'中文'}];
+
+function updateLangDrop(){
+  const trigger=document.getElementById('lang-drop-trigger');
+  const menu=document.getElementById('lang-drop-menu');
+  const active=LANGS.find(l=>l.code===currentLang);
+  if(trigger) trigger.textContent=active?active.label:'RU';
+  if(menu) menu.innerHTML=LANGS.filter(l=>l.code!==currentLang)
+    .map(l=>`<button class="lang-drop-opt" onclick="setLang('${l.code}')">${l.label}</button>`)
+    .join('');
+}
+
+function toggleLangDrop(e){
+  if(e) e.stopPropagation();
+  document.getElementById('lang-drop').classList.toggle('open');
+}
+
+document.addEventListener('click',function(){
+  const d=document.getElementById('lang-drop');
+  if(d) d.classList.remove('open');
+});
+
 function setLang(lang){
   currentLang=lang;
   localStorage.setItem('np-lang',lang);
-  document.querySelectorAll('.lang-btn').forEach(b=>{
-    b.classList.toggle('active',b.textContent.toLowerCase()===lang||(lang==='zh'&&b.textContent==='中文'));
-  });
+  const d=document.getElementById('lang-drop');
+  if(d) d.classList.remove('open');
+  updateLangDrop();
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k=el.dataset.i18n;
     if(i18n[lang][k]&&typeof i18n[lang][k]==='string'){
@@ -929,7 +995,7 @@ function renderSkills(){
 }
 
 // ─── BRANDS ────────────────────────────────────────
-const brands=[{name:'Vincult',img:'https://npchelina.ru/brands/vinkult_h70.png'},{name:'Franky',img:'https://npchelina.ru/brands/franky_h70.png'},{name:'Vertango',img:'https://npchelina.ru/brands/logo_vertango_white_h70.png'},{name:'Pachkoriya',img:'https://npchelina.ru/brands/logo_pachkoriya_white_padded.png'},{name:'Дом музыки',img:'https://npchelina.ru/brands/logo_dommuzyki_white_h70.png'},{name:'KraftiShop',img:'https://npchelina.ru/brands/kraftishop_transparent_white.png'},{name:'Edinovlastie',img:'https://npchelina.ru/brands/edinovlastie_white_final.png'}];
+const brands=[{name:'Vincult',img:'brands/vinkult_h70.png'},{name:'Franky',img:'brands/franky_h70.png'},{name:'Vertango',img:'brands/logo_vertango_white_h70.png'},{name:'Pachkoriya',img:'brands/logo_pachkoriya_white_padded.png'},{name:'Дом музыки',img:'brands/logo_dommuzyki_white_h70.png'},{name:'KraftiShop',img:'brands/kraftishop_transparent_white.png'},{name:'Edinovlastie',img:'brands/edinovlastie_white_final.png'},{name:'Darkside',img:'brands/logo_darkside_white_h70.png'},{name:'Твоя уникальность',img:'brands/tvoya_unikalnost_logo.png'}];
 function renderBrands(){
   const track=document.getElementById('brands-track');
   const doubled=[...brands,...brands];
@@ -1116,6 +1182,7 @@ const savedLang=localStorage.getItem('np-lang')||'ru';
 applyThemeIcon();
 renderBrands();
 setLang(savedLang);
+updateLangDrop();
 setTimeout(()=>{renderPortfolioPreview();},0);
 </script>
 </body>

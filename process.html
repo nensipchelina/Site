@@ -48,7 +48,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
 .nav-link:hover{color:var(--accent);border-bottom-color:var(--accent);}
 .icon-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px;transition:color var(--transition);}
 .icon-btn:hover{color:var(--accent);}
-@media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-langs{gap:0.75rem;}.navbar-icons{gap:0.75rem;}.navbar-name{padding-right:0;border-right:none;margin-right:0;}}
+@media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-langs{gap:0.75rem;}.navbar-icons{gap:0.75rem;}.navbar-name{padding-right:0;border-right:none;margin-right:0;.navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}.navbar-order-btn{display:none!important;}}
 
 .mobile-nav-drop{position:fixed;top:var(--nav-h);left:0;z-index:99;display:flex;flex-direction:column;background:var(--bg2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;width:56px;border-radius:0 0 12px 0;}
 .mobile-nav-drop.open{max-height:360px;opacity:1;}
@@ -162,9 +162,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
         <button class="icon-btn" onclick="downloadVCard()"><i class="fa-regular fa-address-card"></i></button>
     <button class="icon-btn" onclick="window.open('price-'+currentLang+'.pdf','_blank')"><i class="fa-regular fa-file-lines"></i></button>
     <button class="icon-btn" onclick="window.open('resume-'+currentLang+'.pdf','_blank')"><i class="fa-regular fa-file-pdf"></i></button>
-    <a href="process.html" class="icon-btn" title="Как мы работаем"><i class="fa-regular fa-circle-question"></i></a>
+    <a href="process.html" class="icon-btn process-btn" title="Как мы работаем"><i class="fa-regular fa-circle-question"></i></a>
     <a href="privacy.html" class="icon-btn" title="Конфиденциальность"><i class="fa-solid fa-shield-halved"></i></a>
-    <button class="icon-btn" onclick="toggleTheme()"><i class="fa-regular fa-sun" id="theme-icon"></i></button>
+    <button class="icon-btn theme-btn" onclick="toggleTheme()"><i class="fa-regular fa-sun" id="theme-icon"></i></button>
   </div>
 </nav>
 

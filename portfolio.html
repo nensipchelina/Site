@@ -84,6 +84,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
   .navbar-langs{gap:0.75rem;}
   .navbar-icons{gap:0.75rem;}
   .navbar-name{max-width:unset!important;overflow:visible!important;padding-right:0!important;text-align:center;width:100%;}
+  .navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}
+  .navbar-order-btn{display:none!important;}
 }
 
 /* ─── MOBILE DROPDOWN ────────────────────────────── */
@@ -295,9 +297,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <button class="icon-btn" onclick="downloadVCard()"><i class="fa-regular fa-address-card"></i></button>
     <button class="icon-btn" onclick="window.location.href='price.html?lang='+currentLang"><i class="fa-regular fa-file-lines"></i></button>
     <button class="icon-btn" onclick="downloadResume()"><i class="fa-regular fa-file-pdf"></i></button>
-        <a href="process.html" class="icon-btn" title="Как мы работаем"><i class="fa-regular fa-circle-question"></i></a>
+        <a href="process.html" class="icon-btn process-btn" title="Как мы работаем"><i class="fa-regular fa-circle-question"></i></a>
     <a href="privacy.html" class="icon-btn" title="Конфиденциальность"><i class="fa-solid fa-shield-halved"></i></a>
-    <button class="icon-btn" onclick="toggleTheme()"><i class="fa-regular fa-sun" id="theme-icon"></i></button>
+    <button class="icon-btn theme-btn" onclick="toggleTheme()"><i class="fa-regular fa-sun" id="theme-icon"></i></button>
   </div>
 </nav>
 

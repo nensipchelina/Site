@@ -61,12 +61,22 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
 @media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-langs{gap:0.75rem;}.navbar-icons{gap:0.75rem;}.navbar-name{max-width:unset!important;overflow:visible!important;padding-right:0!important;text-align:center;width:100%;}}
 
 /* ─── MOBILE DROPDOWN ────────────────────────────── */
-.mobile-nav-drop{position:fixed;top:var(--nav-h);left:0;z-index:99;display:flex;flex-direction:column;background:var(--bg2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;width:56px;border-radius:0 0 12px 0;}
-.mobile-nav-drop.open{max-height:360px;opacity:1;}
-.mobile-nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0.9rem 0;color:var(--text-muted);text-decoration:none;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-body);border-bottom:1px solid var(--border);transition:color var(--transition),background var(--transition);background:none;border-left:none;border-right:none;width:100%;cursor:pointer;}
+.mobile-nav-drop{position:fixed;top:var(--nav-h);left:0;z-index:99;display:flex;flex-direction:column;background:var(--bg2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;width:160px;border-radius:0 0 12px 0;}
+.mobile-nav-drop.open{max-height:700px;opacity:1;}
+.mobile-nav-item{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;padding:0.75rem 1rem;color:var(--text-muted);text-decoration:none;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-body);border-bottom:1px solid var(--border);transition:color var(--transition),background var(--transition);background:none;border-left:none;border-right:none;width:100%;cursor:pointer;text-align:left;}
 .mobile-nav-item:last-child{border-bottom:none;}
-.mobile-nav-item i{font-size:14px;}
+.mobile-nav-item i{font-size:14px;flex-shrink:0;width:16px;text-align:center;}
 .mobile-nav-item:hover,.mobile-nav-item.active{color:var(--accent);background:var(--accent-dim);}
+.mobile-nav-divider{height:1px;background:var(--border-accent);margin:0;opacity:0.4;}
+/* ─── LANG DROPDOWN ──────────────────────────────── */
+.lang-drop{position:relative;}
+.lang-drop-trigger{background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);cursor:pointer;padding:2px 0;border-bottom:1px solid var(--accent);transition:color var(--transition);}
+.lang-drop-menu{position:absolute;top:calc(100% + 8px);left:0;z-index:200;display:flex;flex-direction:column;background:var(--bg2);border:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.25s ease,opacity 0.2s;min-width:52px;}
+.lang-drop.open .lang-drop-menu{max-height:120px;opacity:1;}
+.lang-drop-opt{background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;padding:6px 12px;text-align:left;transition:color var(--transition),background var(--transition);border-bottom:1px solid var(--border);}
+.lang-drop-opt:last-child{border-bottom:none;}
+.lang-drop-opt:hover{color:var(--accent);background:var(--accent-dim);}
+@media(max-width:900px){.navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}.navbar-order-btn{display:none!important;}}
 
 /* ─── BREADCRUMB ─────────────────────────────────── */
 .breadcrumb{
@@ -90,8 +100,14 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
 
 /* ─── PROJECT LAYOUT ─────────────────────────────── */
 .project-layout{display:grid;grid-template-columns:1fr 260px;gap:4rem;padding:2.5rem 2.5rem 6rem;align-items:start;}
-@media(max-width:900px){.project-layout{grid-template-columns:1fr;gap:2.5rem;}.project-sidebar{order:-1;}}
-@media(max-width:600px){.project-layout{padding-left:1.25rem;padding-right:1.25rem;}}
+@media(max-width:900px){
+  .project-layout{display:flex;flex-direction:column;gap:2rem;padding:1.5rem 1.25rem 4rem;}
+  .project-main{order:2;}
+  .project-sidebar{display:contents;}
+  .project-sidebar > .sidebar-section:first-child{order:1;} /* tags → top */
+  .project-sidebar > .sidebar-section:nth-child(2){order:3;} /* related → after services */
+  .sidebar-order{order:4;} /* order btn → bottom */
+}
 
 /* ─── MAIN CONTENT ───────────────────────────────── */
 .project-main{min-width:0;}
@@ -186,11 +202,17 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
 
 <!-- MOBILE DROPDOWN -->
 <div class="mobile-nav-drop" id="mobile-nav-drop">
-  <a href="index.html"         class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-house"></i></a>
-  <a href="services.html"      class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-layer-group"></i></a>
-  <a href="portfolio.html"     class="mobile-nav-item active" onclick="closeMobileMenu()"><i class="fa-regular fa-images"></i></a>
-  <a href="index.html#skills"  class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-star"></i></a>
-  <a href="index.html#contact" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-envelope"></i></a>
+  <a href="index.html"         class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-solid fa-house"></i><span data-i18n="nav_home">Главная</span></a>
+  <a href="services.html"      class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-solid fa-layer-group"></i><span data-i18n="nav_services">Услуги</span></a>
+  <a href="portfolio.html"     class="mobile-nav-item active" onclick="closeMobileMenu()"><i class="fa-regular fa-images"></i><span data-i18n="nav_portfolio">Портфолио</span></a>
+  <a href="index.html#skills"  class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-star"></i><span data-i18n="nav_skills">Навыки</span></a>
+  <a href="index.html#contact" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-envelope"></i><span data-i18n="nav_contact">Контакт</span></a>
+  <div class="mobile-nav-divider"></div>
+  <button class="mobile-nav-item" onclick="downloadVCard();closeMobileMenu()"><i class="fa-regular fa-address-card"></i><span>Сохранить контакт</span></button>
+  <button class="mobile-nav-item" onclick="goToPrice();closeMobileMenu()"><i class="fa-regular fa-file-lines"></i><span>Прайс-лист</span></button>
+  <button class="mobile-nav-item" onclick="downloadResume();closeMobileMenu()"><i class="fa-regular fa-file-pdf"></i><span>Резюме PDF</span></button>
+  <a href="process.html"       class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-circle-question"></i><span>Как мы работаем</span></a>
+  <a href="privacy.html"       class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-solid fa-shield-halved"></i><span>Конфиденциальность</span></a>
 </div>
 
 <!-- NAVBAR -->
@@ -199,10 +221,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">
       <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
     </button>
-    <div class="navbar-langs">
-      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    <div class="lang-drop" id="lang-drop">
+      <button class="lang-drop-trigger" id="lang-drop-trigger" onclick="toggleLangDrop(event)">RU</button>
+      <div class="lang-drop-menu" id="lang-drop-menu"></div>
     </div>
   </div>
   <div class="navbar-center-wrap">
@@ -222,9 +243,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <button class="icon-btn" onclick="downloadVCard()"><i class="fa-regular fa-address-card"></i></button>
     <button class="icon-btn" onclick="goToPrice()"><i class="fa-regular fa-file-lines"></i></button>
     <button class="icon-btn" onclick="downloadResume()"><i class="fa-regular fa-file-pdf"></i></button>
-    <a href="process.html" class="icon-btn" title="Как мы работаем"><i class="fa-regular fa-circle-question"></i></a>
+    <a href="process.html" class="icon-btn process-btn" title="Как мы работаем"><i class="fa-regular fa-circle-question"></i></a>
     <a href="privacy.html" class="icon-btn" title="Конфиденциальность"><i class="fa-solid fa-shield-halved"></i></a>
-    <button class="icon-btn" onclick="toggleTheme()">
+    <button class="icon-btn theme-btn" onclick="toggleTheme()">
       <i class="fa-regular fa-sun" id="theme-icon"></i>
     </button>
   </div>
@@ -330,13 +351,33 @@ let currentProject=null;
 let currentIdx=0;
 let galleryIdx=0;
 
+// ─── LANG DROPDOWN ────────────────────────────────
+const LANGS=[{code:'ru',label:'RU'},{code:'en',label:'EN'},{code:'zh',label:'中文'}];
+function updateLangDrop(){
+  const trigger=document.getElementById('lang-drop-trigger');
+  const menu=document.getElementById('lang-drop-menu');
+  const active=LANGS.find(l=>l.code===currentLang);
+  if(trigger) trigger.textContent=active?active.label:'RU';
+  if(menu) menu.innerHTML=LANGS.filter(l=>l.code!==currentLang)
+    .map(l=>`<button class="lang-drop-opt" onclick="setLang('${l.code}')">${l.label}</button>`)
+    .join('');
+}
+function toggleLangDrop(e){
+  if(e) e.stopPropagation();
+  document.getElementById('lang-drop').classList.toggle('open');
+}
+document.addEventListener('click',function(){
+  const d=document.getElementById('lang-drop');
+  if(d) d.classList.remove('open');
+});
+
 // ─── LANG & THEME (with localStorage) ─────────────
 function setLang(lang){
   currentLang=lang;
   localStorage.setItem('np-lang',lang);
-  document.querySelectorAll('.lang-btn').forEach(b=>
-    b.classList.toggle('active',b.textContent.toLowerCase()===lang||(lang==='zh'&&b.textContent==='中文'))
-  );
+  const d=document.getElementById('lang-drop');
+  if(d) d.classList.remove('open');
+  updateLangDrop();
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k=el.dataset.i18n;
     if(i18n[lang][k]) el.textContent=i18n[lang][k];
@@ -475,6 +516,22 @@ function updateSiblingBtns(){
   document.getElementById('next-btn').disabled=currentIdx===PROJECTS.length-1;
 }
 
+// ─── GALLERY TOUCH SWIPE ──────────────────────────
+function initGallerySwipe(){
+  const main=document.getElementById('gallery-main');
+  if(!main) return;
+  let startX=0;
+  main.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;},{passive:true});
+  main.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-startX;
+    const n=document.querySelectorAll('#gallery-main img').length;
+    if(Math.abs(dx)>40){
+      if(dx<0) setGalleryImg(Math.min(galleryIdx+1,n-1));
+      else setGalleryImg(Math.max(galleryIdx-1,0));
+    }
+  },{passive:true});
+}
+
 // ─── INIT ─────────────────────────────────────────
 function init(){
   const params=new URLSearchParams(location.search);
@@ -485,6 +542,7 @@ function init(){
 
   applyThemeIcon();
   setLang(lang);
+  updateLangDrop();
 
   if(!id){document.getElementById('proj-title').textContent=i18n[lang].not_found;return;}
   currentProject=typeof getProjectById==='function'?getProjectById(id):PROJECTS.find(p=>p.id===id);
@@ -492,6 +550,7 @@ function init(){
   currentIdx=PROJECTS.findIndex(p=>p.id===id);
   updateSiblingBtns();
   renderProject(currentProject);
+  initGallerySwipe();
 }
 
 function downloadVCard(){const lang=currentLang;const cfg={ru:{fn:'Наталья Пчелина',n:'Пчелина;Наталья;;;',title:'Дизайнер-конструктор'},en:{fn:'Natalya Pchelina',n:'Pchelina;Natalya;;;',title:'Fashion Designer & Pattern Maker'},zh:{fn:'娜塔利亚·普切利娜',n:'普切利娜;娜塔利亚;;;',title:'时装设计师 & 制版师'}};const c=cfg[lang];const vcard=['BEGIN:VCARD','VERSION:3.0',`FN:${c.fn}`,`N:${c.n}`,`TITLE:${c.title}`,'TEL;TYPE=CELL:+79036040666','EMAIL;TYPE=WORK:npchel93@gmail.com','URL:https://npchelina.ru','END:VCARD'].join('\n');const blob=new Blob([vcard],{type:'text/vcard'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='NPchelina.vcf';a.click();}
