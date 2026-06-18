@@ -2,7 +2,7 @@
 <html lang="ru" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Политика конфиденциальности — Наталья Пчелина</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,20 +43,28 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
 .navbar-menu{display:flex;gap:2.5rem;align-items:center;}
 .navbar-icons{display:flex;gap:1.25rem;align-items:center;justify-content:flex-end;}
 .lang-btn{background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;padding:2px 0;border-bottom:1px solid transparent;transition:color var(--transition),border-color var(--transition);}
-.lang-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
 .nav-link{font-family:var(--font-body);font-size:11px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-secondary);text-decoration:none;padding:2px 0;border-bottom:1px solid transparent;transition:color var(--transition),border-color var(--transition);}
 .nav-link:hover{color:var(--accent);border-bottom-color:var(--accent);}
 .icon-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px;transition:color var(--transition);}
 .icon-btn:hover{color:var(--accent);}
-@media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-langs{gap:0.75rem;}.navbar-icons{gap:0.75rem;}.navbar-name{padding-right:0;border-right:none;margin-right:0;.navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}.navbar-order-btn{display:none!important;}}
+@media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-icons{gap:0.75rem;}.navbar-name{padding-right:0;border-right:none;margin-right:0;.navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}.navbar-order-btn{display:none!important;}}
 
 /* MOBILE DROPDOWN */
-.mobile-nav-drop{position:fixed;top:var(--nav-h);left:0;z-index:99;display:flex;flex-direction:column;background:var(--bg2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;width:56px;border-radius:0 0 12px 0;}
-.mobile-nav-drop.open{max-height:360px;opacity:1;}
-.mobile-nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0.9rem 0;color:var(--text-muted);text-decoration:none;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-body);border-bottom:1px solid var(--border);transition:color var(--transition),background var(--transition);background:none;border-left:none;border-right:none;width:100%;cursor:pointer;}
+.mobile-nav-drop{position:fixed;top:var(--nav-h);left:0;z-index:99;display:flex;flex-direction:column;background:var(--bg2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;width:160px;border-radius:0 0 12px 0;}
+.mobile-nav-drop.open{max-height:700px;opacity:1;}
+.mobile-nav-item{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;padding:0.75rem 1rem;color:var(--text-muted);text-decoration:none;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-body);border-bottom:1px solid var(--border);transition:color var(--transition),background var(--transition);background:none;border-left:none;border-right:none;width:100%;cursor:pointer;text-align:left;}
 .mobile-nav-item:last-child{border-bottom:none;}
-.mobile-nav-item i{font-size:14px;}
+.mobile-nav-item i{font-size:14px;flex-shrink:0;width:16px;text-align:center;}
+.mobile-nav-divider{height:1px;background:var(--border-accent);margin:0;opacity:0.4;}
 .mobile-nav-item:hover{color:var(--accent);background:var(--accent-dim);}
+.lang-drop{position:relative;}
+.lang-drop-trigger{background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);cursor:pointer;padding:2px 0;border-bottom:1px solid var(--accent);transition:color var(--transition);}
+.lang-drop-menu{position:absolute;top:calc(100% + 8px);left:0;z-index:200;display:flex;flex-direction:column;background:var(--bg2);border:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.25s ease,opacity 0.2s;min-width:52px;}
+.lang-drop.open .lang-drop-menu{max-height:120px;opacity:1;}
+.lang-drop-opt{background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;padding:6px 12px;text-align:left;transition:color var(--transition),background var(--transition);border-bottom:1px solid var(--border);}
+.lang-drop-opt:last-child{border-bottom:none;}
+.lang-drop-opt:hover{color:var(--accent);background:var(--accent-dim);}
 
 /* ─── PAGE ─── */
 .page-wrap{max-width:760px;margin:0 auto;padding:calc(var(--nav-h) + 3rem) 2.5rem 6rem;}
@@ -106,21 +114,27 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
 </head>
 <body>
 
+<!-- MOBILE DROPDOWN -->
 <div class="mobile-nav-drop" id="mobile-nav-drop">
-  <a href="index.html"         class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-house"></i></a>
-  <a href="services.html"      class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-layer-group"></i></a>
-  <a href="portfolio.html"     class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-images"></i></a>
-  <a href="index.html#skills"  class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-star"></i></a>
-  <a href="index.html#contact" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-envelope"></i></a>
+  <a href="index.html" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-solid fa-house"></i><span data-i18n="nav_home">Главная</span></a>
+  <a href="services.html" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-solid fa-layer-group"></i><span data-i18n="nav_services">Услуги</span></a>
+  <a href="portfolio.html" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-images"></i><span data-i18n="nav_portfolio">Портфолио</span></a>
+  <a href="index.html#skills" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-star"></i><span data-i18n="nav_skills">Навыки</span></a>
+  <a href="index.html#contact" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-envelope"></i><span data-i18n="nav_contact">Контакт</span></a>
+  <div class="mobile-nav-divider"></div>
+  <button class="mobile-nav-item" onclick="downloadVCard();closeMobileMenu()"><i class="fa-regular fa-address-card"></i><span>Сохранить контакт</span></button>
+  <button class="mobile-nav-item" onclick="window.location.href='price.html';closeMobileMenu()"><i class="fa-regular fa-file-lines"></i><span>Прайс-лист</span></button>
+  <button class="mobile-nav-item" onclick="window.open('resume-'+(typeof currentLang!=='undefined'?currentLang:localStorage.getItem('np-lang')||'ru')+'.pdf','_blank');closeMobileMenu()"><i class="fa-regular fa-file-pdf"></i><span>Резюме PDF</span></button>
+  <a href="process.html" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-circle-question"></i><span>Как мы работаем</span></a>
+  <a href="privacy.html" class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-solid fa-shield-halved"></i><span>Конфиденциальность</span></a>
 </div>
 
 <nav class="navbar" id="navbar">
   <div class="navbar-left">
     <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars" id="mobile-menu-icon"></i></button>
-    <div class="navbar-langs">
-      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+        <div class="lang-drop" id="lang-drop">
+      <button class="lang-drop-trigger" id="lang-drop-trigger" onclick="toggleLangDrop(event)">RU</button>
+      <div class="lang-drop-menu" id="lang-drop-menu"></div>
     </div>
   </div>
   <div class="navbar-center-wrap">
@@ -225,9 +239,28 @@ const i18n={
   zh:{nav_name:'娜塔利亚 <em>普切利娜</em>'},
 };
 let currentLang='ru';
+const LANGS=[{code:'ru',label:'RU'},{code:'en',label:'EN'},{code:'zh',label:'中文'}];
+function updateLangDrop(){
+  const trigger=document.getElementById('lang-drop-trigger');
+  const menu=document.getElementById('lang-drop-menu');
+  const active=LANGS.find(l=>l.code===currentLang);
+  if(trigger) trigger.textContent=active?active.label:'RU';
+  if(menu) menu.innerHTML=LANGS.filter(l=>l.code!==currentLang)
+    .map(l=>`<button class="lang-drop-opt" onclick="setLang('${l.code}')">${l.label}</button>`)
+    .join('');
+}
+function toggleLangDrop(e){
+  if(e) e.stopPropagation();
+  document.getElementById('lang-drop').classList.toggle('open');
+}
+document.addEventListener('click',function(){
+  const d=document.getElementById('lang-drop');
+  if(d) d.classList.remove('open');
+});
+
 function setLang(lang){
   currentLang=lang;localStorage.setItem('np-lang',lang);
-  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase()===lang||(lang==='zh'&&b.textContent==='中文')));
+  const _d=document.getElementById('lang-drop');if(_d)_d.classList.remove('open');updateLangDrop();
   const nn=document.getElementById('navbar-name');if(nn)nn.innerHTML=i18n[lang].nav_name;
   // Show/hide lang blocks
   document.querySelectorAll('.lc').forEach(el=>el.style.display=el.dataset.lang===lang?'':'none');
