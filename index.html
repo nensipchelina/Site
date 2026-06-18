@@ -495,47 +495,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
 </head>
 <body>
 
-<<<<<<< Updated upstream
-<!-- ===== HEADER ===== -->
-<header id="header">
-  <div class="header-wrap">
-
-    <!-- Языки слева -->
-    <div class="language-switch">
-      <span class="lang-text active" data-lang="ru">Ru</span>
-      <span class="separator">/</span>
-      <span class="lang-text" data-lang="en">En</span>
-    </div>
-
-    <!-- Бургер (появляется только на телефоне) -->
-    <button id="burger" class="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="navbar">
-      <span></span><span></span><span></span>
-    </button>
-
-    <!-- Меню справа -->
-    <nav id="navbar" class="nav">
-      <ul class="menu-list">
-        <li class="menu-item"><a href="#about" data-ru="Обо мне" data-en="About">Обо мне</a></li>
-        <li class="menu-item"><a href="#portfolio" data-ru="Портфолио" data-en="Portfolio">Портфолио</a></li>
-        <li class="menu-item"><a href="#services" data-ru="Услуги" data-en="Services">Услуги</a></li>
-        <li class="menu-item"><a href="#contact" data-ru="Контакты" data-en="Contact">Контакты</a></li>
-      </ul>
-    </nav>
-
-  </div>
-</header>
-
-  <!-- ===== HERO ===== -->
-  <section id="hero" aria-label="Hero">
-    <div class="overlay"></div>
-    <div class="hero-content">
-      <h1 data-ru="Привет, я - Наталья Пчелина" data-en="Hello I'm Natalya Pchelina">Наталья Пчелина</h1>
-      <p class="subtitle"
-         data-ru="Дизайнер-конструктор лекал, AI, 3D"
-         data-en="Pattern Constructor, AI & 3D Designer">
-         Дизайнер-конструктор лекал, AI, 3D
-      </p>
-=======
 <!-- MOBILE DROPDOWN -->
 <div class="mobile-nav-drop" id="mobile-nav-drop">
   <a href="#hero"          class="mobile-nav-item" onclick="closeMobileMenu()"><i class="fa-regular fa-house"></i></a>
@@ -606,7 +565,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-bg"></div>
->>>>>>> Stashed changes
 
   <!-- Mannequin silhouette — peeks from behind name on the right -->
   <svg class="hero-mannequin" viewBox="0 0 220 580" xmlns="http://www.w3.org/2000/svg"
@@ -1059,31 +1017,6 @@ document.getElementById('popup-form').addEventListener('submit',async e=>{
   if(res.ok){document.getElementById('popup-form-wrap').style.display='none';document.getElementById('popup-success').classList.add('show');}}catch{}
 });
 
-<<<<<<< Updated upstream
-function openByIndex(i){
-    if (!images.length) collectImages();
-    index = (i + images.length) % images.length;
-    lbImg.src = images[index];
-    lb.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('no-scroll');
-  }
-  function close(){
-    lb.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('no-scroll');
-  }
-  function prev(){
-    openByIndex(index - 1);
-  }
-  function next(){
-    openByIndex(index + 1);
-  }
-  
-  // Делегируем клик по картинке в гриде
-  if (grid) {
-    grid.addEventListener('click', (e) => {
-      const img = e.target.closest('img');
-      if (!img) return;
-=======
 // ─── VCARD / DOWNLOADS ─────────────────────────────
 function downloadVCard(){
   const lang=currentLang;
@@ -1104,7 +1037,6 @@ function getTagsForLang(p,lang){
   if(lang==='zh'&&p.tags_zh)return p.tags_zh;
   return p.tags||[];
 }
->>>>>>> Stashed changes
 
 function renderPortfolioPreview(){
   if(typeof PROJECTS==='undefined') return;
@@ -1186,31 +1118,5 @@ renderBrands();
 setLang(savedLang);
 setTimeout(()=>{renderPortfolioPreview();},0);
 </script>
-<script>
-  (function(){
-    const burger = document.getElementById('burger');
-    const nav = document.getElementById('navbar');
-    if(!burger || !nav) return;
-
-    burger.addEventListener('click', () => {
-      const open = burger.classList.toggle('is-open');
-      nav.classList.toggle('is-open', open);
-      document.body.classList.toggle('menu-open', open);
-      burger.setAttribute('aria-expanded', open);
-    });
-
-    /* клик по ссылке — закрыть; клик по фону оверлея — тоже закрыть */
-    nav.addEventListener('click', e=>{
-      const linkClicked = !!e.target.closest('a');
-      const clickedBackdrop = e.target === nav;
-      if (linkClicked || clickedBackdrop){
-        burger.classList.remove('is-open');
-        nav.classList.remove('is-open');
-        document.body.classList.remove('menu-open');
-        burger.setAttribute('aria-expanded', 'false');
-      }
-    });
-  })();
-  </script>
 </body>
 </html>
