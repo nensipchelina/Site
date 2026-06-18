@@ -44,7 +44,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
 .nav-link:hover,.nav-link.active{color:var(--accent);border-bottom-color:var(--accent);}
 .icon-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px;transition:color var(--transition);}
 .icon-btn:hover{color:var(--accent);}
-@media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-icons{gap:0.75rem;}.navbar-name{max-width:unset!important;overflow:visible!important;padding-right:0!important;text-align:center;width:100%;.navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}.navbar-order-btn{display:none!important;}}
+@media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-icons{gap:0.75rem;}.navbar-name{max-width:unset!important;overflow:visible!important;padding-right:0!important;text-align:center;width:100%;}.navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}.lang-drop{display:block;}.navbar-langs{display:none!important;}.navbar-order-btn{display:none!important;}}
 
 /* MOBILE DROPDOWN */
 .mobile-nav-drop{position:fixed;top:var(--nav-h);left:0;z-index:99;display:flex;flex-direction:column;background:var(--bg2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;width:160px;border-radius:0 0 12px 0;}
@@ -54,7 +54,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
 .mobile-nav-item i{font-size:14px;flex-shrink:0;width:16px;text-align:center;}
 .mobile-nav-divider{height:1px;background:var(--border-accent);margin:0;opacity:0.4;}
 .mobile-nav-item:hover,.mobile-nav-item.active{color:var(--accent);background:var(--accent-dim);}
-.lang-drop{position:relative;}
+.lang-drop{position:relative;display:none;}
 .lang-drop-trigger{background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);cursor:pointer;padding:2px 0;border-bottom:1px solid var(--accent);transition:color var(--transition);}
 .lang-drop-menu{position:absolute;top:calc(100% + 8px);left:0;z-index:200;display:flex;flex-direction:column;background:var(--bg2);border:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.25s ease,opacity 0.2s;min-width:52px;}
 .lang-drop.open .lang-drop-menu{max-height:120px;opacity:1;}
@@ -253,7 +253,12 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">
       <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
     </button>
-        <div class="lang-drop" id="lang-drop">
+            <div class="navbar-langs">
+      <button class="lang-btn" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    </div>
+    <div class="lang-drop" id="lang-drop">
       <button class="lang-drop-trigger" id="lang-drop-trigger" onclick="toggleLangDrop(event)">RU</button>
       <div class="lang-drop-menu" id="lang-drop-menu"></div>
     </div>
@@ -269,7 +274,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     </div>
   </div>
   <div class="navbar-icons">
-    <a href="price.html" class="navbar-order-btn">Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i></a>
+    <a href="price.html" class="navbar-order-btn">Заказать проект <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></a>
     <button class="icon-btn" onclick="downloadVCard()"><i class="fa-regular fa-address-card"></i></button>
     <button class="icon-btn" onclick="window.location.href='price.html?lang='+currentLang"><i class="fa-regular fa-file-lines"></i></button>
     <button class="icon-btn" onclick="downloadResume()"><i class="fa-regular fa-file-pdf"></i></button>
@@ -428,6 +433,7 @@ function setLang(lang){
   currentLang=lang;
   localStorage.setItem('np-lang',lang);
   const _d=document.getElementById('lang-drop');if(_d)_d.classList.remove('open');updateLangDrop();
+  document.querySelectorAll('.lang-btn').forEach(b=>{b.classList.toggle('active',b.textContent.toLowerCase()===lang||(lang==='zh'&&b.textContent==='中文'));});
   document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(i18n[lang][k]&&typeof i18n[lang][k]==='string')el.textContent=i18n[lang][k];});
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const k=el.dataset.i18nPlaceholder;if(i18n[lang][k])el.placeholder=i18n[lang][k];});
   const hn=document.getElementById('hero-display-name');if(hn)hn.innerHTML=i18n[lang].hero_name;

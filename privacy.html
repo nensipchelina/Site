@@ -48,7 +48,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
 .nav-link:hover{color:var(--accent);border-bottom-color:var(--accent);}
 .icon-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px;transition:color var(--transition);}
 .icon-btn:hover{color:var(--accent);}
-@media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-icons{gap:0.75rem;}.navbar-name{padding-right:0;border-right:none;margin-right:0;.navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}.navbar-order-btn{display:none!important;}}
+@media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-icons{gap:0.75rem;}.navbar-name{padding-right:0;border-right:none;margin-right:0;}.navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}.lang-drop{display:block;}.navbar-langs{display:none!important;}.navbar-order-btn{display:none!important;}}
 
 /* MOBILE DROPDOWN */
 .mobile-nav-drop{position:fixed;top:var(--nav-h);left:0;z-index:99;display:flex;flex-direction:column;background:var(--bg2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;width:160px;border-radius:0 0 12px 0;}
@@ -58,7 +58,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
 .mobile-nav-item i{font-size:14px;flex-shrink:0;width:16px;text-align:center;}
 .mobile-nav-divider{height:1px;background:var(--border-accent);margin:0;opacity:0.4;}
 .mobile-nav-item:hover{color:var(--accent);background:var(--accent-dim);}
-.lang-drop{position:relative;}
+.lang-drop{position:relative;display:none;}
 .lang-drop-trigger{background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);cursor:pointer;padding:2px 0;border-bottom:1px solid var(--accent);transition:color var(--transition);}
 .lang-drop-menu{position:absolute;top:calc(100% + 8px);left:0;z-index:200;display:flex;flex-direction:column;background:var(--bg2);border:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.25s ease,opacity 0.2s;min-width:52px;}
 .lang-drop.open .lang-drop-menu{max-height:120px;opacity:1;}
@@ -132,7 +132,12 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
 <nav class="navbar" id="navbar">
   <div class="navbar-left">
     <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars" id="mobile-menu-icon"></i></button>
-        <div class="lang-drop" id="lang-drop">
+            <div class="navbar-langs">
+      <button class="lang-btn" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    </div>
+    <div class="lang-drop" id="lang-drop">
       <button class="lang-drop-trigger" id="lang-drop-trigger" onclick="toggleLangDrop(event)">RU</button>
       <div class="lang-drop-menu" id="lang-drop-menu"></div>
     </div>
@@ -178,7 +183,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <div class="content-section"><h2>Ваши права</h2><p>Вы вправе запросить информацию о хранимых данных, потребовать исправления или удаления, отозвать согласие. Напишите на <a href="mailto:npchel93@gmail.com">npchel93@gmail.com</a> — отвечу в течение 3 рабочих дней.</p></div>
     <div class="content-section"><h2>Cookies</h2><p>Сайт сохраняет только два параметра в localStorage браузера: выбранный язык и тему оформления. Эти данные не передаются на сервер и не идентифицируют вас.</p></div>
     <div class="content-section"><h2>Изменения политики</h2><p>При существенных изменениях дата «Актуально с» будет обновлена.</p></div>
-    <div class="cta-block"><a href="price.html" class="btn-primary">Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">Задать вопрос</a></div>
+    <div class="cta-block"><a href="price.html" class="btn-primary">Заказать проект <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">Задать вопрос</a></div>
   </div>
 
   <!-- EN -->
@@ -193,7 +198,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <div class="content-section"><h2>Your rights</h2><p>You may request information about stored data, correction, deletion, or withdrawal of consent. Email <a href="mailto:npchel93@gmail.com">npchel93@gmail.com</a> — response within 3 business days.</p></div>
     <div class="content-section"><h2>Cookies</h2><p>The site stores only two values in browser localStorage: your selected language and theme preference. These are not sent to a server and do not identify you.</p></div>
     <div class="content-section"><h2>Policy changes</h2><p>The "Effective" date will be updated whenever the policy changes materially.</p></div>
-    <div class="cta-block"><a href="price.html" class="btn-primary">Order a Project <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">Ask a Question</a></div>
+    <div class="cta-block"><a href="price.html" class="btn-primary">Order a Project <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">Ask a Question</a></div>
   </div>
 
   <!-- ZH -->
@@ -208,7 +213,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <div class="content-section"><h2>您的权利</h2><p>您可以申请查看已存储数据、更正、删除或撤回同意。发邮件至<a href="mailto:npchel93@gmail.com">npchel93@gmail.com</a>——3个工作日内回复。</p></div>
     <div class="content-section"><h2>Cookie</h2><p>网站仅在浏览器localStorage中存储两个值：您选择的语言和主题偏好。这些数据不发送至服务器，不识别您的身份。</p></div>
     <div class="content-section"><h2>政策变更</h2><p>政策发生重大变更时，"生效日期"将更新。</p></div>
-    <div class="cta-block"><a href="price.html" class="btn-primary">订购项目 <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">提问</a></div>
+    <div class="cta-block"><a href="price.html" class="btn-primary">订购项目 <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">提问</a></div>
   </div>
 
 </div><!-- .page-wrap -->
@@ -261,6 +266,7 @@ document.addEventListener('click',function(){
 function setLang(lang){
   currentLang=lang;localStorage.setItem('np-lang',lang);
   const _d=document.getElementById('lang-drop');if(_d)_d.classList.remove('open');updateLangDrop();
+  document.querySelectorAll('.lang-btn').forEach(b=>{b.classList.toggle('active',b.textContent.toLowerCase()===lang||(lang==='zh'&&b.textContent==='中文'));});
   const nn=document.getElementById('navbar-name');if(nn)nn.innerHTML=i18n[lang].nav_name;
   // Show/hide lang blocks
   document.querySelectorAll('.lc').forEach(el=>el.style.display=el.dataset.lang===lang?'':'none');

@@ -48,7 +48,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
 .nav-link:hover{color:var(--accent);border-bottom-color:var(--accent);}
 .icon-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px;transition:color var(--transition);}
 .icon-btn:hover{color:var(--accent);}
-@media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-icons{gap:0.75rem;}.navbar-name{padding-right:0;border-right:none;margin-right:0;.navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}.navbar-order-btn{display:none!important;}}
+@media(max-width:900px){.navbar{padding:0 1rem;}.navbar-menu{display:none;}.mobile-menu-btn{display:flex;}.navbar-icons{gap:0.75rem;}.navbar-name{padding-right:0;border-right:none;margin-right:0;}.navbar-icons .icon-btn:not(.theme-btn):not(.process-btn){display:none;}.lang-drop{display:block;}.navbar-langs{display:none!important;}.navbar-order-btn{display:none!important;}}
 
 .mobile-nav-drop{position:fixed;top:var(--nav-h);left:0;z-index:99;display:flex;flex-direction:column;background:var(--bg2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;width:160px;border-radius:0 0 12px 0;}
 .mobile-nav-drop.open{max-height:700px;opacity:1;}
@@ -57,7 +57,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
 .mobile-nav-item i{font-size:14px;flex-shrink:0;width:16px;text-align:center;}
 .mobile-nav-divider{height:1px;background:var(--border-accent);margin:0;opacity:0.4;}
 .mobile-nav-item:hover{color:var(--accent);background:var(--accent-dim);}
-.lang-drop{position:relative;}
+.lang-drop{position:relative;display:none;}
 .lang-drop-trigger{background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);cursor:pointer;padding:2px 0;border-bottom:1px solid var(--accent);transition:color var(--transition);}
 .lang-drop-menu{position:absolute;top:calc(100% + 8px);left:0;z-index:200;display:flex;flex-direction:column;background:var(--bg2);border:1px solid var(--border);overflow:hidden;max-height:0;opacity:0;transition:max-height 0.25s ease,opacity 0.2s;min-width:52px;}
 .lang-drop.open .lang-drop-menu{max-height:120px;opacity:1;}
@@ -157,7 +157,12 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
 <nav class="navbar">
   <div class="navbar-left">
     <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fa-solid fa-bars" id="mobile-menu-icon"></i></button>
-        <div class="lang-drop" id="lang-drop">
+            <div class="navbar-langs">
+      <button class="lang-btn" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    </div>
+    <div class="lang-drop" id="lang-drop">
       <button class="lang-drop-trigger" id="lang-drop-trigger" onclick="toggleLangDrop(event)">RU</button>
       <div class="lang-drop-menu" id="lang-drop-menu"></div>
     </div>
@@ -213,7 +218,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <div class="content-section"><h2>Что нужно подготовить</h2><p>Чем больше деталей — тем быстрее стартуем. Идеально, если есть:</p><ul><li>Референс или готовое ТЗ</li><li>Примерные размеры или размерный ряд</li><li>Информация о ткани, если известна</li><li>Название производства или ПО для файлов</li><li>Желаемые сроки</li></ul><p>Если ничего из этого нет — не страшно, всё обсудим.</p></div>
     <div class="content-section"><h2>Работаю дистанционно</h2><p>Принимаю заказы из любой точки России и из-за рубежа. Коммуникация в мессенджерах, почте или видеосвязи.</p><p>Личная встреча возможна в Нижнем Новгороде — там же находится мастерская, можно приехать и посмотреть образцы.</p></div>
     <div class="content-section"><h2>Пошив и производство</h2><p>Для заказов на пошив и изготовление изделий работаю с партнёрскими цехами и подрядчиками в Нижнем Новгороде. Помогу с подбором производства под ваш тип изделия и объём.</p></div>
-    <div class="cta-block"><a href="price.html" class="btn-primary">Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">Задать вопрос</a></div>
+    <div class="cta-block"><a href="price.html" class="btn-primary">Заказать проект <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">Задать вопрос</a></div>
   </div>
 
   <!-- EN -->
@@ -237,7 +242,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <div class="content-section"><h2>What to prepare</h2><p>The more details you provide, the faster we can start. Ideal to have:</p><ul><li>Reference (photo, sketch, description) or an existing brief</li><li>Approximate measurements or size range</li><li>Fabric info (type, composition, width) if known</li><li>Factory name or software the files are needed for</li><li>Desired timeline</li></ul><p>If you have none of the above — no problem, we will work it out together.</p></div>
     <div class="content-section"><h2>Working Remotely</h2><p>I accept orders from anywhere in Russia and abroad. Communication via messengers, email or video call. Files shared via Google Drive, WeTransfer or any other convenient method.</p><p>In-person meetings are available in Nizhny Novgorod — my workshop is located there, you are welcome to visit and view samples.</p></div>
     <div class="content-section"><h2>Sewing &amp; Production</h2><p>If the task involves not just documentation but actual garment manufacturing, I work with partner workshops and subcontractors in Nizhny Novgorod. I can help match a production facility to your garment type and volume.</p></div>
-    <div class="cta-block"><a href="price.html" class="btn-primary">Order a Project <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">Ask a Question</a></div>
+    <div class="cta-block"><a href="price.html" class="btn-primary">Order a Project <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">Ask a Question</a></div>
   </div>
 
   <!-- ZH -->
@@ -261,7 +266,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <div class="content-section"><h2>准备什么</h2><p>提供的细节越多，启动越快。最好能有：</p><ul><li>参考资料（照片、草图、描述）或现有简报</li><li>大致尺寸或尺码范围</li><li>面料信息（类型、成分、宽度）如已知</li><li>工厂名称或文件所需软件</li><li>期望时间</li></ul><p>如果以上都没有也没关系，我们一起讨论。</p></div>
     <div class="content-section"><h2>远程工作</h2><p>接受来自俄罗斯及海外的订单。通过Messenger、电子邮件或视频通话沟通。文件通过Google Drive、WeTransfer或其他便捷方式传送。</p><p>可在下诺夫哥罗德面谈——工作室就在那里，欢迎来访，讨论项目并查看样品。</p></div>
     <div class="content-section"><h2>缝制与生产</h2><p>如果任务包含服装实物制作，我与下诺夫哥罗德的合作车间和承包商合作，可协助选择适合您服装类型和产量的生产设施。</p></div>
-    <div class="cta-block"><a href="price.html" class="btn-primary">订购项目 <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">提问</a></div>
+    <div class="cta-block"><a href="price.html" class="btn-primary">订购项目 <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i></a><a href="index.html#contact" class="btn-ghost">提问</a></div>
   </div>
 
 </div><!-- .page-wrap -->
@@ -314,6 +319,7 @@ document.addEventListener('click',function(){
 function setLang(lang){
   currentLang=lang;localStorage.setItem('np-lang',lang);
   const _d=document.getElementById('lang-drop');if(_d)_d.classList.remove('open');updateLangDrop();
+  document.querySelectorAll('.lang-btn').forEach(b=>{b.classList.toggle('active',b.textContent.toLowerCase()===lang||(lang==='zh'&&b.textContent==='中文'));});
   const nn=document.getElementById('navbar-name');if(nn)nn.innerHTML=i18n[lang].nav_name;
   // Show/hide lang blocks
   document.querySelectorAll('.lc').forEach(el=>el.style.display=el.dataset.lang===lang?'':'none');

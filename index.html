@@ -160,7 +160,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
 .mobile-nav-divider{height:1px;background:var(--border-accent);margin:0;opacity:0.4;}
 
 /* ─── LANG DROPDOWN ──────────────────────────────── */
-.lang-drop{position:relative;}
+.lang-drop{position:relative;display:none;}
 .lang-drop-trigger{
   background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;
   letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);cursor:pointer;
@@ -204,6 +204,8 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-he
     width:100%;
   }
   .navbar-name-sep{display:none !important;}
+
+  .lang-drop{display:block;}.navbar-langs{display:none!important;}
 }
 
 /* ─── CONTENT ────────────────────────────────────── */
@@ -392,7 +394,7 @@ section{padding:7rem 0;position:relative;}
 .brand-logo{opacity:0.25;font-family:var(--font-display);font-size:1rem;font-weight:300;letter-spacing:0.15em;text-transform:uppercase;color:var(--text);white-space:nowrap;transition:opacity var(--transition);filter:grayscale(1);}
 .brand-logo img{height:28px;width:auto;object-fit:contain;filter:grayscale(1) brightness(2);opacity:0.3;transition:opacity var(--transition);}
 [data-theme="light"] .brand-logo img{filter:grayscale(1) brightness(0);opacity:0.25;}
-.brands-track:hover{animation-play-state:paused;}
+@media(hover:hover){.brands-track:hover{animation-play-state:paused;}}
 .brand-logo:hover img,.brand-logo:hover{opacity:0.7;}
 
 /* ─── ORDER BUTTON (hero → navbar) ──────────────── */
@@ -556,6 +558,11 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
     <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()">
       <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
     </button>
+        <div class="navbar-langs">
+      <button class="lang-btn" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    </div>
     <div class="lang-drop" id="lang-drop">
       <button class="lang-drop-trigger" id="lang-drop-trigger" onclick="toggleLangDrop(event)">RU</button>
       <div class="lang-drop-menu" id="lang-drop-menu"></div>
@@ -577,7 +584,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
   <!-- Right: order CTA (slides in when hero btn scrolls away) + icons -->
   <div class="navbar-icons">
     <a href="price.html" class="navbar-order-btn" id="navbar-order-btn" data-i18n="order_btn">
-      Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i>
+      Заказать проект <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i>
     </a>
     <button class="icon-btn" onclick="downloadVCard()">
       <i class="fa-regular fa-address-card"></i>
@@ -652,7 +659,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
       <h1 class="hero-name" id="hero-name">Наталья<br><em>Пчелина</em></h1>
       <p class="hero-sub" data-i18n="hero_sub">Конструирование · 3D-примерка · AI-визуализация · Техдокументация</p>
       <a href="price.html" class="hero-order-btn" id="hero-order-btn" data-i18n="order_btn">
-        Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i>
+        Заказать проект <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i>
       </a>
     </div>
   </div>
@@ -729,7 +736,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
         <div class="contact-order-block">
           <div class="contact-order-block-title" data-i18n="contact_order_label">Хотите начать проект?</div>
           <a href="price.html" class="contact-order-link" data-i18n="order_btn">
-            Заказать проект <i class="fa-regular fa-arrow-right" style="font-size:9px;"></i>
+            Заказать проект <i class="fa-solid fa-arrow-right" style="font-size:9px;"></i>
           </a>
         </div>
         <p class="contact-form-purpose" data-i18n="contact_form_purpose">Форма ниже — для быстрых вопросов и отзывов. Для оформления заказа используйте кнопку выше: там можно подробно описать задачу и прикрепить файлы.</p>
@@ -906,6 +913,7 @@ function setLang(lang){
   const d=document.getElementById('lang-drop');
   if(d) d.classList.remove('open');
   updateLangDrop();
+  document.querySelectorAll('.lang-btn').forEach(b=>{b.classList.toggle('active',b.textContent.toLowerCase()===lang||(lang==='zh'&&b.textContent==='中文'));});
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k=el.dataset.i18n;
     if(i18n[lang][k]&&typeof i18n[lang][k]==='string'){
@@ -1000,6 +1008,9 @@ function renderBrands(){
   const track=document.getElementById('brands-track');
   const doubled=[...brands,...brands];
   track.innerHTML=doubled.map(b=>`<div class="brand-logo"><img src="${b.img}" alt="${b.name}" title="${b.name}"></div>`).join('');
+  let _rt;
+  track.addEventListener('touchstart',()=>{track.style.animationPlayState='paused';clearTimeout(_rt);},{passive:true});
+  track.addEventListener('touchend',()=>{_rt=setTimeout(()=>{track.style.animationPlayState='running';},1500);},{passive:true});
 }
 
 // ─── THEME ─────────────────────────────────────────
