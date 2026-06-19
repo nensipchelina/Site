@@ -740,14 +740,22 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 2.5r
           </a>
         </div>
         <p class="contact-form-purpose" data-i18n="contact_form_purpose">Форма ниже — для быстрых вопросов и отзывов. Для оформления заказа используйте кнопку выше: там можно подробно описать задачу и прикрепить файлы.</p>
-        <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-          <div class="form-group"><input class="form-input" type="text" name="name" placeholder="" required data-i18n-placeholder="form_name"></div>
-          <div class="form-group"><input class="form-input" type="text" name="phone" placeholder="" required data-i18n-placeholder="form_phone"></div>
-          <div class="form-group"><input class="form-input" type="email" name="email" placeholder="" data-i18n-placeholder="form_email"></div>
-          <div class="form-group"><textarea class="form-input" name="message" placeholder="" data-i18n-placeholder="form_message"></textarea></div>
-          <button type="submit" class="form-submit" data-i18n="form_submit">Отправить</button>
-          <p class="form-note" data-i18n="form_note">Нажимая «Отправить», вы соглашаетесь с обработкой данных</p>
-        </form>
+        <div id="contact-form-wrap">
+          <form class="contact-form" id="contact-form" action="#" method="POST">
+            <div class="form-group"><input class="form-input" type="text" name="name" placeholder="" required data-i18n-placeholder="form_name"></div>
+            <div class="form-group"><input class="form-input" type="text" name="phone" placeholder="" required data-i18n-placeholder="form_phone"></div>
+            <div class="form-group"><input class="form-input" type="email" name="email" placeholder="" data-i18n-placeholder="form_email"></div>
+            <div class="form-group"><textarea class="form-input" name="message" placeholder="" data-i18n-placeholder="form_message"></textarea></div>
+            <button type="submit" class="form-submit" data-i18n="form_submit">Отправить</button>
+            <p class="form-note" data-i18n="form_note">Нажимая «Отправить», вы соглашаетесь с обработкой данных</p>
+          </form>
+        </div>
+        <div class="success-popup show" id="contact-success" style="display:none;text-align:center;padding:2rem 0;">
+          <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+          <h3 data-i18n="success_title" style="font-family:var(--font-display);font-size:1.5rem;font-weight:300;margin:1rem 0 0.5rem;">Спасибо!</h3>
+          <p data-i18n="success_msg" style="font-size:13px;color:var(--text-muted);">Свяжусь с вами в ближайшее время.</p>
+          <a href="https://t.me/npchel" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1rem;font-size:12px;color:var(--accent);text-decoration:none;"><i class="fa-brands fa-telegram"></i><span data-i18n="success_tg">Написать в Telegram</span></a>
+        </div>
       </div>
     </div>
   </div>
@@ -1088,10 +1096,43 @@ function closeContactPopup(e){
     document.getElementById('contact-popup').classList.remove('open');document.body.style.overflow='';
   }
 }
+// Telegram
+const TG_TOKEN='8426010644:AAGqeKgUqAUOZXdHlsqEnIL983UQIXFmK4A';
+const TG_CHAT='188634236';
+async function sendToTelegram(msg){
+  try{
+    const r=await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:TG_CHAT,text:msg,parse_mode:'HTML'})
+    });
+    return r.ok;
+  }catch{return false;}
+}
+
+// Главная форма
+document.getElementById('contact-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const form=e.target;
+  const btn=form.querySelector('.form-submit');
+  btn.disabled=true;
+  const fd=new FormData(form);
+  const msg=`💬 <b>Вопрос с главной страницы</b>\n\n👤 <b>Имя:</b> ${fd.get('name')||'—'}\n📞 <b>Контакт:</b> ${fd.get('phone')||'—'}\n📧 <b>Email:</b> ${fd.get('email')||'—'}\n\n📝 <b>Сообщение:</b>\n${fd.get('message')||'—'}`;
+  await sendToTelegram(msg);
+  document.getElementById('contact-form-wrap').style.display='none';
+  document.getElementById('contact-success').style.display='block';
+});
+
+// Popup-форма
 document.getElementById('popup-form').addEventListener('submit',async e=>{
-  e.preventDefault();const form=e.target;
-  try{const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
-  if(res.ok){document.getElementById('popup-form-wrap').style.display='none';document.getElementById('popup-success').classList.add('show');}}catch{}
+  e.preventDefault();
+  const form=e.target;
+  const btn=form.querySelector('.form-submit');
+  btn.disabled=true;
+  const fd=new FormData(form);
+  const msg=`💬 <b>Быстрый вопрос с главной (popup)</b>\n\n👤 <b>Имя:</b> ${fd.get('name')||'—'}\n📞 <b>Контакт:</b> ${fd.get('phone')||'—'}`;
+  await sendToTelegram(msg);
+  document.getElementById('popup-form-wrap').style.display='none';
+  document.getElementById('popup-success').classList.add('show');
 });
 
 // ─── VCARD / DOWNLOADS ─────────────────────────────
