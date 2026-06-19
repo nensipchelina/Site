@@ -528,10 +528,31 @@ window.addEventListener('scroll',()=>{
   if(heroEl&&navName){const rect=heroEl.getBoundingClientRect();navName.classList.toggle('visible',rect.bottom<70);}
 });
 
+// Telegram
+const TG_TOKEN='8426010644:AAGqeKgUqAUOZXdHlsqEnIL983UQIXFmK4A';
+const TG_CHAT='188634236';
+async function sendToTelegram(msg){
+  try{
+    const r=await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:TG_CHAT,text:msg,parse_mode:'HTML'})
+    });
+    return r.ok;
+  }catch{return false;}
+}
+
 // Form submit
 document.getElementById('order-form').addEventListener('submit',async e=>{
-  e.preventDefault();const form=e.target;const btn=form.querySelector('.form-submit');btn.disabled=true;
-  try{const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});if(res.ok){document.getElementById('success-overlay').classList.add('open');document.body.style.overflow='hidden';}else btn.disabled=false;}catch{document.getElementById('success-overlay').classList.add('open');document.body.style.overflow='hidden';btn.disabled=false;}
+  e.preventDefault();
+  const form=e.target;
+  const btn=form.querySelector('.form-submit');
+  btn.disabled=true;
+  const fd=new FormData(form);
+  const services=[...document.querySelectorAll('#checks-grid input:checked')].map(c=>c.value).join(', ');
+  const msg=`📬 <b>Новый запрос с сайта!</b>\n\n👤 <b>Имя:</b> ${fd.get('name')||'—'}\n📞 <b>Контакт:</b> ${fd.get('phone')||'—'}\n📧 <b>Email:</b> ${fd.get('email')||'—'}\n\n🛍 <b>Услуги:</b> ${services||'—'}\n\n📝 <b>Описание:</b>\n${fd.get('project_desc')||'—'}`;
+  await sendToTelegram(msg);
+  document.getElementById('success-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
 });
 function closeSuccess(){document.getElementById('success-overlay').classList.remove('open');document.body.style.overflow='';}
 
