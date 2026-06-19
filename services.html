@@ -540,6 +540,15 @@ async function sendToTelegram(msg){
     return r.ok;
   }catch{return false;}
 }
+async function sendFilesToTelegram(files){
+  for(let i=0;i<files.length;i++){
+    const fd=new FormData();
+    fd.append('chat_id',TG_CHAT);
+    fd.append('document',files[i]);
+    if(i===0) fd.append('caption','📎 Вложения к запросу');
+    try{await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendDocument`,{method:'POST',body:fd});}catch{}
+  }
+}
 
 // Form submit
 document.getElementById('order-form').addEventListener('submit',async e=>{
@@ -551,6 +560,8 @@ document.getElementById('order-form').addEventListener('submit',async e=>{
   const services=[...document.querySelectorAll('#checks-grid input:checked')].map(c=>c.value).join(', ');
   const msg=`📬 <b>Новый запрос с сайта!</b>\n\n👤 <b>Имя:</b> ${fd.get('name')||'—'}\n📞 <b>Контакт:</b> ${fd.get('phone')||'—'}\n📧 <b>Email:</b> ${fd.get('email')||'—'}\n\n🛍 <b>Услуги:</b> ${services||'—'}\n\n📝 <b>Описание:</b>\n${fd.get('project_desc')||'—'}`;
   await sendToTelegram(msg);
+  const fileInput=document.getElementById('file-input');
+  if(fileInput&&fileInput.files.length>0) await sendFilesToTelegram(fileInput.files);
   document.getElementById('success-overlay').classList.add('open');
   document.body.style.overflow='hidden';
 });
