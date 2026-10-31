@@ -24,7 +24,7 @@ const PROJECTS = [
     "portfolio/img/«По протоколу. Верх» Рубаха от бренда EDINOVLASTIE/014.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Edinovlastie",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -50,7 +50,7 @@ const PROJECTS = [
     "portfolio/img/Белье _ДВОЕЧКА_/010.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Pachkoriya",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -80,7 +80,7 @@ const PROJECTS = [
     "portfolio/img/Блейзер-трансформер от бренда EDINOVLASTIE/014.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Edinovlastie",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -104,7 +104,7 @@ const PROJECTS = [
     "portfolio/img/Брюки МИЛАНО/08.webp"
     ],
     year: "2024",
-    client: "",
+    client: "Vertango",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -142,7 +142,7 @@ const PROJECTS = [
     "portfolio/img/Брюки от бренда EDINOVLASTIE/022.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Edinovlastie",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -186,7 +186,7 @@ const PROJECTS = [
     "portfolio/img/Жилет Franky Bar/028.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Franky",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -210,7 +210,7 @@ const PROJECTS = [
     "portfolio/img/Жилетка костюмная на одно плечо с воланом/08.webp"
     ],
     year: "2024",
-    client: "",
+    client: "Mountain Grass",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -235,7 +235,7 @@ const PROJECTS = [
     "portfolio/img/Зипка/09.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Pachkoriya",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -279,7 +279,7 @@ const PROJECTS = [
     "portfolio/img/Кардиган от бренда EDINOVLASTIE/028.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Edinovlastie",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -324,7 +324,7 @@ const PROJECTS = [
     "portfolio/img/Комбинезон _ARCHI/057.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Pachkoriya",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -364,7 +364,7 @@ const PROJECTS = [
     "portfolio/img/Костюм Lanitissimo/024.webp"
     ],
     year: "2024",
-    client: "",
+    client: "Lanitissimo",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -382,7 +382,7 @@ const PROJECTS = [
     "portfolio/img/Костюм Vinkult/02.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Vincult",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -430,7 +430,7 @@ const PROJECTS = [
     "portfolio/img/Костюм _Friends_/032.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Pachkoriya",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -473,7 +473,7 @@ const PROJECTS = [
     "portfolio/img/Костюм _Vector_/027.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Pachkoriya",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -503,7 +503,7 @@ const PROJECTS = [
     "portfolio/img/Лонгслив детский/014.webp"
     ],
     year: "2024",
-    client: "",
+    client: "KraftiShop",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -532,7 +532,7 @@ const PROJECTS = [
     "portfolio/img/Лонгслив от бренда EDINOVLASTIE/013.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Edinovlastie",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -560,7 +560,7 @@ const PROJECTS = [
     "portfolio/img/Набор топиков с принтом/012.webp"
     ],
     year: "2024",
-    client: "",
+    client: "KraftiShop",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -583,7 +583,7 @@ const PROJECTS = [
     "portfolio/img/Набор топов бельевых/010.webp"
     ],
     year: "2024",
-    client: "",
+    client: "KraftiShop",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -634,7 +634,7 @@ const PROJECTS = [
     "portfolio/img/Платье-трансформер от бренда EDINOVLASTIE/035.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Edinovlastie",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -658,7 +658,7 @@ const PROJECTS = [
     "portfolio/img/Поло CORTO/08.webp"
     ],
     year: "2024",
-    client: "",
+    client: "Vertango",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -684,7 +684,7 @@ const PROJECTS = [
     "portfolio/img/Рубашка BELLINI/010.webp"
     ],
     year: "2024",
-    client: "",
+    client: "Vertango",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -710,7 +710,7 @@ const PROJECTS = [
     "portfolio/img/Рубашка RISTRETTO/010.webp"
     ],
     year: "2024",
-    client: "",
+    client: "Vertango",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -734,7 +734,7 @@ const PROJECTS = [
     "portfolio/img/Топ/08.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Pachkoriya",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -806,7 +806,7 @@ const PROJECTS = [
     "portfolio/img/Топ на одно плечо/056.webp"
     ],
     year: "2024",
-    client: "",
+    client: "KraftiShop",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -838,7 +838,7 @@ const PROJECTS = [
     "portfolio/img/Футболка _Oversize_ удлиненная/016.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Pachkoriya",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -873,7 +873,7 @@ const PROJECTS = [
     "portfolio/img/Футболка _Oversize_ укороченная/019.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Pachkoriya",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],
@@ -912,7 +912,7 @@ const PROJECTS = [
     "portfolio/img/Штаны _Карго_/023.jpg"
     ],
     year: "2024",
-    client: "",
+    client: "Pachkoriya",
     services_ru: ["Лекала", "Дизайн"],
     services_en: ["Pattern Making", "Design"],
     services_zh: ["制版", "设计"],

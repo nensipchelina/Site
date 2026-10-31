@@ -24,7 +24,6 @@
     <div class="project-main">
       <h1 class="project-title" id="proj-title">…</h1>
       <div class="project-meta">
-        <div class="meta-item"><span class="meta-label" data-i18n="meta_year">Год</span><span class="meta-value" id="proj-year">—</span></div>
         <div class="meta-item"><span class="meta-label" data-i18n="meta_client">Клиент</span><span class="meta-value" id="proj-client">—</span></div>
       </div>
       <div class="gallery">
@@ -112,7 +111,6 @@ function renderProject(p){
   document.title=`${title} — Наталья Пчелина`;
   document.getElementById('bc-project').textContent=title;
   document.getElementById('proj-title').textContent=title;
-  document.getElementById('proj-year').textContent=p.year||'—';
   var pc=document.getElementById('proj-client');pc.textContent=p.client||'';if(!p.client)pc.parentNode.style.display='none';
   document.getElementById('proj-desc').textContent=p[lang]?.desc||p.ru?.desc||'';
   const services=p[`services_${lang}`]||p.services_ru||[];

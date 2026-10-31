@@ -136,7 +136,7 @@ window.NP={
   brandProjects:function(name){
     var ks=NP.brandKeys[name]||[name.toLowerCase()];
     if(typeof PROJECTS==='undefined') return [];
-    return PROJECTS.filter(function(p){var t=(p.id+JSON.stringify([p.ru,p.en,p.zh])).toLowerCase(); return ks.some(function(k){return t.indexOf(k)>-1;});});
+    return PROJECTS.filter(function(p){ if((p.client||'').toLowerCase()===name.toLowerCase()) return true; var t=(p.id+JSON.stringify([p.ru,p.en,p.zh])).toLowerCase(); return ks.some(function(k){return t.indexOf(k)>-1;});});
   },
   tg:{
     url:'https://np-forms.yaiscolu.workers.dev',
@@ -166,7 +166,7 @@ window.NP={
       '<div class="frame">'+imgs+'</div>'+
       '<div class="tape" aria-hidden="true"><i></i></div>'+
       '<div class="work-title">'+esc(title)+'</div>'+
-      '<div class="work-meta"><span>'+esc(tags)+'</span><span>'+esc(p.year||'')+'</span></div>'+
+      '<div class="work-meta"><span>'+esc(tags)+'</span><span>'+esc(p.client||'')+'</span></div>'+
     '</a>';
   },
   wire:function(root){
