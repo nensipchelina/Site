@@ -139,16 +139,16 @@ window.NP={
     return PROJECTS.filter(function(p){var t=(p.id+JSON.stringify([p.ru,p.en,p.zh])).toLowerCase(); return ks.some(function(k){return t.indexOf(k)>-1;});});
   },
   tg:{
-    token:'8426010644:AAGqeKgUqAUOZXdHlsqEnIL983UQIXFmK4A', chat:'188634236',
+    url:'https://np-forms.yaiscolu.workers.dev',
     h:function(v){return String(v==null||v===''?'—':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');},
     send:function(msg){
-      return fetch('https://api.telegram.org/bot'+NP.tg.token+'/sendMessage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:NP.tg.chat,text:msg,parse_mode:'HTML'})})
+      return fetch(NP.tg.url+'/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:msg})})
         .then(function(r){return r.ok;}).catch(function(){return false;});
     },
     files:async function(files){
       for(var i=0;i<files.length;i++){
-        var fd=new FormData(); fd.append('chat_id',NP.tg.chat); fd.append('document',files[i]); if(i===0) fd.append('caption','Вложения к запросу');
-        try{await fetch('https://api.telegram.org/bot'+NP.tg.token+'/sendDocument',{method:'POST',body:fd});}catch(e){}
+        var fd=new FormData(); fd.append('document',files[i]); if(i===0) fd.append('caption','Вложения к запросу');
+        try{await fetch(NP.tg.url+'/file',{method:'POST',body:fd});}catch(e){}
       }
     }
   },
