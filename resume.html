@@ -1,222 +1,35 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Резюме — Наталья Пчелина</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@500;600;700&family=Golos+Text:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script>(function(){var t=localStorage.getItem('np-theme')||'dark';document.documentElement.dataset.theme=t;})()</script>
-<style>
-:root{
-  --accent:#C4A882;--accent-dim:rgba(196,168,130,0.15);--accent-hover:#D4B992;
-  --bg:#1A1410;--bg2:#221C17;--bg3:#2A231C;
-  --surface:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);--border-accent:rgba(196,168,130,0.3);
-  --text:#F0EAE0;--text-secondary:#A09080;--text-muted:#6B5E50;
-  --font-display:'Cormorant Garamond',serif;--font-body:'DM Sans',sans-serif;
-  --transition:0.3s cubic-bezier(0.4,0,0.2,1);--nav-h:52px;
-}
-[data-theme="light"]{--bg:#F5F0E8;--bg2:#EDE7DC;--bg3:#E5DDD0;--surface:rgba(0,0,0,0.03);--border:rgba(0,0,0,0.08);--border-accent:rgba(139,100,60,0.3);--text:#1A1208;--text-secondary:#6B5030;--text-muted:#9E8060;--accent:#8B643C;--accent-dim:rgba(139,100,60,0.1);--accent-hover:#7A5530;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh;}
-
-/* ─── NAVBAR ─────────────────────────────────────── */
-.navbar{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:0 2.5rem;backdrop-filter:blur(20px);background:rgba(26,20,16,0.82);border-bottom:1px solid var(--border);}
-[data-theme="light"] .navbar{background:rgba(245,240,232,0.88);}
-.navbar-left{display:flex;gap:1.25rem;align-items:center;}
-.navbar-langs{display:flex;gap:1.25rem;align-items:center;}
-.navbar-center-wrap{display:flex;align-items:center;justify-content:center;}
-.navbar-title{font-family:var(--font-display);font-size:1.1rem;font-weight:300;color:var(--text-secondary);letter-spacing:-0.01em;white-space:nowrap;}
-.navbar-title em{font-style:italic;color:var(--accent);}
-.navbar-icons{display:flex;gap:1.25rem;align-items:center;justify-content:flex-end;}
-.lang-btn{background:none;border:none;font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;padding:2px 0;border-bottom:1px solid transparent;transition:color var(--transition),border-color var(--transition);}
-.lang-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
-.icon-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px;transition:color var(--transition);text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-body);font-size:11px;letter-spacing:0.1em;}
-.icon-btn:hover{color:var(--accent);}
-@media(max-width:768px){.navbar{padding:0 1rem;}.navbar-title{display:none;}.navbar-langs{gap:0.75rem;}.navbar-icons{gap:0.75rem;}}
-
-/* ─── PAGE WRAP ──────────────────────────────────── */
-.page-wrap{padding-top:calc(var(--nav-h)+3rem);padding-bottom:5rem;max-width:900px;margin:0 auto;padding-left:2.5rem;padding-right:2.5rem;}
-@media(max-width:768px){.page-wrap{padding-left:1.25rem;padding-right:1.25rem;}}
-
-/* ─── PAGE HERO ──────────────────────────────────── */
-.page-hero{margin-bottom:3rem;}
-.page-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:1rem;margin-bottom:0.8rem;}
-.page-label::before{content:'';display:block;width:32px;height:1px;background:var(--accent);}
-.page-name{font-family:var(--font-display);font-size:clamp(3rem,7vw,5.5rem);font-weight:300;line-height:0.9;letter-spacing:-0.02em;color:var(--text);margin-bottom:0.75rem;}
-.page-name em{font-style:italic;color:var(--accent);}
-.page-sub{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-secondary);font-weight:300;}
-
-/* ─── ACTION BUTTONS ─────────────────────────────── */
-.actions{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:3rem;}
-.btn-download{
-  display:inline-flex;align-items:center;gap:0.75rem;
-  background:var(--accent);color:var(--bg);
-  font-family:var(--font-body);font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;
-  padding:0.85rem 1.75rem;text-decoration:none;border:none;cursor:pointer;
-  transition:background var(--transition);
-}
-.btn-download:hover{background:var(--accent-hover);}
-.btn-nav{
-  display:inline-flex;align-items:center;gap:0.6rem;
-  font-family:var(--font-body);font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--text-secondary);text-decoration:none;
-  border:1px solid var(--border);padding:0.85rem 1.25rem;
-  transition:color var(--transition),border-color var(--transition),background var(--transition);
-}
-.btn-nav:hover{color:var(--accent);border-color:var(--border-accent);background:var(--accent-dim);}
-.btn-nav i{font-size:10px;}
-
-/* ─── RESUME CARD ────────────────────────────────── */
-.resume-card{
-  background:#1A1410;
-  border:1px solid rgba(255,255,255,0.06);
-  display:grid;
-  grid-template-columns:180px 1fr;
-  min-height:600px;
-  overflow:hidden;
-}
-@media(max-width:600px){.resume-card{grid-template-columns:1fr;}}
-[data-theme="light"] .resume-card{background:#1A1410;border-color:rgba(255,255,255,0.06);}
-
-/* Left strip — always dark */
-.cv-left{
-  background:#221C17;
-  padding:2.5rem 1.5rem;
-  display:flex;flex-direction:column;gap:2rem;
-  border-right:1px solid rgba(255,255,255,0.06);
-}
-@media(max-width:600px){.cv-left{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);padding:2rem 1.5rem;}}
-
-/* Monogram */
-.cv-monogram{
-  width:72px;height:72px;border-radius:50%;
-  background:var(--accent);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;
-  color:#1A1410;letter-spacing:0.05em;
-  flex-shrink:0;
-}
-
-.cv-name-block{margin-bottom:0.5rem;}
-.cv-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:#F0EAE0;line-height:1.2;margin-bottom:0.35rem;}
-.cv-job{font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:#C4A882;line-height:1.4;}
-
-.cv-section-label{font-size:7.5px;letter-spacing:0.2em;text-transform:uppercase;color:#C4A882;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.4rem;}
-.cv-section-label::before{content:'';display:block;width:12px;height:1px;background:#C4A882;}
-
-.cv-contact-item{font-size:9.5px;color:#A09080;margin-bottom:0.35rem;line-height:1.4;word-break:break-all;}
-
-/* Right content */
-.cv-right{
-  background:#1A1410;
-  padding:2.5rem 2rem;
-  display:flex;flex-direction:column;gap:1.5rem;
-}
-@media(max-width:600px){.cv-right{padding:2rem 1.5rem;}}
-
-.cv-section{margin-bottom:0.25rem;}
-.cv-section-title{font-size:7.5px;letter-spacing:0.2em;text-transform:uppercase;color:#C4A882;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;}
-.cv-section-title::before{content:'';display:block;width:14px;height:1px;background:#C4A882;}
-.cv-divider{height:1px;background:rgba(255,255,255,0.06);margin-bottom:1.25rem;}
-
-.cv-summary{font-size:11px;color:#A09080;line-height:1.7;font-weight:300;}
-
-/* Skills */
-.cv-skills{display:flex;flex-direction:column;gap:0;}
-.cv-skill-row{display:flex;justify-content:space-between;align-items:baseline;padding:0.4rem 0;border-bottom:1px solid rgba(255,255,255,0.05);}
-.cv-skill-name{font-size:10.5px;color:#F0EAE0;font-weight:300;}
-.cv-skill-level{font-size:9px;color:#6B5E50;letter-spacing:0.06em;}
-
-/* Experience */
-.cv-exp-item{display:grid;grid-template-columns:60px 1fr;gap:0.75rem;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05);}
-.cv-exp-year{font-size:9px;color:#C4A882;letter-spacing:0.08em;text-transform:uppercase;padding-top:2px;}
-.cv-exp-title{font-size:11px;color:#F0EAE0;font-weight:400;margin-bottom:0.2rem;font-family:'Cormorant Garamond',serif;}
-.cv-exp-desc{font-size:10px;color:#6B5E50;line-height:1.5;font-weight:300;}
-
-/* Brands */
-.cv-brands{font-size:10px;color:#A09080;line-height:1.7;}
-
-/* Portfolio link */
-.cv-portfolio-link{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  font-size:11px;color:#C4A882;letter-spacing:0.08em;
-  text-decoration:none;border-bottom:1px solid rgba(196,168,130,0.3);padding-bottom:1px;
-}
-
-/* ─── SCROLLBAR ──────────────────────────────────── */
-::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border);}
-</style>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script>(function(){var t='light';try{t=localStorage.getItem('np-theme-v2')||'light';}catch(e){}document.documentElement.dataset.theme=t;})()</script>
+<link rel="stylesheet" href="np.css">
 </head>
 <body>
-
-<!-- NAVBAR -->
-<nav class="navbar">
-  <div class="navbar-left">
-    <div class="navbar-langs">
-      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('zh')">中文</button>
-    </div>
+<div id="np-top"></div>
+<main class="page-wrap">
+  <div class="section-label" data-i18n="page_label">Резюме</div>
+  <h1 class="page-title" id="page-name">Наталья<br>Пчелина</h1>
+  <p class="page-subtitle" data-i18n="page_sub">Дизайнер-конструктор, 7 лет в индустрии</p>
+  <div class="resume-actions">
+    <a href="#" class="btn-download" id="pdf-download-btn" download><i class="ico fa-solid fa-arrow-down" aria-hidden="true"></i><span data-i18n="download_btn">Скачать PDF</span></a>
+    <a href="index.html" class="btn-nav"><i class="ico fa-solid fa-house" aria-hidden="true"></i><span data-i18n="nav_home">На главную</span></a>
+    <a href="price.html" class="btn-nav" id="price-link"><i class="ico fa-solid fa-pen-to-square" aria-hidden="true"></i><span data-i18n="nav_price">Рассчитать проект</span></a>
+    <a href="portfolio.html" class="btn-nav"><i class="ico fa-solid fa-images" aria-hidden="true"></i><span data-i18n="nav_portfolio">Смотреть проекты</span></a>
   </div>
-  <div class="navbar-center-wrap">
-    <div class="navbar-title">Наталья <em>Пчелина</em></div>
-  </div>
-  <div class="navbar-icons">
-    <a href="index.html" class="icon-btn">
-      <i class="fa-regular fa-arrow-left"></i>
-      <span data-i18n="back">На главную</span>
-    </a>
-    <button class="icon-btn" onclick="toggleTheme()">
-      <i class="fa-regular fa-sun" id="theme-icon"></i>
-    </button>
-  </div>
-</nav>
-
-<!-- PAGE -->
-<div class="page-wrap">
-
-  <!-- Hero -->
-  <div class="page-hero">
-    <div class="page-label" data-i18n="page_label">Резюме</div>
-    <h1 class="page-name" id="page-name">Наталья<br><em>Пчелина</em></h1>
-    <p class="page-sub" data-i18n="page_sub">Дизайнер-конструктор · 7 лет в индустрии</p>
-  </div>
-
-  <!-- Action buttons -->
-  <div class="actions">
-    <a href="#" class="btn-download" id="pdf-download-btn" download>
-      <i class="fa-regular fa-arrow-down"></i>
-      <span data-i18n="download_btn">Скачать PDF</span>
-    </a>
-    <a href="index.html" class="btn-nav">
-      <i class="fa-regular fa-house"></i>
-      <span data-i18n="nav_home">На главную</span>
-    </a>
-    <a href="price.html" class="btn-nav" id="price-link">
-      <i class="fa-regular fa-pen-to-square"></i>
-      <span data-i18n="nav_price">Рассчитать проект</span>
-    </a>
-    <a href="portfolio.html" class="btn-nav">
-      <i class="fa-regular fa-images"></i>
-      <span data-i18n="nav_portfolio">Смотреть проекты</span>
-    </a>
-  </div>
-
-  <!-- Resume card preview -->
   <div class="resume-card">
-
-    <!-- LEFT STRIP -->
     <div class="cv-left">
       <div>
         <div class="cv-monogram" id="cv-monogram">НП</div>
-      </div>
-      <div class="cv-name-block">
         <div class="cv-name" id="cv-name">Наталья Пчелина</div>
-        <div class="cv-job" id="cv-job">ДИЗАЙНЕР-КОНСТРУКТОР</div>
+        <div class="cv-job" id="cv-job">Дизайнер-конструктор</div>
       </div>
       <div>
         <div class="cv-section-label" data-i18n="contacts_label">Контакты</div>
@@ -227,44 +40,37 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);overflo
       </div>
       <div>
         <div class="cv-section-label" data-i18n="brands_label">Клиенты</div>
-        <div class="cv-contact-item" id="cv-brands-left">Vincult · Franky · Vertango · Pachkoriya · Дом музыки · KraftiShop · Edinovlastie</div>
+        <div class="cv-contact-item" id="cv-brands-left"></div>
       </div>
       <div>
         <div class="cv-section-label" data-i18n="portfolio_label">Портфолио</div>
         <div class="cv-contact-item">npchelina.ru</div>
       </div>
     </div>
-
-    <!-- RIGHT CONTENT -->
     <div class="cv-right">
-      <!-- Summary -->
       <div class="cv-section">
         <div class="cv-section-title" data-i18n="summary_label">Профиль</div>
         <p class="cv-summary" id="cv-summary"></p>
       </div>
       <div class="cv-divider"></div>
-
-      <!-- Skills -->
       <div class="cv-section">
         <div class="cv-section-title" data-i18n="skills_label">Компетенции</div>
         <div class="cv-skills" id="cv-skills"></div>
       </div>
       <div class="cv-divider"></div>
-
-      <!-- Experience -->
       <div class="cv-section">
         <div class="cv-section-title" data-i18n="exp_label">Опыт</div>
         <div id="cv-exp"></div>
       </div>
     </div>
-  </div><!-- /resume-card -->
-
-</div><!-- /page-wrap -->
-
+  </div>
+</main>
+<div id="np-foot"></div>
+<script src="np-common.js"></script>
 <script>
 const data = {
   ru:{
-    page_label:'Резюме', page_sub:'Дизайнер-конструктор · 7 лет в индустрии',
+    page_label:'Резюме', page_sub:'Дизайнер-конструктор, 7 лет в индустрии',
     back:'На главную', download_btn:'Скачать PDF',
     nav_home:'На главную', nav_price:'Рассчитать проект', nav_portfolio:'Смотреть проекты',
     contacts_label:'Контакты', brands_label:'Клиенты', portfolio_label:'Портфолио',
@@ -288,7 +94,7 @@ const data = {
     pdf_file:'resume-ru.pdf',
   },
   en:{
-    page_label:'CV / Resume', page_sub:'Fashion Designer & Pattern Maker · 7 years in industry',
+    page_label:'CV / Resume', page_sub:'Fashion Designer & Pattern Maker, 7 years in industry',
     back:'Back to home', download_btn:'Download PDF',
     nav_home:'Back to home', nav_price:'Calculate project', nav_portfolio:'View projects',
     contacts_label:'Contacts', brands_label:'Clients', portfolio_label:'Portfolio',
@@ -312,7 +118,7 @@ const data = {
     pdf_file:'resume-en.pdf',
   },
   zh:{
-    page_label:'简历', page_sub:'时装设计师 & 制版师 · 7年行业经验',
+    page_label:'简历', page_sub:'时装设计师 & 制版师, 7年行业经验',
     back:'返回首页', download_btn:'下载PDF',
     nav_home:'返回首页', nav_price:'计算项目费用', nav_portfolio:'查看项目',
     contacts_label:'联系方式', brands_label:'客户', portfolio_label:'作品集',
@@ -365,9 +171,9 @@ function setLang(lang) {
 
   // Brands in left strip
   document.getElementById('cv-brands-left').textContent =
-    'Vincult · Franky · Vertango · Pachkoriya · ' +
+    'Vincult, Franky, Vertango, Pachkoriya, ' +
     (lang==='ru'?'Дом музыки':'Dom Muzyki') +
-    ' · KraftiShop · Edinovlastie';
+    ', KraftiShop, Edinovlastie';
 
   // Skills
   document.getElementById('cv-skills').innerHTML = d.skills.map(([name, level]) => `
@@ -398,13 +204,8 @@ function setLang(lang) {
 }
 
 // Theme
-function toggleTheme(){
-  const html=document.documentElement;const isDark=html.dataset.theme==='dark';
-  const next=isDark?'light':'dark';html.dataset.theme=next;
-  localStorage.setItem('np-theme',next);
-  document.getElementById('theme-icon').className=isDark?'fa-regular fa-moon':'fa-regular fa-sun';
-}
-function applyThemeIcon(){const isDark=document.documentElement.dataset.theme==='dark';const icon=document.getElementById('theme-icon');if(icon)icon.className=isDark?'fa-regular fa-sun':'fa-regular fa-moon';}
+
+
 
 // Init
 const params = new URLSearchParams(location.search);
@@ -412,6 +213,7 @@ const urlLang = params.get('lang');
 const savedLang = urlLang || localStorage.getItem('np-lang') || 'ru';
 applyThemeIcon();
 setLang(savedLang);
+
 </script>
 </body>
 </html>
