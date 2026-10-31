@@ -123,6 +123,7 @@ function renderProject(p){
   ).join(' ');
   // related
   const related=getSimilarProjects(p,3);
+  document.getElementById('related-list').parentNode.style.display=related.length?'':'none';
   document.getElementById('related-list').innerHTML=related.map(r=>`
     <a class="related-card" href="project.html?id=${r.id}&lang=${lang}">
       <div class="related-thumb">${r.photos?.[0]?`<img src="${r.photos[0]}" alt="${r[lang]?.title||r.ru.title}" loading="lazy">`:''}
@@ -135,14 +136,26 @@ function renderProject(p){
 
 function getTagsForLang(p,lang){if(lang==='en'&&p.tags_en)return p.tags_en;if(lang==='zh'&&p.tags_zh)return p.tags_zh;return p.tags||[];}
 function getAllTagsForLang(lang){const set=new Set();PROJECTS.forEach(p=>getTagsForLang(p,lang).forEach(t=>set.add(t)));return[...set].sort();}
+const TYPE_GROUPS=[
+  ['top','tops',['топ','топик','майк']],
+  ['tee','tops',['футболк','лонгслив','поло']],
+  ['shirts','shirts',['рубашк']],
+  ['pants','pants',['брюк','штаны','шорты']],
+  ['outer','outer',['костюм','жилет','блейзер','кардиган','зипк','куртк']],
+  ['dress','dress',['платье','комбинезон']],
+  ['lingerie','lingerie',['бель']]
+];
+function typeOf(p){const t=(p.ru&&p.ru.title||'').toLowerCase();for(const [sub,fam,ks] of TYPE_GROUPS){if(ks.some(k=>t.includes(k)))return {sub,fam};}return null;}
 function getSimilarProjects(p,n){
-  const lang=currentLang;
-  const tags=new Set(getTagsForLang(p,lang));
+  const ty=typeOf(p), client=(p.client||'').toLowerCase();
   return PROJECTS
     .filter(r=>r.id!==p.id)
-    .map(r=>({p:r,score:[...getTagsForLang(r,lang)].filter(t=>tags.has(t)).length}))
+    .map((r,i)=>{const rt=typeOf(r);
+      let sc=0; if(ty&&rt){ if(rt.sub===ty.sub) sc+=10; else if(rt.fam===ty.fam) sc+=4; }
+      if(client&&(r.client||'').toLowerCase()===client) sc+=5;
+      return {p:r,i,score:sc};})
     .filter(x=>x.score>0)
-    .sort((a,b)=>b.score-a.score)
+    .sort((a,b)=>b.score-a.score||a.i-b.i)
     .slice(0,n)
     .map(x=>x.p);
 }
